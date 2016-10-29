@@ -1,0 +1,27 @@
+@charset "UTF-8";
+@import "./common/var.css";
+
+@component-namespace el {
+
+  @b data-panel-item {
+    width: 230px;
+    height: 110px;
+    position: relative;
+
+    &:before,&:after{
+      content:'';
+      background-color: #ececec;
+      width: 2px;
+      height: 55px;
+      position: absolute;
+      left: 0;
+      top:50%;
+      transform: translate(-50%,-50%);
+    }
+    &:after{
+      left: auto;
+      right: 0;
+      transform: translate(50%,-50%);
+    }
+  }
+}
