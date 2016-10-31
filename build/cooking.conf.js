@@ -9,10 +9,10 @@ cooking.set({
   moduleName: 'ELEMENT',
   extends: ['vue2'],
   alias: config.alias,
-  externals: { vue: config.externals.vue }
+  externals: { vue: config.vue }
 });
 
 cooking.add('output.filename', 'index.js');
 cooking.add('loader.js.exclude', config.jsexclude);
-
+cooking.add('vue.preserveWhitespace', false);
 module.exports = cooking.resolve();

@@ -1,11 +1,13 @@
 <script>
   import Clickoutside from 'element-ui/src/utils/clickoutside';
-  import emitter from 'element-ui/src/mixins/emitter';
+  import Emitter from 'element-ui/src/mixins/emitter';
 
   export default {
     name: 'ElDropdown',
 
-    mixins: [emitter],
+    componentName: 'ElDropdown',
+
+    mixins: [Emitter],
 
     directives: { Clickoutside },
 
@@ -31,6 +33,7 @@
     },
 
     mounted() {
+      this.$on('visible', value => { this.visible = value; });
       this.initEvent();
     },
 

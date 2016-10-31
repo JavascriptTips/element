@@ -1,15 +1,16 @@
 <template>
   <div class="el-input-number"
     :class="[
-      size ? 'is-' + size : '',
+      size ? 'el-input-number--' + size : '',
       { 'is-disabled': disabled }
     ]"
   >
     <el-input
-      v-model="currentValue"
+      v-model.number="currentValue"
+      @keydown.up.native="increase"
+      @keydown.down.native="decrease"
       :disabled="disabled"
       :size="size"
-      :number="true"
       :class="{
         'is-active': inputActive
       }">
@@ -33,15 +34,12 @@
   </div>
 </template>
 <script>
-  import ElInput from 'element-ui/packages/input/index.js';
+  import ElInput from 'element-ui/packages/input';
   import { once, on } from 'wind-dom/src/event';
 
   export default {
     name: 'ElInputNumber',
     props: {
-      value: {
-        default: 1
-      },
       step: {
         type: Number,
         default: 1
@@ -52,6 +50,9 @@
       },
       min: {
         type: Number,
+        default: 0
+      },
+      value: {
         default: 0
       },
       disabled: Boolean,
@@ -89,8 +90,18 @@
       ElInput
     },
     data() {
+      // correct the init value
+      let value = this.value;
+      if (value < this.min) {
+        this.$emit('input', this.min);
+        value = this.min;
+      }
+      if (value > this.max) {
+        this.$emit('input', this.max);
+        value = this.max;
+      }
       return {
-        currentValue: this.value,
+        currentValue: value,
         inputActive: false
       };
     },
@@ -100,7 +111,7 @@
       },
 
       currentValue(newVal, oldVal) {
-        if (!isNaN(newVal) && newVal <= this.max && newVal >= this.min) {
+        if (newVal <= this.max && newVal >= this.min) {
           this.$emit('change', newVal);
           this.$emit('input', newVal);
         } else {

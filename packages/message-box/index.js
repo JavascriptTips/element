@@ -1,3 +1,1 @@
-import MessageBox from './src/main.js';
-
-module.exports = MessageBox;
+module.exports = require('./src/main.js');

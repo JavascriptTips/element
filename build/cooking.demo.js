@@ -1,7 +1,6 @@
 var cooking = require('cooking');
 var config = require('./config');
 var md = require('markdown-it')();
-var Components = require('../components.json');
 var striptags = require('./strip-tags');
 
 function convert(str) {
@@ -15,7 +14,7 @@ cooking.set({
   entry: './examples/entry.js',
   dist: './examples/element-ui/',
   template: './examples/index.tpl',
-  publicPath: '/',
+  publicPath: process.env.CI_ENV || '/',
   hash: true,
   devServer: {
     port: 8085,
@@ -28,29 +27,7 @@ cooking.set({
   sourceMap: true,
   alias: config.alias,
   extends: ['vue2', 'lint'],
-  postcss: function(webapck) {
-    return [
-      require('postcss-salad')({
-        browser: ['ie > 8', 'last 2 version'],
-        features: {
-          'partialImport': {
-            addDependencyTo: webapck
-          },
-          'bem': {
-            'shortcuts': {
-              'component': 'b',
-              'modifier': 'm',
-              'descendent': 'e'
-            },
-            'separators': {
-              'descendent': '__',
-              'modifier': '--'
-            }
-          }
-        }
-      })
-    ];
-  }
+  postcss: config.postcss
 });
 
 cooking.add('loader.md', {
@@ -100,17 +77,10 @@ var wrap = function(render) {
   };
 };
 
-var externals = {};
-Object.keys(Components).forEach(function(key) {
-  externals[`element-ui/packages/${key}/style.css`] = 'null';
-});
-
-// 开发模式不需要将不存在的 style.css 打包进去
-cooking.add('externals', externals);
-
 if (process.env.NODE_ENV === 'production') {
   cooking.add('externals.vue', 'Vue');
   cooking.add('externals.vue-router', 'VueRouter');
 }
 
+cooking.add('vue.preserveWhitespace', false);
 module.exports = cooking.resolve();

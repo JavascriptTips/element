@@ -1,5 +1,7 @@
-import ElCheckbox from 'element-ui/packages/checkbox/index.js';
-import ElTag from 'element-ui/packages/tag/index.js';
+import ElCheckbox from 'element-ui/packages/checkbox';
+import ElTag from 'element-ui/packages/tag';
+import Vue from 'vue';
+import FilterPanel from './filter-panel.vue';
 
 export default {
   name: 'el-table-header',
@@ -16,47 +18,63 @@ export default {
             <colgroup
               name={ column.id }
               width={ column.realWidth || column.width }
-            />).concat(
-              <thead>
-                <tr>
-                  {
-                    this._l(this.columns, column =>
-                      <th
-                        on-mousemove={ ($event) => this.handleMouseMove($event, column) }
-                        on-mouseout={ this.handleMouseOut }
-                        on-mousedown={ ($event) => this.handleMouseDown($event, column) }
-                        on-click={ ($event) => this.handleHeaderClick($event, column) }
-                        class={ [column.id, column.direction, column.align] }>
-                        {
-                          [
-                            column.headerTemplate
-                              ? column.headerTemplate.call(this._renderProxy, h, column.label)
-                              : <div>{ column.label }</div>,
-                            column.sortable
-                              ? <div class="caret-wrapper">
-                                  <i class="sort-caret ascending"></i>
-                                  <i class="sort-caret descending"></i>
-                                </div>
-                              : ''
-                          ]
-                        }
-                      </th>
-                    ).concat(this.$parent.showVScrollBar && this.$parent.currentGutterWidth ? <th class="gutter"
-                              style={{ width: this.$parent.currentGutterWidth + 'px' }}></th> : '')
-                  }
-                </tr>
-              </thead>
-            )
+            />)
         }
+        {
+          !this.fixed && this.layout.gutterWidth
+            ? <colgroup name="gutter" width={ this.layout.scrollY ? this.layout.gutterWidth : '' }></colgroup>
+            : ''
+        }
+        <thead>
+          <tr>
+            {
+              this._l(this.columns, (column, cellIndex) =>
+                <th
+                  on-mousemove={ ($event) => this.handleMouseMove($event, column) }
+                  on-mouseout={ this.handleMouseOut }
+                  on-mousedown={ ($event) => this.handleMouseDown($event, column) }
+                  class={ [column.id, column.order, column.align, this.isCellHidden(cellIndex) ? 'hidden' : ''] }>
+                  <div class={ ['cell', column.filteredValue && column.filteredValue.length > 0 ? 'highlight' : ''] }>
+                  {
+                    column.headerTemplate
+                      ? column.headerTemplate.call(this._renderProxy, h, column.label)
+                      : column.label
+                  }
+                  {
+                    column.sortable
+                      ? <span class="caret-wrapper" on-click={ ($event) => this.handleHeaderClick($event, column) }>
+                          <i class="sort-caret ascending"></i>
+                          <i class="sort-caret descending"></i>
+                        </span>
+                      : ''
+                  }
+                  {
+                    column.filterable
+                      ? <span class="el-table__column-filter-trigger" on-click={ ($event) => this.handleFilterClick($event, column) }><i class={ ['el-icon-arrow-down', column.filterOpened ? 'el-icon-arrow-up' : ''] }></i></span>
+                      : ''
+                  }
+                  </div>
+                </th>
+              )
+            }
+            {
+              !this.fixed && this.layout.gutterWidth
+                ? <th class="gutter" style={{ width: this.layout.scrollY ? this.layout.gutterWidth + 'px' : '0' }}></th>
+                : ''
+            }
+          </tr>
+        </thead>
       </table>
     );
   },
 
   props: {
-    columns: {},
-    fixed: Boolean,
-    allSelected: {
-      default: Boolean
+    fixed: String,
+    store: {
+      required: true
+    },
+    layout: {
+      required: true
     },
     border: Boolean
   },
@@ -66,30 +84,104 @@ export default {
     ElTag
   },
 
+  computed: {
+    isAllSelected() {
+      return this.store.states.isAllSelected;
+    },
+
+    columnsCount() {
+      return this.store.states.columns.length;
+    },
+
+    leftFixedCount() {
+      return this.store.states.fixedColumns.length;
+    },
+
+    rightFixedCount() {
+      return this.store.states.rightFixedColumns.length;
+    },
+
+    columns() {
+      return this.store.states.columns;
+    }
+  },
+
+  created() {
+    this.filterPanels = {};
+  },
+
+  beforeDestroy() {
+    const panels = this.filterPanels;
+    for (let prop in panels) {
+      if (panels.hasOwnProperty(prop) && panels[prop]) {
+        panels[prop].$destroy(true);
+      }
+    }
+  },
+
   methods: {
-    toggleAllSelection($event) {
-      this.$parent.toggleAllSelection($event);
+    isCellHidden(index) {
+      if (this.fixed === true || this.fixed === 'left') {
+        return index >= this.leftFixedCount;
+      } else if (this.fixed === 'right') {
+        return index < this.columnsCount - this.rightFixedCount;
+      } else {
+        return (index < this.leftFixedCount) || (index >= this.columnsCount - this.rightFixedCount);
+      }
+    },
+
+    toggleAllSelection() {
+      this.store.commit('toggleAllSelection');
+    },
+
+    handleFilterClick(event, column) {
+      event.stopPropagation();
+      const target = event.target;
+      const cell = target.parentNode;
+      const table = this.$parent;
+
+      let filterPanel = this.filterPanels[column.id];
+
+      if (filterPanel && column.filterOpened) {
+        filterPanel.showPopper = false;
+        return;
+      }
+
+      if (!filterPanel) {
+        filterPanel = new Vue(FilterPanel);
+        this.filterPanels[column.id] = filterPanel;
+
+        filterPanel.table = table;
+        filterPanel.cell = cell;
+        filterPanel.column = column;
+        filterPanel.$mount(document.createElement('div'));
+      }
+
+      setTimeout(() => {
+        filterPanel.showPopper = true;
+      }, 16);
     },
 
     handleMouseDown(event, column) {
+      /* istanbul ignore if */
       if (this.draggingColumn && this.border) {
         this.dragging = true;
 
         this.$parent.resizeProxyVisible = true;
 
-        const gridEl = this.$parent.$el;
-        const gridLeft = gridEl.getBoundingClientRect().left;
+        const tableEl = this.$parent.$el;
+        const tableLeft = tableEl.getBoundingClientRect().left;
         const columnEl = this.$el.querySelector(`th.${column.id}`);
         const columnRect = columnEl.getBoundingClientRect();
-        const minLeft = columnRect.left - gridLeft + 30;
+        const minLeft = columnRect.left - tableLeft + 30;
 
         columnEl.classList.add('noclick');
 
         this.dragState = {
           startMouseLeft: event.clientX,
-          startLeft: columnRect.right - gridLeft,
-          startColumnLeft: columnRect.left - gridLeft,
-          gridLeft: gridLeft
+          startLeft: columnRect.right - tableLeft,
+          startColumnLeft: columnRect.left - tableLeft,
+          tableLeft
         };
 
         const resizeProxy = this.$parent.$refs.resizeProxy;
@@ -98,22 +190,20 @@ export default {
         document.onselectstart = function() { return false; };
         document.ondragstart = function() { return false; };
 
-        const mousemove = (event) => {
+        const handleMouseMove = (event) => {
           const deltaLeft = event.clientX - this.dragState.startMouseLeft;
           const proxyLeft = this.dragState.startLeft + deltaLeft;
 
           resizeProxy.style.left = Math.max(minLeft, proxyLeft) + 'px';
         };
 
-        const mouseup = () => {
+        const handleMouseUp = () => {
           if (this.dragging) {
             const finalLeft = parseInt(resizeProxy.style.left, 10);
             const columnWidth = finalLeft - this.dragState.startColumnLeft;
             column.width = column.realWidth = columnWidth;
 
-            this.$nextTick(() => {
-              this.$parent.$calcColumns();
-            });
+            this.store.scheduleLayout();
 
             document.body.style.cursor = '';
             this.dragging = false;
@@ -123,8 +213,8 @@ export default {
             this.$parent.resizeProxyVisible = false;
           }
 
-          document.removeEventListener('mousemove', mousemove);
-          document.removeEventListener('mouseup', mouseup);
+          document.removeEventListener('mousemove', handleMouseMove);
+          document.removeEventListener('mouseup', handleMouseUp);
           document.onselectstart = null;
           document.ondragstart = null;
 
@@ -133,26 +223,29 @@ export default {
           }, 0);
         };
 
-        document.addEventListener('mousemove', mousemove);
-        document.addEventListener('mouseup', mouseup);
+        document.addEventListener('mousemove', handleMouseMove);
+        document.addEventListener('mouseup', handleMouseUp);
       }
     },
 
     handleMouseMove(event, column) {
-      const target = event.target;
+      let target = event.target;
+      while (target && target.tagName !== 'TH') {
+        target = target.parentNode;
+      }
 
       if (!column || !column.resizable) return;
 
       if (!this.dragging && this.border) {
         let rect = target.getBoundingClientRect();
 
+        var bodyStyle = document.body.style;
         if (rect.width > 12 && rect.right - event.pageX < 8) {
-          document.body.style.cursor = 'col-resize';
+          bodyStyle.cursor = 'col-resize';
           this.draggingColumn = column;
         } else if (!this.dragging) {
-          document.body.style.cursor = '';
+          bodyStyle.cursor = '';
           this.draggingColumn = null;
-          if (column.sortable) document.body.style.cursor = 'pointer';
         }
       }
     },
@@ -176,41 +269,32 @@ export default {
 
       if (!column.sortable) return;
 
-      const grid = this.$parent;
+      const states = this.store.states;
+      let sortProp = states.sortProp;
+      let sortOrder;
+      const sortingColumn = states.sortingColumn;
 
-      if (grid.sortingColumn !== column) {
-        if (grid.sortingColumn) {
-          grid.sortingColumn.direction = '';
+      if (sortingColumn !== column) {
+        if (sortingColumn) {
+          sortingColumn.order = null;
         }
-        grid.sortingColumn = column;
-        grid.sortingProperty = column.property;
+        states.sortingColumn = column;
+        sortProp = column.property;
       }
 
-      if (!column.direction) {
-        column.direction = 'ascending';
-      } else if (column.direction === 'ascending') {
-        column.direction = 'descending';
+      if (!column.order) {
+        sortOrder = column.order = 'ascending';
+      } else if (column.order === 'ascending') {
+        sortOrder = column.order = 'descending';
       } else {
-        column.direction = '';
-        grid.sortingColumn = null;
-        grid.sortingProperty = null;
+        sortOrder = column.order = null;
+        states.sortingColumn = null;
+        sortProp = null;
       }
+      states.sortProp = sortProp;
+      states.sortOrder = sortOrder;
 
-      grid.sortingDirection = column.direction === 'descending' ? -1 : 1;
-    },
-
-    $setVisibleFilter(property) {
-      if (this.visibleFilter) {
-        this.visibleFilter = null;
-      } else {
-        this.visibleFilter = property;
-      }
-    }
-  },
-
-  watch: {
-    visibleFilter(val) {
-      this.$parent.visibleFilter = val;
+      this.store.commit('changeSortCondition');
     }
   },
 
@@ -218,9 +302,7 @@ export default {
     return {
       draggingColumn: null,
       dragging: false,
-      dragState: {},
-      columnsMap: null,
-      visibleFilter: null
+      dragState: {}
     };
   }
 };

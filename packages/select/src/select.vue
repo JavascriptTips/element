@@ -53,27 +53,30 @@
     <transition name="md-fade-bottom" @after-leave="doDestroy">
       <el-select-menu
         ref="popper"
-        v-show="visible && nodataText !== false">
+        v-show="visible && emptyText !== false">
         <ul class="el-select-dropdown__list" v-show="options.length > 0 && filteredOptionsCount > 0 && !loading">
           <slot></slot>
         </ul>
-        <p class="el-select-dropdown__nodata" v-if="nodataText">{{ nodataText }}</p>
+        <p class="el-select-dropdown__empty" v-if="emptyText">{{ emptyText }}</p>
       </el-select-menu>
     </transition>
   </div>
 </template>
 
 <script type="text/babel">
-  import emitter from 'element-ui/src/mixins/emitter';
-  import ElInput from 'element-ui/packages/input/index.js';
-  import ElSelectMenu from 'element-ui/packages/select-dropdown/index.js';
-  import ElTag from 'element-ui/packages/tag/index.js';
+  import Emitter from 'element-ui/src/mixins/emitter';
+  import Locale from 'element-ui/src/mixins/locale';
+  import ElInput from 'element-ui/packages/input';
+  import ElSelectMenu from './select-dropdown.vue';
+  import ElTag from 'element-ui/packages/tag';
   import debounce from 'throttle-debounce/debounce';
   import Clickoutside from 'element-ui/src/utils/clickoutside';
   import { addClass, removeClass, hasClass } from 'wind-dom/src/class';
+  import { addResizeListener, removeResizeListener } from 'element-ui/src/utils/resize-event';
+  import { $t } from 'element-ui/src/locale';
 
   export default {
-    mixins: [emitter],
+    mixins: [Emitter, Locale],
 
     name: 'ElSelect',
 
@@ -105,19 +108,19 @@
         return criteria;
       },
 
-      nodataText() {
+      emptyText() {
         if (this.loading) {
-          return '加载中';
+          return this.$t('el.select.loading');
         } else {
           if (this.voidRemoteQuery) {
             this.voidRemoteQuery = false;
             return false;
           }
-          if (this.filteredOptionsCount === 0) {
-            return '无匹配数据';
+          if (this.filterable && this.filteredOptionsCount === 0) {
+            return this.$t('el.select.noMatch');
           }
           if (this.options.length === 0) {
-            return '无数据';
+            return this.$t('el.select.noData');
           }
         }
         return null;
@@ -146,7 +149,7 @@
       multiple: Boolean,
       placeholder: {
         type: String,
-        default: '请选择'
+        default: $t('el.select.placeholder')
       }
     },
 
@@ -438,7 +441,9 @@
               this.hoverIndex = 0;
             }
             this.resetScrollTop();
-            if (this.options[this.hoverIndex].disabled === true || !this.options[this.hoverIndex].queryPassed) {
+            if (this.options[this.hoverIndex].disabled === true ||
+              this.options[this.hoverIndex].groupDisabled === true ||
+              !this.options[this.hoverIndex].queryPassed) {
               this.navigateOptions('next');
             }
           }
@@ -448,7 +453,9 @@
               this.hoverIndex = this.options.length - 1;
             }
             this.resetScrollTop();
-            if (this.options[this.hoverIndex].disabled === true || !this.options[this.hoverIndex].queryPassed) {
+            if (this.options[this.hoverIndex].disabled === true ||
+              this.options[this.hoverIndex].groupDisabled === true ||
+              !this.options[this.hoverIndex].queryPassed) {
               this.navigateOptions('prev');
             }
           }
@@ -505,6 +512,10 @@
           this.options.splice(index, 1);
         }
         this.broadcast('option', 'resetIndex');
+      },
+
+      resetInputWidth() {
+        this.inputWidth = this.$refs.reference.$el.getBoundingClientRect().width;
       }
     },
 
@@ -528,11 +539,24 @@
     },
 
     mounted() {
+      addResizeListener(this.$el, this.resetInputWidth);
+      if (this.remote && this.multiple && Array.isArray(this.value)) {
+        this.selected = this.options.reduce((prev, curr) => {
+          return this.value.indexOf(curr.value) > -1 ? prev.concat(curr) : prev;
+        }, []);
+        this.$nextTick(() => {
+          this.resetInputHeight();
+        });
+      }
       this.$nextTick(() => {
         if (this.$refs.reference.$el) {
           this.inputWidth = this.$refs.reference.$el.getBoundingClientRect().width;
         }
       });
+    },
+
+    destroyed() {
+      if (this.resetInputWidth) removeResizeListener(this.$el, this.resetInputWidth);
     }
   };
 </script>

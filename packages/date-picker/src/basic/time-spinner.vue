@@ -1,6 +1,5 @@
 <template>
   <div class="el-time-spinner">
-    {{hours}}
     <div
       @mouseenter="emitSelectRange('hours')"
       @mousewheel="handleScroll('hour')"
@@ -31,6 +30,7 @@
       </ul>
     </div>
     <div
+      v-show="showSeconds"
       @mouseenter="emitSelectRange('seconds')"
       @mousewheel="handleScroll('second')"
       class="el-time-spinner__wrapper"
@@ -47,7 +47,7 @@
   </div>
 </template>
 
-<script type="text/ecmascript-6">
+<script type="text/babel">
   import { getRangeHours } from '../util';
 
   export default {
@@ -79,7 +79,6 @@
           this.hoursPrivate = oldVal;
         }
         this.$refs.hour.scrollTop = Math.max(0, (this.hoursPrivate - 2.5) * 32 + 80);
-
         this.$emit('change', { hours: newVal });
       },
 
@@ -116,13 +115,6 @@
     },
 
     methods: {
-      focusEditor(type) {
-        const editor = this.$refs[type + 'Editor'];
-        if (editor) {
-          editor.focus();
-        }
-      },
-
       handleClick(type, value, disabled) {
         if (value.disabled) {
           return;

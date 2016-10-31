@@ -1,7 +1,8 @@
 const ElRow = require('./src/row');
 
+/* istanbul ignore next */
 ElRow.install = function(Vue) {
-  Vue.component('el-row', ElRow);
+  Vue.component(ElRow.name, ElRow);
 };
 
 module.exports = ElRow;

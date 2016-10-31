@@ -14,7 +14,7 @@
   export default {
     name: 'ElMenu',
 
-    componentName: 'menu',
+    componentName: 'ElMenu',
 
     mixins: [emitter],
 
@@ -33,7 +33,11 @@
         default: 'light'
       },
       uniqueOpened: Boolean,
-      router: Boolean
+      router: Boolean,
+      menuTrigger: {
+        type: String,
+        default: 'hover'
+      }
     },
     data() {
       return {
@@ -46,9 +50,11 @@
     watch: {
       defaultActive(value) {
         this.activeIndex = value;
-        let indexPath = this.menuItems[value].indexPath;
+        if (!this.menuItems[value]) return;
+        let menuItem = this.menuItems[value];
+        let indexPath = menuItem.indexPath;
 
-        this.handleSelect(value, indexPath);
+        this.handleSelect(value, indexPath, null, menuItem);
       },
       defaultOpeneds(value) {
         this.openedMenus = value;
@@ -80,23 +86,28 @@
           this.$emit('open', index, indexPath);
         }
       },
-      handleSelect(index, indexPath, route) {
+      handleSelect(index, indexPath, route, instance) {
         this.activeIndex = index;
-        this.$emit('select', index, indexPath);
+        this.$emit('select', index, indexPath, instance);
 
         if (this.mode === 'horizontal') {
-          this.broadcast('submenu', 'item-select', [index, indexPath]);
+          this.broadcast('ElSubmenu', 'item-select', [index, indexPath]);
           this.openedMenus = [];
         } else {
           this.openActiveItemMenus();
         }
 
         if (this.router && route) {
-          this.$router.push(route);
+          try {
+            this.$router.push(route);
+          } catch (e) {
+            console.error(e);
+          }
         }
       },
       openActiveItemMenus() {
         let index = this.activeIndex;
+        if (!this.menuItems[index]) return;
         if (index && this.mode === 'vertical') {
           let indexPath = this.menuItems[index].indexPath;
 

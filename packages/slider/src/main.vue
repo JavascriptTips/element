@@ -4,33 +4,40 @@
       v-model="inputValue"
       v-if="showInput"
       class="el-slider__input"
-      @keyup.native="onInputChange()"
+      @keyup.native="onInputChange"
       ref="input"
       :step="step"
+      :disabled="disabled"
       :min="min"
       :max="max"
       size="small">
     </el-input-number>
     <div class="el-slider__runway"
-      :class="{ 'show-input': showInput }"
+      :class="{ 'show-input': showInput, 'disabled': disabled }"
       @click="onSliderClick" ref="slider">
       <div class="el-slider__bar" :style="{ width: currentPosition }"></div>
-      <div class="el-slider__button-wrapper" @mouseenter="hovering = true" @mouseleave="hovering = false" :style="{left: currentPosition}" ref="button">
-        <div class="el-slider__button" :class="{ 'hover': hovering, 'dragging': dragging }"></div>
+      <div
+        class="el-slider__button-wrapper"
+        @mouseenter="handleMouseEnter"
+        @mouseleave="handleMouseLeave"
+        @mousedown="onButtonDown"
+        :class="{ 'hover': hovering, 'dragging': dragging }"
+        :style="{left: currentPosition}"
+        ref="button">
+        <el-tooltip placement="top" ref="tooltip">
+          <span slot="content">{{ value }}</span>
+          <div class="el-slider__button" :class="{ 'hover': hovering, 'dragging': dragging }"></div>
+        </el-tooltip>
       </div>
-      <transition name="popper-fade">
-        <div class="el-slider__pop" v-show="showTip" ref="pop">{{ value }}</div>
-      </transition>
       <div class="el-slider__stop" v-for="item in stops" :style="{ 'left': item + '%' }" v-if="showStops"></div>
     </div>
   </div>
 </template>
 
 <script type="text/babel">
-  import Popper from 'element-ui/src/utils/popper';
-  import ElInputNumber from 'element-ui/packages/input-number/index.js';
+  import ElInputNumber from 'element-ui/packages/input-number';
+  import ElTooltip from 'element-ui/packages/tooltip';
   import { getStyle } from 'wind-dom/src/style';
-  import { addClass, removeClass } from 'wind-dom/src/class';
 
   export default {
     name: 'ElSlider',
@@ -63,21 +70,27 @@
       showStops: {
         type: Boolean,
         default: false
+      },
+      disabled: {
+        type: Boolean,
+        default: false
       }
     },
 
     components: {
-      ElInputNumber
+      ElInputNumber,
+      ElTooltip
     },
 
     data() {
       return {
         inputValue: null,
         timeout: null,
-        showTip: false,
         hovering: false,
         dragging: false,
-        popper: null,
+        startX: 0,
+        currentX: 0,
+        startPos: 0,
         newPos: null,
         oldValue: this.value,
         currentPosition: (this.value - this.min) / (this.max - this.min) * 100 + '%'
@@ -87,21 +100,6 @@
     watch: {
       inputValue(val) {
         this.$emit('input', Number(val));
-      },
-
-      showTip(val) {
-        if (val) {
-          this.$nextTick(() => {
-            this.updatePopper();
-          });
-        } else {
-          this.timeout = setTimeout(() => {
-            if (this.popper) {
-              this.popper.destroy();
-              this.popper = null;
-            }
-          }, 300);
-        }
       },
 
       value(val) {
@@ -122,27 +120,18 @@
     },
 
     methods: {
-      handlePopperStyle() {
-        let placementMap = { top: 'bottom', bottom: 'top' };
-        let placement = this.popper._popper.getAttribute('x-placement').split('-')[0];
-        let origin = placementMap[placement];
-        addClass(this.popper._popper, placement);
-        removeClass(this.popper._popper, placementMap[placement]);
-        this.popper._popper.style.transformOrigin = `center ${ origin }`;
+      handleMouseEnter() {
+        this.hovering = true;
+        this.$refs.tooltip.showPopper = true;
+      },
+
+      handleMouseLeave() {
+        this.hovering = false;
+        this.$refs.tooltip.showPopper = false;
       },
 
       updatePopper() {
-        if (this.popper) {
-          clearTimeout(this.timeout);
-          this.popper.update();
-          this.handlePopperStyle();
-        } else {
-          this.popper = new Popper(this.$refs.button, this.$refs.pop, { gpuAcceleration: false, placement: 'top' });
-          this.popper.onCreate(() => {
-            this.handlePopperStyle();
-          });
-          this.updatePopper();
-        }
+        this.$refs.tooltip.updatePopper();
       },
 
       setPosition(newPos) {
@@ -161,6 +150,7 @@
       },
 
       onSliderClick(event) {
+        if (this.disabled) return;
         var currentX = event.clientX;
         var sliderOffsetLeft = this.$refs.slider.getBoundingClientRect().left;
         var newPos = (currentX - sliderOffsetLeft) / this.$sliderWidth * 100;
@@ -174,16 +164,45 @@
         if (!isNaN(this.value)) {
           this.setPosition((this.value - this.min) * 100 / (this.max - this.min));
         }
+      },
+
+      onDragStart(event) {
+        this.dragging = true;
+        this.startX = event.clientX;
+        this.startPos = parseInt(this.currentPosition, 10);
+      },
+
+      onDragging(event) {
+        if (this.dragging) {
+          this.$refs.tooltip.showPopper = true;
+          this.currentX = event.clientX;
+          var diff = (this.currentX - this.startX) / this.$sliderWidth * 100;
+          this.newPos = this.startPos + diff;
+          this.setPosition(this.newPos);
+        }
+      },
+
+      onDragEnd() {
+        if (this.dragging) {
+          this.dragging = false;
+          this.$refs.tooltip.showPopper = false;
+          this.setPosition(this.newPos);
+          window.removeEventListener('mousemove', this.onDragging);
+          window.removeEventListener('mouseup', this.onDragEnd);
+        }
+      },
+
+      onButtonDown(event) {
+        if (this.disabled) return;
+        this.onDragStart(event);
+        window.addEventListener('mousemove', this.onDragging);
+        window.addEventListener('mouseup', this.onDragEnd);
       }
     },
 
     computed: {
       $sliderWidth() {
         return parseInt(getStyle(this.$refs.slider, 'width'), 10);
-      },
-
-      showTip() {
-        return this.dragging || this.hovering;
       },
 
       stops() {
@@ -198,53 +217,15 @@
       }
     },
 
-    mounted() {
-      var startX = 0;
-      var currentX = 0;
-      var startPos = 0;
-
-      var onDragStart = event => {
-        this.dragging = true;
-        startX = event.clientX;
-        startPos = parseInt(this.currentPosition, 10);
-      };
-
-      var onDragging = event => {
-        if (this.dragging) {
-          currentX = event.clientX;
-          var diff = (currentX - startX) / this.$sliderWidth * 100;
-          this.newPos = startPos + diff;
-          this.setPosition(this.newPos);
-        }
-      };
-
-      var onDragEnd = () => {
-        if (this.dragging) {
-          this.dragging = false;
-          this.setPosition(this.newPos);
-          window.removeEventListener('mousemove', onDragging);
-          window.removeEventListener('mouseup', onDragEnd);
-        }
-      };
-
-      this.$refs.button.addEventListener('mousedown', function(event) {
-        onDragStart(event);
-        window.addEventListener('mousemove', onDragging);
-        window.addEventListener('mouseup', onDragEnd);
-      });
-    },
-
     created() {
-      if (typeof this.value !== 'number' || this.value < this.min || this.value > this.max) {
+      if (typeof this.value !== 'number' || this.value < this.min) {
         this.$emit('input', this.min);
+      } else if (this.value > this.max) {
+        this.$emit('input', this.max);
       }
-      this.inputValue = this.inputValue || this.value;
-    },
-
-    beforeDestroy() {
-      if (this.popper) {
-        this.popper.destroy();
-      }
+      this.$nextTick(() => {
+        this.inputValue = this.inputValue || this.value;
+      });
     }
   };
 </script>

@@ -22,6 +22,7 @@ const Files = [
     filename: 'index.js',
     content: `const ${ComponentName} = require('./src/main');
 
+/* istanbul ignore next */
 ${ComponentName}.install = function(Vue) {
   Vue.component(${ComponentName}.name, ${ComponentName});
 };
@@ -41,21 +42,9 @@ cooking.set({
   template: false,
   format: 'umd',
   moduleName: 'El${ComponentName}',
-  extends: ['vue2']
-});
-
-cooking.add('resolve.alias', {
-  'main': path.join(__dirname, '../../src'),
-  'packages': path.join(__dirname, '../../packages')
-});
-
-cooking.add('externals', {
-  vue: {
-    root: 'Vue',
-    commonjs: 'vue',
-    commonjs2: 'vue',
-    amd: 'vue'
-  }
+  extends: ['vue2'],
+  alias: config.alias,
+  externals: { vue: config.vue }
 });
 
 module.exports = cooking.resolve();`

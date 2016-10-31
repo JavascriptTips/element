@@ -8,8 +8,7 @@
     @click="handleClick"
     @drop.prevent="onDrop"
     @dragover.prevent="dragOver = true"
-    @dragleave.prevent="dragOver = false"
-  >
+    @dragleave.prevent="dragOver = false">
     <slot v-if="!showCover"></slot>
     <cover :image="lastestFile" :on-preview="onPreview" :on-remove="onRemove" v-else></cover>
     <input class="el-upload__input" type="file" ref="input" @change="handleChange" :multiple="multiple" :accept="accept">
@@ -63,8 +62,8 @@ export default {
 
   computed: {
     lastestFile() {
-      var uploadedFiles = this.$parent.uploadedFiles;
-      return uploadedFiles[uploadedFiles.length - 1];
+      var fileList = this.$parent.fileList;
+      return fileList[fileList.length - 1];
     },
     showCover() {
       var file = this.lastestFile;
@@ -86,6 +85,7 @@ export default {
         return;
       }
       this.uploadFiles(files);
+      this.$refs.input.value = null;
     },
     uploadFiles(files) {
       let postFiles = Array.prototype.slice.call(files);

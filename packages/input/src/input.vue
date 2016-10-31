@@ -1,7 +1,7 @@
 <template>
   <div :class="[
     type === 'textarea' ? 'el-textarea' : 'el-input',
-    size ? 'el-input-' + size : '',
+    size ? 'el-input--' + size : '',
     {
       'is-disabled': disabled,
       'el-input-group': $slots.prepend || $slots.append
@@ -12,42 +12,27 @@
       <div class="el-input-group__prepend" v-if="$slots.prepend">
         <slot name="prepend"></slot>
       </div>
-      <input
-        v-if="type === 'text'"
-        class="el-input__inner"
-        v-model="currentValue"
-        type="text"
-        :name="name"
-        :placeholder="placeholder"
-        :disabled="disabled"
-        :readonly="readonly"
-        :number="number"
-        :maxlength="maxlength"
-        :minlength="minlength"
-        :autocomplete="autoComplete"
-        ref="input"
-        @focus="handleFocus"
-        @blur="handleBlur"
-      >
-      <input
-        v-if="type === 'password'"
-        class="el-input__inner"
-        v-model="currentValue"
-        type="password"
-        :name="name"
-        :placeholder="placeholder"
-        :disabled="disabled"
-        :readonly="readonly"
-        :number="number"
-        :maxlength="maxlength"
-        :minlength="minlength"
-        :autocomplete="autoComplete"
-        ref="input"
-        @focus="handleFocus"
-        @blur="handleBlur"
-      >
       <!-- input 图标 -->
-      <i class="el-input__icon" :class="[icon ? 'el-icon-' + icon : '']" v-if="icon"></i>
+      <i class="el-input__icon" :class="[icon ? 'el-icon-' + icon : '']" v-if="icon" @click="handleIconClick"></i>
+      <input
+        v-if="type !== 'textarea'"
+        class="el-input__inner"
+        :type="type"
+        :name="name"
+        :placeholder="placeholder"
+        :disabled="disabled"
+        :readonly="readonly"
+        :maxlength="maxlength"
+        :minlength="minlength"
+        :autocomplete="autoComplete"
+        :autofocus="autofocus"
+        :form="form"
+        :value="value"
+        ref="input"
+        @input="handleInput"
+        @focus="handleFocus"
+        @blur="handleBlur"
+      >
       <i class="el-input__icon el-icon-loading" v-if="validating"></i>
       <!-- 后置元素 -->
       <div class="el-input-group__append" v-if="$slots.append">
@@ -65,6 +50,8 @@
       :style="textareaStyle"
       :readonly="readonly"
       :rows="rows"
+      :form="form"
+      :autofocus="autofocus"
       :maxlength="maxlength"
       :minlength="minlength"
       @focus="handleFocus"
@@ -83,38 +70,17 @@
 
     props: {
       value: [String, Number],
-      placeholder: {
-        type: String,
-        default: ''
-      },
-      size: {
-        type: String,
-        default: ''
-      },
-      readonly: {
-        type: Boolean,
-        default: false
-      },
-      icon: {
-        type: String,
-        default: ''
-      },
-      disabled: {
-        type: Boolean,
-        default: false
-      },
+      placeholder: String,
+      size: String,
+      readonly: Boolean,
+      autofocus: Boolean,
+      icon: String,
+      disabled: Boolean,
       type: {
         type: String,
         default: 'text'
       },
-      name: {
-        type: String,
-        default: ''
-      },
-      number: {
-        type: Boolean,
-        default: false
-      },
+      name: String,
       autosize: {
         type: [Boolean, Object],
         default: false
@@ -127,16 +93,16 @@
         type: String,
         default: 'off'
       },
+      form: String,
       maxlength: Number,
       minlength: Number
     },
 
     methods: {
       handleBlur(event) {
-        this.$emit('onblur', this.currentValue);
+        this.$emit('blur', this.currentValue);
         this.dispatch('form-item', 'el.form.blur', [this.currentValue]);
       },
-
       inputSelect() {
         this.$refs.input.select();
       },
@@ -145,12 +111,19 @@
         if (!autosize || type !== 'textarea') {
           return;
         }
-        const minRows = autosize ? autosize.minRows : null;
-        const maxRows = autosize ? autosize.maxRows : null;
+        const minRows = autosize.minRows;
+        const maxRows = autosize.maxRows;
+
         this.textareaStyle = calcTextareaHeight(this.$refs.textarea, minRows, maxRows);
       },
       handleFocus(ev) {
         this.$emit('focus', ev);
+      },
+      handleInput(ev) {
+        this.currentValue = ev.target.value;
+      },
+      handleIconClick(ev) {
+        this.$emit('click', ev);
       }
     },
 
@@ -178,10 +151,11 @@
     watch: {
       'value'(val, oldValue) {
         this.currentValue = val;
-        this.resizeTextarea();
       },
-
       'currentValue'(val) {
+        this.$nextTick(_ => {
+          this.resizeTextarea();
+        });
         this.$emit('input', val);
         this.$emit('change', val);
         this.dispatch('form-item', 'el.form.change', [val]);

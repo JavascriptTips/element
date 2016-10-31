@@ -1,4 +1,3 @@
-import SelectDropdown from '../packages/select-dropdown/index.js';
 import Pagination from '../packages/pagination/index.js';
 import Dialog from '../packages/dialog/index.js';
 import Autocomplete from '../packages/autocomplete/index.js';
@@ -54,11 +53,13 @@ import Card from '../packages/card/index.js';
 import Rate from '../packages/rate/index.js';
 import Steps from '../packages/steps/index.js';
 import Step from '../packages/step/index.js';
+import locale from 'element-ui/src/locale';
 
-const install = function(Vue) {
+const install = function(Vue, opts = {}) {
+  /* istanbul ignore if */
   if (install.installed) return;
+  locale.use(opts.locale);
 
-  Vue.component(SelectDropdown.name, SelectDropdown);
   Vue.component(Pagination.name, Pagination);
   Vue.component(Dialog.name, Dialog);
   Vue.component(Autocomplete.name, Autocomplete);
@@ -121,15 +122,14 @@ const install = function(Vue) {
   Vue.prototype.$message = Message;
 };
 
-// auto install
+/* istanbul ignore if */
 if (typeof window !== 'undefined' && window.Vue) {
   install(window.Vue);
 };
 
 module.exports = {
-  version: '1.0.0-rc.7',
+  version: '1.0.0-rc.8',
   install,
-  SelectDropdown,
   Pagination,
   Dialog,
   Autocomplete,

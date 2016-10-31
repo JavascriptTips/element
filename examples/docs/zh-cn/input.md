@@ -109,6 +109,9 @@
       },
       handleSelect(item) {
         console.log(item);
+      },
+      handleIconClick(ev) {
+        console.log(ev);
       }
     },
     mounted() {
@@ -200,7 +203,6 @@
 ```html
 <el-input
   placeholder="请输入内容"
-  :number="true"
   v-model="input">
 </el-input>
 ```
@@ -228,7 +230,8 @@
 <el-input
   placeholder="请选择日期"
   icon="time"
-  v-model="input2">
+  v-model="input2"
+  @click="handleIconClick">
 </el-input>
 ```
 :::
@@ -241,8 +244,8 @@
 ```html
 <el-input
   type="textarea"
+  autosize
   placeholder="请输入内容"
-  :autosize="{minRows: 2, maxRows: 5}"
   v-model="textarea">
 </el-input>
 ```
@@ -636,9 +639,13 @@
 | disabled      | 禁用            | boolean         | — | false   |
 | size          | 输入框尺寸，只在 `type!="textarea"` 时有效      | string          | large, small, mini  | — |
 | icon          | 输入框尾部图标    | string          | — | — |
-| number        | 指定 model 值为 number 类型  |  boolean | — |  false   |
 | rows          | 输入框行数，只对 `type="textarea"` 有效  |  number | — |  2   |
 | autosize      | 自适应内容高度，只对 `type="textarea"` 有效，可传入对象，如，{ minRows: 2, maxRows: 6 }  |  boolean/object | — |  false   |
+
+### Input Events
+| 事件名称 | 说明 | 回调参数 |
+|---------|--------|---------|
+| click | 点击 Input 内的图标时触发 | event |
 
 ### Autocomplete API
 

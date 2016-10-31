@@ -1,5 +1,6 @@
 # Element
 [![Build Status](https://travis-ci.org/ElemeFE/element.svg?branch=master)](https://travis-ci.org/ElemeFE/element)
+[![Coverage Status](https://coveralls.io/repos/github/ElemeFE/element/badge.svg?branch=master)](https://coveralls.io/github/ElemeFE/element?branch=master)
 [![npm package](https://img.shields.io/npm/v/element-ui.svg)](https://www.npmjs.org/package/element-ui)
 [![NPM downloads](http://img.shields.io/npm/dm/element-ui.svg)](https://npmjs.org/package/element-ui)
 ![JS gzip size](http://img.badgesize.io/https://unpkg.com/element-ui@next/lib/index.js?compression=gzip&label=gzip%20size:%20JS)
@@ -11,6 +12,7 @@
 ## Links
 - [Home Page](http://element.eleme.io/)
 - [Docs](http://element.eleme.io/#/component)
+- [FAQ 中文](./FAQ.md)
 
 ## Install
 ```shell
@@ -60,7 +62,7 @@ Vue.component(Button.name, Button)
 .babelrc
 ```json
 {
-  "plugins": ["xxx", ["component", [
+  "plugins": [["component", [
     {
       "libraryName": "element-ui",
       "styleLibraryName": "theme-default"
@@ -73,15 +75,9 @@ Vue.component(Button.name, Button)
 Modern browsers and Internet Explorer 9+.
 
 ## Development
-Recommend: node >= 4 npm >= 3
+Skip this part if you just want to use Element.
 
-```shell
-# development => install packages -> build icon etc. -> run webpack
-$ npm run dev
-
-# build => build all component
-$ npm run dist
-```
+For those who are interested in contributing to Element, please refer to our [contributing guide](https://github.com/ElemeFE/element/blob/master/.github/CONTRIBUTING.md) to see how to run this project.
 
 ## Other links
 - Starter Kit
@@ -96,6 +92,9 @@ $ npm run dist
 
 ## Changelog
 Detailed changes for each release are documented in the [release notes](https://github.com/ElemeFE/element/releases).
+
+## FAQ
+We have collected some [frequently asked questions](https://github.com/ElemeFE/element/blob/master/FAQ.md). Before reporting an issue, please search if the FAQ has the answer to your problem.
 
 ## Contribution
 Please make sure to read the [Contributing Guide](https://github.com/ElemeFE/element/blob/master/.github/CONTRIBUTING.md) before making a pull request.

@@ -1,5 +1,16 @@
 {
   "presets": [["es2015", { "loose": true }]],
   "plugins": ["transform-vue-jsx"],
-  "comments": false
+  "env": {
+    "utils": {
+      "plugins": [
+        ["module-resolver", {
+          "root": ["element-ui"],
+          "alias": {
+            "element-ui/src/locale": "element-ui/lib/locale"
+          }
+        }]
+      ]
+    }
+  }
 }

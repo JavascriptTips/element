@@ -8,9 +8,12 @@ var OUTPUT_PATH = path.join(__dirname, '../../src/index.js');
 var IMPORT_TEMPLATE = 'import {{name}} from \'../packages/{{package}}/index.js\';';
 var INSTALL_COMPONENT_TEMPLATE = '  Vue.component({{name}}.name, {{name}});';
 var MAIN_TEMPLATE = `{{include}}
+import locale from 'element-ui/src/locale';
 
-const install = function(Vue) {
+const install = function(Vue, opts = {}) {
+  /* istanbul ignore if */
   if (install.installed) return;
+  locale.use(opts.locale);
 
 {{install}}
 
@@ -24,7 +27,7 @@ const install = function(Vue) {
   Vue.prototype.$message = Message;
 };
 
-// auto install
+/* istanbul ignore if */
 if (typeof window !== 'undefined' && window.Vue) {
   install(window.Vue);
 };
