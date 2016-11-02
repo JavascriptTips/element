@@ -15,14 +15,14 @@ export default {
         border="0">
         {
           this._l(this.columns, column =>
-            <colgroup
+            <col
               name={ column.id }
               width={ column.realWidth || column.width }
             />)
         }
         {
           !this.fixed && this.layout.gutterWidth
-            ? <colgroup name="gutter" width={ this.layout.scrollY ? this.layout.gutterWidth : '' }></colgroup>
+            ? <col name="gutter" width={ this.layout.scrollY ? this.layout.gutterWidth : '' }></col>
             : ''
         }
         <thead>
@@ -33,7 +33,7 @@ export default {
                   on-mousemove={ ($event) => this.handleMouseMove($event, column) }
                   on-mouseout={ this.handleMouseOut }
                   on-mousedown={ ($event) => this.handleMouseDown($event, column) }
-                  class={ [column.id, column.order, column.align, this.isCellHidden(cellIndex) ? 'hidden' : ''] }>
+                  class={ [column.id, column.order, column.align, this.isCellHidden(cellIndex) ? 'is-hidden' : ''] }>
                   <div class={ ['cell', column.filteredValue && column.filteredValue.length > 0 ? 'highlight' : ''] }>
                   {
                     column.headerTemplate

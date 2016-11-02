@@ -393,7 +393,7 @@ describe('Table', () => {
     it('width', done => {
       const vm = createTable('width="123px"', ':width="102"', 'width="39"');
       setTimeout(_ => {
-        const ths = toArray(vm.$el.querySelectorAll('.el-table__header-wrapper colgroup'))
+        const ths = toArray(vm.$el.querySelectorAll('.el-table__header-wrapper col'))
           .map(node => node.width).filter(o => o);
 
         expect(ths).to.include('123').include('102').include('39');
@@ -408,11 +408,11 @@ describe('Table', () => {
         'fixed="right" label="test2"',
         'fixed="left" label="test3"');
       setTimeout(_ => {
-        expect(toArray(vm.$el.querySelectorAll('.el-table__fixed th:not(.hidden)'))
+        expect(toArray(vm.$el.querySelectorAll('.el-table__fixed th:not(.is-hidden)'))
           .map(node => node.textContent))
           .to.eql(['test1', 'test3']);
 
-        expect(toArray(vm.$el.querySelectorAll('.el-table__fixed-right th:not(.hidden)'))
+        expect(toArray(vm.$el.querySelectorAll('.el-table__fixed-right th:not(.is-hidden)'))
           .map(node => node.textContent))
           .to.eql(['test2']);
         destroyVM(vm);

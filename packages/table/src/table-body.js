@@ -21,7 +21,7 @@ export default {
         border="0">
         {
           this._l(this.columns, column =>
-            <colgroup
+            <col
               name={ column.id }
               width={ column.realWidth || column.width }
             />)
@@ -36,7 +36,7 @@ export default {
                 {
                   this._l(this.columns, (column, cellIndex) =>
                     <td
-                      class={ [column.id, column.align, this.isCellHidden(cellIndex) ? 'hidden' : '' ] }
+                      class={ [column.id, column.align, this.isCellHidden(cellIndex) ? 'is-hidden' : '' ] }
                       on-mouseenter={ ($event) => this.handleCellMouseEnter($event, row) }
                       on-mouseleave={ this.handleCellMouseLeave }>
                       {
