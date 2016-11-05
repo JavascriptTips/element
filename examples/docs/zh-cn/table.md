@@ -670,7 +670,7 @@
 
 选择多行数据时使用 Checkbox。
 
-:::demo 实现多选非常简单: 手动添加一个`el-table-column`，设`type`属性为`selection`即可。在本例中，为了方便说明其他属性，我们还使用了`inline-template`和`show-tooltip-when-overflow`：设置了`inline-template`属性后，可以通过调用`row`对象中的值取代`prop`属性的设置；默认情况下若内容过多会折行显示，若需要单行显示可以使用`show-tooltip-when-overflow`属性，它接受一个`Boolean`，为`true`时多余的内容会在 hover 时以 tooltip 的形式显示出来。
+:::demo 实现多选非常简单: 手动添加一个`el-table-column`，设`type`属性为`selection`即可。在本例中，为了方便说明其他属性，我们还使用了`inline-template`和`show-overflow-tooltip`：设置了`inline-template`属性后，可以通过调用`row`对象中的值取代`prop`属性的设置；默认情况下若内容过多会折行显示，若需要单行显示可以使用`show-overflow-tooltip`属性，它接受一个`Boolean`，为`true`时多余的内容会在 hover 时以 tooltip 的形式显示出来。
 ```html
 <template>
   <el-table
@@ -696,7 +696,7 @@
     <el-table-column
       prop="address"
       label="地址"
-      show-tooltip-when-overflow>
+      show-overflow-tooltip>
     </el-table-column>
   </el-table>
 </template>
@@ -898,6 +898,7 @@
 | stripe | 是否为斑马纹 table | boolean | — | false |
 | border | 是否带有纵向边框 | boolean | — | false |
 | fit | 列的宽度是否自撑开 | boolean | — | true |
+| highlight-current-row | 是否要高亮当前行 | boolean | - | false |
 | row-class-name | 行的 className 的回调。 | Function(row, index) | - | - |
 | row-key | 行数据的 Key，用来优化 Table 的渲染；在使用 reserve-selection 功能的情况下，该属性是必填的 | Function(row), String | - | - |
 
@@ -912,26 +913,29 @@
 | cell-click | 当某个单元格被点击时会触发该事件 | row, column, cell, event |
 | row-click | 当某一行被点击时会触发该事件 | row, event |
 | sort-change | 当表格的排序条件发生变化的时候会触发该事件 | { column, prop, order } |
+| current-change | 当表格的当前行发生变化的时候会触发该事件，如果要高亮当前行，请打开表格的 highlight-current-row 属性 | { column, prop, order } |
 
 ### Table Methods
 | 方法名 | 说明 | 参数 |
 | ---- | ---- | ---- |
 | clearSelection | 清空用户的选择，当使用 reserve-selection 功能的时候，可能会需要使用此方法 | selection |
+| toggleRowSelection | 切换某一行的选中状态，如果使用了第二个参数，则是设置这一行选中与否（selected 为 true 则选中） | row, selected |
 
 ### Table-column Attributes
 | 参数      | 说明          | 类型      | 可选值                           | 默认值  |
 |---------- |-------------- |---------- |--------------------------------  |-------- |
+| type | 对应列的类型。如果设置了 `selection` 则显示多选框，如果设置了 `index` 则显示该行的索引（从 1 开始计算） | string | selection/index | — |
 | label | 显示的标题 | string | — | — |
 | prop | 对应列内容的字段名，也可以使用 property 属性 | string | — | — |
 | width | 对应列的宽度 | string | — | — |
 | min-width | 对应列的最小宽度，与 width 的区别是 width 是固定的，min-width 会把剩余宽度按比例分配给设置了 min-width 的列 | string | — | — |
 | fixed | 列是否固定在左侧或者右侧，true 表示固定在左侧 | string, boolean | true, left, right | - |
+| render-header | 列标题 Label 区域渲染使用的 Function | Function(h, { column, $index }) | - | - |
 | sortable | 对应列是否可以排序，如果设置为 'custom'，则代表用户希望远程排序，需要监听 Table 的 sort-change 事件 | boolean, string | true, false, 'custom' | false |
 | sort-method | 对数据进行排序的时候使用的方法，仅当 sortable 设置为 true 的时候有效 | Function(a, b) | - | - |
 | resizable | 对应列是否可以通过拖动改变宽度（如果需要在 el-table 上设置 border 属性为真） | boolean | — | true |
-| type | 对应列的类型。如果设置了 `selection` 则显示多选框，如果设置了 `index` 则显示该行的索引（从 1 开始计算） | string | selection/index | — |
 | formatter | 用来格式化内容 | Function(row, column) | — | — |
-| show-tooltip-when-overflow | 当过长被隐藏时显示 tooltip | Boolean | — | false |
+| show-overflow-tooltip | 当过长被隐藏时显示 tooltip | Boolean | — | false |
 | inline-template | 指定该属性后可以自定义 column 模板，参考多选的时间列，通过 row 获取行信息，JSX 里通过 _self 获取当前上下文。此时不需要配置 prop 属性。总共可以获取到 `{ row(当前行), column(当前列), $index(行数), _self(当前上下文), store(table store) }` 的信息。 | — | — |
 | align | 对齐方式 | String | left, center, right | left |
 | selectable | 仅对 type=selection 的列有效，类型为 Function，Function 的返回值用来决定这一行的 CheckBox 是否可以勾选 | Function(row, index) | - | - |

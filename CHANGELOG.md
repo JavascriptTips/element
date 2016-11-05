@@ -12,6 +12,11 @@
 - 新增 Dropdown 的 command api #432
 - 修复 Slider 在 Form 中的显示问题
 - 修复 Upload 在 onSuccess、onError 钩子无法拿到服务端返回信息的问题
+- 改善 tabs 现在支持动态更新
+- Table 新增 highlightCurrentRow 属性、新增 current-change 事件
+- TableColumn 的 showTooltipWhenOverflow 更名为 showOverflowTooltip（两个属性均可用）
+- TableColumn 新增属性 render-header
+- Pagination 新增属性 pageCount
 
 #### 非兼容性更新
 
@@ -45,7 +50,7 @@
 
 - Tabs 组件的 click 和 remove 事件回调参数从 name 改为事件对应的 tab 组件实例
 - 全屏 Loading 现在默认不再锁定屏幕滚动。如果需要的话，可添加 `lock` 修饰符
-- Table 删除属性 fixedColumnCount, customCriteria, customBackgroundColors
+- Table 删除属性 fixedColumnCount、customCriteria、customBackgroundColors、selectionMode
 - Table 的 selectionchange、cellmouseenter、cellmouseleave、cellclick 事件更名为 selection-change、cell-mouse-enter、cell-mouse-leave、cell-click。
 - Pagination 的 currentchange、sizechange 事件更名为 current-change、size-change
 

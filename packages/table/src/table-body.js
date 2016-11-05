@@ -9,7 +9,8 @@ export default {
       required: true
     },
     rowClassName: [String, Function],
-    fixed: String
+    fixed: String,
+    highlight: Boolean
   },
 
   render(h) {
@@ -32,6 +33,7 @@ export default {
               <tr
                 on-click={ ($event) => this.handleClick($event, row) }
                 on-mouseenter={ _ => this.handleMouseEnter($index) }
+                on-mouseleave={ _ => this.handleMouseLeave() }
                 class={ this.getRowClass(row, $index) }>
                 {
                   this._l(this.columns, (column, cellIndex) =>
@@ -40,8 +42,8 @@ export default {
                       on-mouseenter={ ($event) => this.handleCellMouseEnter($event, row) }
                       on-mouseleave={ this.handleCellMouseLeave }>
                       {
-                        column.template
-                          ? column.template.call(this._renderProxy, h, { row, column, $index, store: this.store, _self: this.$parent.$vnode.context })
+                        column.renderCell
+                          ? column.renderCell.call(this._renderProxy, h, { row, column, $index, store: this.store, _self: this.$parent.$vnode.context })
                           : <div class="cell">{ this.getCellContent(row, column.property, column.id) }</div>
                       }
                     </td>
@@ -114,6 +116,11 @@ export default {
         classes.push(rowClassName.apply(null, [row, index]) || '');
       }
 
+      const currentRow = this.store.states.currentRow;
+      if (this.highlight && currentRow === row) {
+        classes.push('current-row');
+      }
+
       return classes.join(' ');
     },
 
@@ -145,6 +152,10 @@ export default {
       this.store.commit('setHoverRow', index);
     },
 
+    handleMouseLeave() {
+      this.store.commit('setHoverRow', null);
+    },
+
     handleClick(event, row) {
       const table = this.$parent;
       const cell = getCell(event);
@@ -155,6 +166,8 @@ export default {
           table.$emit('cell-click', row, column, cell, event);
         }
       }
+
+      this.store.commit('setCurrentRow', row);
 
       table.$emit('row-click', row, event);
     },

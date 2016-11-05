@@ -2,6 +2,7 @@ var cooking = require('cooking');
 var config = require('./config');
 var md = require('markdown-it')();
 var striptags = require('./strip-tags');
+var slugify = require('transliteration').slugify;
 
 function convert(str) {
   str = str.replace(/(&#x)(\w{4});/gi, function($0) {
@@ -37,6 +38,12 @@ cooking.add('loader.md', {
 
 cooking.add('vueMarkdown', {
   use: [
+    [require('markdown-it-anchor'), {
+      level: 2,
+      slugify: slugify,
+      permalink: true,
+      permalinkBefore: true
+    }],
     [require('markdown-it-container'), 'demo', {
       validate: function(params) {
         return params.trim().match(/^demo\s*(.*)$/);
@@ -83,4 +90,6 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 cooking.add('vue.preserveWhitespace', false);
+cooking.add('output.chunkFilename', 'element.[id].[chunkhash:7].js');
+cooking.add('output.filename', 'element.[name].[hash:7].js');
 module.exports = cooking.resolve();

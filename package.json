@@ -11,7 +11,7 @@
   "scripts": {
     "bootstrap": "c-npm i",
     "build:file": "node build/bin/iconInit.js & node build/bin/build-entry.js",
-    "build:theme": "npm run submodule:fetch && node build/bin/gen-cssfile && gulp build --gulpfile packages/theme-default/gulpfile.js && cp-cli packages/theme-default/lib lib/theme-default",
+    "build:theme": "node build/bin/gen-cssfile && gulp build --gulpfile packages/theme-default/gulpfile.js && cp-cli packages/theme-default/lib lib/theme-default",
     "build:utils": "cross-env BABEL_ENV=utils babel src --out-dir lib --ignore src/index.js",
     "clean": "rimraf lib && rimraf packages/*/lib && rimraf test/**/coverage",
     "deploy": "npm run build:file && cooking build -c build/cooking.demo.js -p && echo element.eleme.io>>examples/element-ui/CNAME && gh-pages -d examples/element-ui --remote eleme && del examples/element-ui",
@@ -40,8 +40,6 @@
   },
   "dependencies": {
     "async-validator": "^1.6.6",
-    "object-assign": "^4.1.0",
-    "object-equal": "^1.0.0",
     "throttle-debounce": "^1.0.1",
     "vue-popup": "^0.2.9",
     "wind-dom": "0.0.3"
@@ -93,6 +91,7 @@
     "lerna": "2.0.0-beta.18",
     "lolex": "^1.5.1",
     "markdown-it": "^6.1.1",
+    "markdown-it-anchor": "^2.5.0",
     "markdown-it-container": "^2.0.0",
     "mocha": "^3.1.1",
     "phantomjs-prebuilt": "^2.1.13",
@@ -104,6 +103,7 @@
     "sinon-chai": "^2.8.0",
     "style-loader": "^0.13.1",
     "theaterjs": "^3.0.0",
+    "transliteration": "^1.1.11",
     "uppercamelcase": "^1.1.0",
     "url-loader": "^0.5.7",
     "vue": "^2.0.3",

@@ -17,6 +17,7 @@
         :store="store"
         :layout="layout"
         :row-class-name="rowClassName"
+        :highlight="highlightCurrentRow"
         :style="{ width: layout.bodyWidth ? layout.bodyWidth - (layout.scrollY ? layout.gutterWidth : 0 ) + 'px' : '' }">
       </table-body>
       <div class="el-table__empty-block" v-if="!data || data.length === 0">
@@ -47,6 +48,7 @@
           fixed="left"
           :store="store"
           :layout="layout"
+          :highlight="highlightCurrentRow"
           :row-class-name="rowClassName"
           :style="{ width: layout.fixedWidth ? layout.fixedWidth + 'px' : '' }">
         </table-body>
@@ -78,6 +80,7 @@
           :store="store"
           :layout="layout"
           :row-class-name="rowClassName"
+          :highlight="highlightCurrentRow"
           :style="{ width: layout.rightFixedWidth ? layout.rightFixedWidth + 'px' : '' }">
         </table-body>
       </div>
@@ -96,6 +99,7 @@
   import TableLayout from './table-layout';
   import TableBody from './table-body';
   import TableHeader from './table-header';
+  import { mousewheel } from './util';
 
   let tableIdSeed = 1;
 
@@ -129,6 +133,8 @@
 
       rowClassName: [String, Function],
 
+      highlightCurrentRow: Boolean,
+
       emptyText: {
         type: String,
         default: $t('el.table.emptyText')
@@ -158,6 +164,11 @@
           }
         };
       },
+
+      toggleRowSelection(row, selected) {
+        this.store.toggleRowSelection(row, selected);
+      },
+
       clearSelection() {
         this.store.clearSelection();
       },
@@ -179,6 +190,20 @@
           if (refs.fixedBodyWrapper) refs.fixedBodyWrapper.scrollTop = this.scrollTop;
           if (refs.rightFixedBodyWrapper) refs.rightFixedBodyWrapper.scrollTop = this.scrollTop;
         });
+
+        mousewheel(headerWrapper, function(event) {
+          event.preventDefault();
+        });
+
+        mousewheel(headerWrapper, throttle(16, function(event) {
+          const deltaX = event.deltaX;
+
+          if (deltaX > 0) {
+            bodyWrapper.scrollLeft = bodyWrapper.scrollLeft + 10;
+          } else {
+            bodyWrapper.scrollLeft = bodyWrapper.scrollLeft - 10;
+          }
+        }));
 
         if (this.fit) {
           this.windowResizeListener = throttle(50, () => {

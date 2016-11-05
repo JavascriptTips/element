@@ -11,7 +11,7 @@
           closable
           :hit="item.hitState"
           type="primary"
-          @click.native="deleteTag($event, item)"
+          @close="deleteTag($event, item)"
           close-transition>{{ item.currentLabel }}</el-tag>
       </transition-group>
       <input
@@ -235,6 +235,7 @@
 
           this.$emit('input', result);
           this.$emit('change', result);
+          this.dispatch('form-item', 'el.form.change', val);
           if (this.filterable) {
             this.query = '';
             this.hoverIndex = -1;
@@ -242,6 +243,10 @@
             this.inputLength = 20;
           }
         } else {
+          if (this.selectedInit) {
+            this.selectedInit = false;
+            return;
+          }
           this.valueChangeBySelected = true;
           this.$emit('input', val.value);
           this.$emit('change', val.value);
@@ -257,11 +262,9 @@
         }
         if (this.remote && typeof this.remoteMethod === 'function') {
           this.hoverIndex = -1;
-          if (!this.multiple) {
-            this.selected = {};
-          }
           this.remoteMethod(val);
           this.voidRemoteQuery = val === '';
+          this.broadcast('option', 'resetIndex');
         } else if (typeof this.filterMethod === 'function') {
           this.filterMethod(val);
         } else {
@@ -357,6 +360,7 @@
             this.resetHoverIndex();
           }
         } else {
+          this.selectedInit = !!init;
           this.selected = option;
           this.selectedLabel = option.currentLabel;
           this.hoverIndex = option.index;
@@ -423,9 +427,6 @@
         }
         if (!this.disabled) {
           this.visible = !this.visible;
-          if (this.remote && this.visible) {
-            this.selectedLabel = '';
-          }
         }
       },
 
@@ -443,7 +444,7 @@
             this.resetScrollTop();
             if (this.options[this.hoverIndex].disabled === true ||
               this.options[this.hoverIndex].groupDisabled === true ||
-              !this.options[this.hoverIndex].queryPassed) {
+              !this.options[this.hoverIndex].visible) {
               this.navigateOptions('next');
             }
           }
@@ -455,7 +456,7 @@
             this.resetScrollTop();
             if (this.options[this.hoverIndex].disabled === true ||
               this.options[this.hoverIndex].groupDisabled === true ||
-              !this.options[this.hoverIndex].queryPassed) {
+              !this.options[this.hoverIndex].visible) {
               this.navigateOptions('prev');
             }
           }
@@ -489,13 +490,11 @@
       },
 
       deleteTag(event, tag) {
-        if (event.target.tagName === 'I') {
-          let index = this.selected.indexOf(tag);
-          if (index > -1) {
-            this.selected.splice(index, 1);
-          }
-          event.stopPropagation();
+        let index = this.selected.indexOf(tag);
+        if (index > -1) {
+          this.selected.splice(index, 1);
         }
+        event.stopPropagation();
       },
 
       onInputChange() {
