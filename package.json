@@ -1,5 +1,5 @@
 {
-  "name": "element-ui",
+  "name": "qp-element-ui",
   "version": "1.0.0-rc.8.0",
   "description": "A Component Library for Vue.js.",
   "main": "lib/element-ui.common.js",
@@ -9,7 +9,7 @@
     "packages"
   ],
   "scripts": {
-    "bootstrap": "npm i",
+    "bootstrap": "c-npm i",
     "build:file": "node build/bin/iconInit.js & node build/bin/build-entry.js",
     "build:theme": "npm run submodule:fetch && node build/bin/gen-cssfile && gulp build --gulpfile packages/theme-default/gulpfile.js && cp-cli packages/theme-default/lib lib/theme-default",
     "build:utils": "cross-env BABEL_ENV=utils babel src --out-dir lib --ignore src/index.js",
