@@ -9,7 +9,7 @@ npm i element-theme -D
 
 安装默认主题，可以从 npm 安装或者从 GitHub 拉取最新代码。
 ```shell
-npm i element-theme-default@next -D
+npm i element-theme-default -D
 
 # 从 GitHub
 npm i https://github.com/ElementUI/theme-default -D
@@ -82,4 +82,4 @@ Vue.use(ElementUI)
 }
 ```
 
-如果不清楚 `babel-plugin-component` 是什么，请阅读 [快速上手](./examples/docs/zh-cn/quickstart.md) 一节。更多 `element-theme` 用法请参考[项目仓库](https://github.com/ElementUI/element-theme)。
+如果不清楚 `babel-plugin-component` 是什么，请阅读 [快速上手](./examples/docs/zh-CN/quickstart.md) 一节。更多 `element-theme` 用法请参考[项目仓库](https://github.com/ElementUI/element-theme)。

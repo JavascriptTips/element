@@ -20,14 +20,14 @@ const PackagePath = path.resolve(__dirname, '../../packages', componentname);
 const Files = [
   {
     filename: 'index.js',
-    content: `const ${ComponentName} = require('./src/main');
+    content: `import ${ComponentName} from './src/main';
 
 /* istanbul ignore next */
 ${ComponentName}.install = function(Vue) {
   Vue.component(${ComponentName}.name, ${ComponentName});
 };
 
-module.exports = ${ComponentName};`
+export default ${ComponentName};`
   },
   {
     filename: 'cooking.conf.js',
@@ -61,7 +61,7 @@ module.exports = cooking.resolve();`
     "component"
   ],
   "main": "./lib/index.js",
-  "repository": "https://github.com/element-component/element/tree/master/packages/${componentname}",
+  "repository": "https://github.com/ElemeFE/element/tree/master/packages/${componentname}",
   "author": "elemefe",
   "license": "MIT",
   "dependencies": {}
@@ -80,8 +80,30 @@ export default {
 </script>`
   },
   {
-    filename: path.join('../../examples/docs/zh-cn', `${componentname}.md`),
+    filename: path.join('../../examples/docs/zh-CN', `${componentname}.md`),
     content: `## ${chineseName}`
+  },
+  {
+    filename: path.join('../../examples/docs/en-us', `${componentname}.md`),
+    content: `## ${componentname}`
+  },
+  {
+    filename: path.join('../../test/unit/specs', `${componentname}.spec.js`),
+    content: `import { createTest, destroyVM } from '../util';
+import Alert from 'packages/{{componentname}}';
+
+describe('{{ComponentName}}', () => {
+  let vm;
+  afterEach(() => {
+    destroyVM(vm);
+  });
+
+  it('create', () => {
+    vm = createTest({{ComponentName}}, true);
+    expect(vm.$el).to.exist;
+  });
+});
+`
   }
 ];
 
@@ -106,12 +128,14 @@ Files.forEach(file => {
 // 添加到 nav.config.json
 const navConfigFile = require('../../examples/nav.config.json');
 
-navConfigFile[2].groups[navConfigFile[2].groups.length - 1].list.push({
-  path: `/${componentname}`,
-  name: `${chineseName} (${componentname})`,
-  title: componentname === chineseName
-          ? componentname
-          : `${componentname} ${chineseName}`
+Object.keys(navConfigFile).forEach(lang => {
+  let groups = navConfigFile[lang][2].groups;
+  groups[groups.length - 1].list.push({
+    path: `/${componentname}`,
+    title: lang === 'zh-CN' && componentname !== chineseName
+        ? `${ComponentName} ${chineseName}`
+        : ComponentName
+  });
 });
 
 fileSave(path.join(__dirname, '../../examples/nav.config.json'))

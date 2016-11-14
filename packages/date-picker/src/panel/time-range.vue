@@ -6,7 +6,7 @@
       class="el-time-range-picker el-picker-panel">
       <div class="el-time-range-picker__content">
         <div class="el-time-range-picker__cell">
-          <div class="el-time-range-picker__header">{{ $t('el.datepicker.startTime') }}</div>
+          <div class="el-time-range-picker__header">{{ t('el.datepicker.startTime') }}</div>
           <div class="el-time-range-picker__body el-time-panel__content">
             <time-spinner
               ref="minSpinner"
@@ -20,7 +20,7 @@
           </div>
         </div>
         <div class="el-time-range-picker__cell">
-          <div class="el-time-range-picker__header">{{ $t('el.datepicker.endTime') }}</div>
+          <div class="el-time-range-picker__header">{{ t('el.datepicker.endTime') }}</div>
           <div class="el-time-range-picker__body el-time-panel__content">
             <time-spinner
               ref="maxSpinner"
@@ -38,12 +38,12 @@
         <button
           type="button"
           class="el-time-panel__btn cancel"
-          @click="handleCancel()">{{ $t('el.datepicker.cancel') }}</button>
+          @click="handleCancel()">{{ t('el.datepicker.cancel') }}</button>
         <button
           type="button"
           class="el-time-panel__btn confirm"
           @click="handleConfirm()"
-          :disabled="btnDisabled">{{ $t('el.datepicker.confirm') }}</button>
+          :disabled="btnDisabled">{{ t('el.datepicker.confirm') }}</button>
       </div>
     </div>
   </transition>
@@ -127,11 +127,16 @@
     },
 
     methods: {
+      handleClear() {
+        this.handleCancel();
+      },
+
       handleCancel() {
         this.$emit('pick');
       },
 
       handleChange() {
+        if (this.minTime > this.maxTime) return;
         this.$refs.minSpinner.selectableRange = [[MIN_TIME, this.maxTime]];
         this.$refs.maxSpinner.selectableRange = [[this.minTime, MAX_TIME]];
         this.handleConfirm(true);

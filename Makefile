@@ -14,8 +14,14 @@ install-cn:
 dev:
 	npm run dev
 
+play:
+	npm run dev:play
+
 new:
 	node build/bin/new.js $(filter-out $@,$(MAKECMDGOALS))
+
+new-lang:
+	node build/bin/new-lang.js $(filter-out $@,$(MAKECMDGOALS))
 
 dist: install
 	npm run dist
@@ -45,3 +51,4 @@ help:
 	@echo "   \033[35mmake deploy\033[0m\t\033[0m\t\033[0m\t\033[0m\t---  部署 demo"
 	@echo "   \033[35mmake pub\033[0m\t\033[0m\t\033[0m\t\033[0m\t---  发布到 npm 上"
 	@echo "   \033[35mmake pub-all\033[0m\t\033[0m\t\033[0m\t\033[0m\t---  发布各组件到 npm 上"
+	@echo "   \033[35mmake new-lang <lang>\033[0m\t\033[0m\t\033[0m\t---  为网站添加新语言. 例如 'make new-lang fr'"

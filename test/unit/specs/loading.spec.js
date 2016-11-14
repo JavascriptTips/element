@@ -106,9 +106,7 @@ describe('Loading', () => {
     Vue.nextTick(() => {
       const mask = document.querySelector('.el-loading-mask');
       expect(mask.parentNode === document.body).to.true;
-      expect(mask.style.left).to.equal('0px');
-      expect(mask.style.right).to.equal('0px');
-      expect(mask.style.position).to.equal('fixed');
+      expect(mask.classList.contains('is-fullscreen')).to.true;
       vm.loading = false;
       document.body.removeChild(mask);
       document.body.removeChild(vm.$el);
@@ -133,6 +131,27 @@ describe('Loading', () => {
       vm.loading = false;
       document.body.removeChild(document.querySelector('.el-loading-mask'));
       document.body.removeChild(vm.$el);
+      done();
+    });
+  });
+
+  it('text', done => {
+    vm = createVue({
+      template: `
+        <div v-loading="loading" element-loading-text="拼命加载中"></div>
+      `,
+
+      data() {
+        return {
+          loading: true
+        };
+      }
+    }, true);
+    Vue.nextTick(() => {
+      const mask = document.querySelector('.el-loading-mask');
+      const text = mask.querySelector('.el-loading-text');
+      expect(text).to.exist;
+      expect(text.textContent).to.equal('拼命加载中');
       done();
     });
   });

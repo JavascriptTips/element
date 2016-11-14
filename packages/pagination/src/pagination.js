@@ -2,7 +2,7 @@ import Pager from './pager.vue';
 import ElSelect from 'element-ui/packages/select';
 import ElOption from 'element-ui/packages/option';
 import Migrating from 'element-ui/src/mixins/migrating';
-import { $t } from 'element-ui/src/locale';
+import { t } from 'element-ui/src/locale';
 
 export default {
   name: 'ElPagination',
@@ -137,7 +137,7 @@ export default {
                 this.$parent.pageSizes.map(item =>
                     <el-option
                       value={ item }
-                      label={ item + ' ' + $t('el.pagination.pagesize') }>
+                      label={ item + ' ' + t('el.pagination.pagesize') }>
                     </el-option>
                   )
               }
@@ -174,8 +174,11 @@ export default {
         },
 
         handleChange({ target }) {
+          const oldPage = this.$parent.internalCurrentPage;
           this.$parent.internalCurrentPage = this.$parent.getValidCurrentPage(target.value);
-          this.$parent.$emit('current-change', this.$parent.internalCurrentPage);
+          if (oldPage !== this.$parent.internalCurrentPage) {
+            this.$parent.$emit('current-change', this.$parent.internalCurrentPage);
+          }
           this.oldValue = null;
         }
       },
@@ -183,7 +186,7 @@ export default {
       render(h) {
         return (
           <span class="el-pagination__jump">
-            { $t('el.pagination.goto') }
+            { t('el.pagination.goto') }
             <input
               class="el-pagination__editor"
               type="number"
@@ -194,7 +197,7 @@ export default {
               on-focus={ this.handleFocus }
               style={{ width: '30px' }}
               number/>
-            { $t('el.pagination.pageClassifier') }
+            { t('el.pagination.pageClassifier') }
           </span>
         );
       }
@@ -204,7 +207,7 @@ export default {
       render(h) {
         return (
           typeof this.$parent.total === 'number'
-            ? <span class="el-pagination__total">{ $t('el.pagination.total', { total: this.$parent.total }) }</span>
+            ? <span class="el-pagination__total">{ t('el.pagination.total', { total: this.$parent.total }) }</span>
             : ''
         );
       }
@@ -225,8 +228,11 @@ export default {
     },
 
     handleCurrentChange(val) {
+      const oldPage = this.internalCurrentPage;
       this.internalCurrentPage = this.getValidCurrentPage(val);
-      this.$emit('current-change', this.internalCurrentPage);
+      if (oldPage !== this.internalCurrentPage) {
+        this.$emit('current-change', this.internalCurrentPage);
+      }
     },
 
     prev() {
@@ -289,12 +295,14 @@ export default {
   watch: {
     internalPageCount(newVal) {
       /* istanbul ignore if */
-      if (newVal > 0 && this.internalCurrentPage === 0) {
+      const oldPage = this.internalCurrentPage;
+      if (newVal > 0 && oldPage === 0) {
         this.internalCurrentPage = 1;
-        this.$emit('current-change', 1);
-      } else if (this.internalCurrentPage > newVal) {
-        this.internalCurrentPage = newVal;
-        this.$emit('current-change', newVal);
+      } else if (oldPage > newVal) {
+        this.internalCurrentPage = newVal === 0 ? 1 : newVal;
+      }
+      if (oldPage !== this.internalCurrentPage) {
+        this.$emit('current-change', this.internalCurrentPage);
       }
     },
 

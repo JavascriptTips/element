@@ -1,4 +1,7 @@
-import Spinner from './spinner';
+import Vue from 'vue';
+import { addClass, removeClass } from 'wind-dom/src/class';
+let Spinner = Vue.extend(require('./spinner.vue'));
+
 exports.install = Vue => {
   let toggleLoading = (el, binding) => {
     if (binding.value) {
@@ -7,14 +10,14 @@ exports.install = Vue => {
           el.originalPosition = document.body.style.position;
           el.originalOverflow = document.body.style.overflow;
 
-          ['top', 'right', 'bottom', 'left'].forEach(property => {
-            el.maskStyle[property] = '0';
-          });
-          el.maskStyle.position = 'fixed';
-          el.spinnerStyle.position = 'fixed';
+          addClass(el.mask, 'is-fullscreen');
+          addClass(el.spinner, 'is-fullscreen');
 
           insertDom(document.body, el, binding);
         } else {
+          removeClass(el.mask, 'is-fullscreen');
+          removeClass(el.spinner, 'is-fullscreen');
+
           if (binding.modifiers.body) {
             el.originalPosition = document.body.style.position;
 
@@ -29,11 +32,6 @@ exports.install = Vue => {
             insertDom(document.body, el, binding);
           } else {
             el.originalPosition = el.style.position;
-
-            ['top', 'right', 'bottom', 'left'].forEach(property => {
-              el.maskStyle[property] = '0';
-            });
-
             insertDom(el, el, binding);
           }
         }
@@ -44,7 +42,7 @@ exports.install = Vue => {
         el.spinner.style.display = 'none';
         el.domVisible = false;
 
-        if (binding.modifiers.fullscreen) {
+        if (binding.modifiers.fullscreen && el.originalOverflow !== 'hidden') {
           document.body.style.overflow = el.originalOverflow;
         }
         if (binding.modifiers.fullscreen || binding.modifiers.body) {
@@ -59,10 +57,6 @@ exports.install = Vue => {
     if (!directive.domVisible) {
       Object.keys(directive.maskStyle).forEach(property => {
         directive.mask.style[property] = directive.maskStyle[property];
-      });
-
-      Object.keys(directive.spinnerStyle).forEach(property => {
-        directive.spinner.style[property] = directive.spinnerStyle[property];
       });
 
       if (directive.originalPosition !== 'absolute') {
@@ -85,17 +79,16 @@ exports.install = Vue => {
     bind: function(el, binding) {
       el.mask = document.createElement('div');
       el.mask.className = 'el-loading-mask';
-      el.maskStyle = {
-        position: 'absolute',
-        zIndex: '10000',
-        backgroundColor: 'rgba(0, 0, 0, .65)',
-        margin: '0'
-      };
+      el.maskStyle = {};
 
-      el.spinner = (new Spinner()).el;
-      el.spinnerStyle = {
-        position: 'absolute'
-      };
+      let spinner = new Spinner({
+        data: {
+          text: el.getAttribute('element-loading-text'),
+          fullScreen: !!binding.modifiers.fullscreen
+        }
+      });
+      spinner.$mount(el.mask);
+      el.spinner = spinner.$el;
       toggleLoading(el, binding);
     },
 

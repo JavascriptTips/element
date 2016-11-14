@@ -29,6 +29,12 @@
 </details>
 
 <details>
+<summary>Tree 组件的 `render-content` 和 Table 组件的 `render-header` 怎么用？</summary>
+
+请阅读 Vue 文档 [Render Function](http://vuejs.org/v2/guide/render-function.html) 的相关内容。注意，使用 JSX 来写 Render Function 的话，需要安装 `babel-plugin-transform-vue-jsx`，并参照其[文档](https://github.com/vuejs/babel-plugin-transform-vue-jsx)进行配置。
+</details>
+
+<details>
 <summary>你们的文档怎么偷偷更新了？</summary>
 
 我们只会在 Element 发布新版本时同步更新文档，以体现最新的变化。详细的更新内容可以查看 [changelog](https://github.com/ElemeFE/element/blob/master/CHANGELOG.md)。
@@ -38,19 +44,6 @@
 <summary>在项目中引入 Element，但是 CSS 报错/字体文件报错/组件没有样式是什么原因？</summary>
 
 请参考我们提供的 [starter kit](https://github.com/ElementUI/element-starter)，在 webpack 的 loaders 中正确配置 file-loader、css-loader 和 style-loader。此外，我们还提供了基于 [cooking](https://github.com/ElementUI/element-cooking-starter) 和 [laravel](https://github.com/ElementUI/element-in-laravel-starter) 的项目模板。
-</details>
-
-<details>
-<summary>在项目中引入 Element，报 `Uncaught Error: Module build failed: SyntaxError: 'with' in strict mode` 是什么原因？</summary>
-
-请避免你使用的编译器处理 Element。比如，若是使用 webpack，请在 loaders 中配置：
-```javascript
-{
-  test: /\.js$/,
-  loader: 'babel',
-  exclude: /node_modules/
-}
-```
 </details>
 
 <details>

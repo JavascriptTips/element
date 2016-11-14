@@ -19,11 +19,11 @@
         <button
           type="button"
           class="el-time-panel__btn cancel"
-          @click="handleCancel">{{ $t('el.datepicker.cancel') }}</button>
+          @click="handleCancel">{{ t('el.datepicker.cancel') }}</button>
         <button
           type="button"
           class="el-time-panel__btn confirm"
-          @click="handleConfirm()">{{ $t('el.datepicker.confirm') }}</button>
+          @click="handleConfirm()">{{ t('el.datepicker.confirm') }}</button>
       </div>
     </div>
   </transition>
@@ -100,8 +100,12 @@
     },
 
     methods: {
+      handleClear() {
+        this.handleCancel();
+      },
+
       handleCancel() {
-        this.$emit('pick', null);
+        this.$emit('pick');
       },
 
       handleChange(date) {

@@ -12,7 +12,7 @@
       <a class="el-upload__file__name" @click="$emit('preview', file)">
         <i class="el-icon-document"></i>{{file.name}}
       </a>
-      <span class="el-upload__btn-delete" @click="$emit('remove', file)" v-show="file.status === 'finished'">{{ $t('el.upload.delete') }}</span>
+      <span class="el-upload__btn-delete" @click="$emit('remove', file)" v-show="file.status === 'finished'">{{ t('el.upload.delete') }}</span>
       <el-progress
         v-if="file.showProgress"
         :stroke-width="2"
@@ -24,9 +24,13 @@
 </template>
 <script>
   import Locale from 'element-ui/src/mixins/locale';
+  import ElProgress from 'element-ui/packages/progress';
 
   export default {
     mixins: [Locale],
+
+    components: { ElProgress },
+
     props: {
       files: {
         type: Array,

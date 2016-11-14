@@ -15,11 +15,10 @@ then
   echo "Releasing theme-default $VERSION ..."
   cd packages/theme-default
   npm version $VERSION --message "[release] $VERSION"
-  npm publish --tag next
+  npm publish
   cd ../..
 
   # commit
-  git submodule update
   git add -A
   git commit -m "[build] $VERSION"
   npm version $VERSION --message "[release] $VERSION"
@@ -27,5 +26,5 @@ then
   # publish
   git push eleme refs/tags/v$VERSION
   git push eleme master
-  npm publish --tag next
+  npm publish
 fi

@@ -73,7 +73,7 @@ const getDefaultColumn = function(type, options) {
 };
 
 const DEFAULT_RENDER_CELL = function(h, { row, column }, parent) {
-  return <span>{ parent.getCellContent(row, column.property, column.id) }</span>;
+  return parent.getCellContent(row, column.property, column);
 };
 
 export default {
@@ -85,6 +85,7 @@ export default {
       default: 'default'
     },
     label: String,
+    className: String,
     property: String,
     prop: String,
     width: {},
@@ -177,6 +178,7 @@ export default {
     let column = getDefaultColumn(type, {
       id: columnId,
       label: this.label,
+      className: this.className,
       property: this.prop || this.property,
       type,
       renderCell: DEFAULT_RENDER_CELL,
@@ -209,12 +211,13 @@ export default {
     column.renderCell = function(h, data) {
       if (_self.$vnode.data.inlineTemplate) {
         renderCell = function() {
-          data._staticTrees = _self._staticTrees;
-          data.$options = {};
-          data.$options.staticRenderFns = _self.$options.staticRenderFns;
-          data._renderProxy = _self._renderProxy;
-          data._m = _self._m;
-
+          if (Object.prototype.toString.call(data._self) === '[object Object]') {
+            for (let prop in data._self) {
+              if (!data.hasOwnProperty(prop)) {
+                data[prop] = data._self[prop];
+              }
+            }
+          }
           return _self.customRender.call(data);
         };
       }

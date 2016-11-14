@@ -66,6 +66,60 @@ describe('DatePicker', () => {
     }, DELAY);
   });
 
+  it('clear value', done => {
+    vm = createVue({
+      template: `
+        <el-date-picker v-model="value" ref="compo"></el-date-picker>
+      `,
+      data() {
+        return { value: '' };
+      }
+    }, true);
+    const input = vm.$el.querySelector('input');
+
+    input.focus();
+    setTimeout(_ => {
+      const $el = vm.$refs.compo.picker.$el;
+      $el.querySelector('td.available').click();
+      vm.$nextTick(_ => {
+        vm.$el.querySelector('.el-date-editor__trigger').click();
+        setTimeout(_ => {
+          expect(vm.value).to.empty;
+          done();
+        }, DELAY);
+      });
+    }, DELAY);
+  });
+
+  it('reset', done => {
+    vm = createVue({
+      template: `
+        <el-date-picker ref="compo" v-model="value"></el-date-picker>
+      `,
+      data() {
+        return { value: '' };
+      }
+    }, true);
+    const input = vm.$el.querySelector('input');
+
+    input.blur();
+    input.focus();
+    setTimeout(_ => {
+      const $el = vm.$refs.compo.picker.$el;
+      $el.querySelector('.el-date-picker__next-btn.el-icon-arrow-right').click();
+      setTimeout(_ => {
+        $el.querySelector('td.available').click();
+        vm.$nextTick(_ => {
+          vm.value = '';
+          setTimeout(_ => {
+            expect(vm.$refs.compo.picker.date.getDate()).to.equal(new Date().getDate());
+            done();
+          }, DELAY);
+        });
+      }, DELAY);
+    }, DELAY);
+  });
+
   describe('keydown', () => {
     let input;
     let keyDown = function(el, keyCode) {
@@ -189,7 +243,6 @@ describe('DatePicker', () => {
     it('click now button', done => {
       const date = new Date(1999, 10, 10, 10, 10);
 
-      vm.picker.date = new Date(date);
       vm.picker.$el.querySelector('.el-picker-panel__link-btn').click();
       setTimeout(_ => {
         expect(vm.picker.date > date).to.true;
@@ -199,14 +252,12 @@ describe('DatePicker', () => {
 
     it('click timepicker', done => {
       const input = vm.picker.$el.querySelectorAll('.el-date-picker__editor-wrap input')[1];
-      input.blur();
-      input.focus();
-      input.blur();
+      triggerEvent(input, 'focus');
 
       setTimeout(_ => {
         expect(vm.picker.$el.querySelector('.el-time-panel')).to.have.deep.property('style.display').to.equal('');
         done();
-      }, 400);
+      }, DELAY);
     });
 
     it('input timepicker', done => {
@@ -362,7 +413,7 @@ describe('DatePicker', () => {
       setTimeout(_ => {
         expect(vm.picker.$el.querySelector('.el-date-range-picker__time-picker-wrap .el-time-panel')).to.have.deep.property('style.display').to.equal('');
         done();
-      }, 400);
+      }, DELAY);
     });
 
     it('click timepicker in right', done => {
@@ -374,7 +425,7 @@ describe('DatePicker', () => {
       setTimeout(_ => {
         expect(vm.picker.$el.querySelectorAll('.el-date-range-picker__time-picker-wrap .el-time-panel')[1]).to.have.deep.property('style.display').to.equal('');
         done();
-      }, 400);
+      }, DELAY);
     });
 
     it('input timepicker', done => {

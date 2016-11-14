@@ -49,16 +49,54 @@ describe('Switch', () => {
     }, true);
 
     const core = vm.$el.querySelector('.el-switch__core');
-    const button = vm.$el.querySelector('.el-switch__button');
     core.click();
-    Vue.nextTick(() => {
+    setTimeout(() => {
       expect(vm.value).to.equal(false);
-      expect(getComputedStyle(core).backgroundColor).to.equal('rgb(192, 204, 218)');
-      expect(/2px, 2px/.test(button.style.transform)).to.true;
       core.click();
-      expect(vm.value).to.equal(true);
-      done();
-    });
+      setTimeout(() => {
+        expect(vm.value).to.equal(true);
+        done();
+      }, 10);
+    }, 10);
+  });
+
+  it('change event', done => {
+    vm = createVue({
+      template: `
+        <div>
+          <el-switch
+            v-model="value"
+            @change="handleChange">  
+          </el-switch>
+        </div>
+      `,
+      mounted() {
+        setTimeout(() => {
+          this.value = false;
+        }, 10);
+      },
+      methods: {
+        handleChange(val) {
+          this.target = val;
+        }
+      },
+      data() {
+        return {
+          target: 1,
+          value: true
+        };
+      }
+    }, true);
+
+    setTimeout(() => {
+      const core = vm.$el.querySelector('.el-switch__core');
+      expect(vm.target).to.equal(1);
+      core.click();
+      setTimeout(() => {
+        expect(vm.target).to.equal(true);
+        done();
+      }, 10);
+    }, 50);
   });
 
   it('disabled switch should not respond to user click', done => {

@@ -107,6 +107,7 @@
   @b radio-group {
     display: inline-block;
     font-size: 0;
+    line-height: 1;
 
     & .el-radio {
       font-size: var(--radio-font-size);
@@ -169,7 +170,6 @@
 
       &:disabled {
         & + .el-radio-button__inner {
-          z-index: -1;
           color: var(--button-disabled-color);
           cursor: not-allowed;
           background-image: none;
