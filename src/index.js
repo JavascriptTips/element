@@ -130,12 +130,8 @@ if (typeof window !== 'undefined' && window.Vue) {
 };
 
 module.exports = {
-<<<<<<< HEAD
-  version: '1.0.0-rc.8.0',
-=======
   version: '1.0.0',
   locale: locale.use,
->>>>>>> 73dd98ff35f16d74473d53a88e62b1848a7775d4
   install,
   Pagination,
   Dialog,
