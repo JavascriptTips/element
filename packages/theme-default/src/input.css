@@ -40,6 +40,7 @@
       width: 35px;
       height: 100%;
       right: 0;
+      top: 0;
       text-align: center;
       color: var(--input-icon-color);
 
@@ -99,6 +100,7 @@
   }
 
   @b input-group {
+    line-height: normal;
     display: table;
     border-collapse: separate;
 

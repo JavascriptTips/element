@@ -45,6 +45,20 @@ describe('Popover', () => {
       }, 250); // 代码里是 200ms
     });
 
+    it('manual', done => {
+      vm = createVM('manual');
+      const compo = vm.$refs.popover;
+      const button = vm.$el.querySelector('button');
+
+      triggerEvent(button, 'mouseenter');
+      expect(compo.showPopper).to.false;
+      triggerEvent(button, 'mouseleave');
+      setTimeout(_ => {
+        expect(compo.showPopper).to.false;
+        done();
+      }, 250); // 代码里是 200ms
+    });
+
     it('focus input in children node', () => {
       vm = createVue(`
         <div>
@@ -188,6 +202,59 @@ describe('Popover', () => {
     it('click outside', () => {
       document.body.click();
       expect(compo.showPopper).to.false;
+    });
+  });
+
+  describe('event', (done) => {
+    const createVM = (trigger) => {
+      return createVue({
+        template: `
+          <div>
+            <el-popover
+              ref="popover"
+              trigger="${trigger}"
+              @show="handleShow"
+              @hide="handleHide"
+              content="content">
+              <button slot="reference">trigger ${trigger}</button>
+            </el-popover>
+          </div>
+        `,
+
+        methods: {
+          handleShow() {
+            this.trigger = true;
+          },
+          handleHide() {
+            this.trigger = false;
+          }
+        },
+
+        data() {
+          return {
+            trigger: false
+          };
+        }
+      }, true);
+    };
+
+    it('show/hide', () => {
+      vm = createVM('click');
+      const compo = vm.$refs.popover;
+
+      vm.$el.querySelector('button').click();
+      expect(compo.showPopper).to.true;
+      expect(vm.trigger).to.false;
+      document.body.click();
+      expect(compo.showPopper).to.false;
+      setTimeout(_ => {
+        expect(vm.trigger).to.true;
+        document.body.click();
+        setTimeout(_ => {
+          expect(vm.trigger).to.false;
+        }, 50);
+        done();
+      }, 50);
     });
   });
 

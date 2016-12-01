@@ -1,13 +1,13 @@
 <script>
   export default {
     methods: {
-      handleopen(key, keyPath) {
+      handleOpen(key, keyPath) {
         console.log(key, keyPath);
       },
-      handleclose(key, keyPath) {
+      handleClose(key, keyPath) {
         console.log(key, keyPath);
       },
-      handleselect(key, keyPath) {
+      handleSelect(key, keyPath) {
         console.log(key, keyPath);
       }
     }
@@ -22,9 +22,9 @@ Menu that provides navigation for your website.
 
 Top bar NavMenu can be used in a variety of scenarios.
 
-::: demo
+::: demo By default Menu is vertical, but you can change it to horizontal by setting the mode prop to 'horizontal'. In addition, you can use the submenu component to create a second level menu.
 ```html
-<el-menu theme="dark" default-active="1" class="el-menu-demo" mode="horizontal" @select="handleselect">
+<el-menu theme="dark" default-active="1" class="el-menu-demo" mode="horizontal" @select="handleSelect">
   <el-menu-item index="1">Processing Center</el-menu-item>
   <el-submenu index="2">
     <template slot="title">Workspace</template>
@@ -35,7 +35,7 @@ Top bar NavMenu can be used in a variety of scenarios.
   <el-menu-item index="3">Orders</el-menu-item>
 </el-menu>
 <div class="line"></div>
-<el-menu default-active="1" class="el-menu-demo" mode="horizontal" @select="handleselect">
+<el-menu default-active="1" class="el-menu-demo" mode="horizontal" @select="handleSelect">
   <el-menu-item index="1">Processing Center</el-menu-item>
   <el-submenu index="2">
     <template slot="title">Workspace</template>
@@ -45,20 +45,29 @@ Top bar NavMenu can be used in a variety of scenarios.
   </el-submenu>
   <el-menu-item index="3">Orders </el-menu-item>
 </el-menu>
-```
 
+<script>
+  export default {
+    methods: {
+      handleSelect(key, keyPath) {
+        console.log(key, keyPath);
+      }
+    }
+  }
+</script>
+```
 :::
 
 ### Side bar
 
 Vertical NavMenu with sub-menus.
 
-::: demo
+::: demo You can use the el-menu-item-group component to create a menu group, and the name of the group is determined by the title prop or a named slot.
 ```html
 <el-row class="tac">
   <el-col :span="8">
     <h5>With icons</h5>
-    <el-menu default-active="2" class="el-menu-vertical-demo" @open="handleopen" @close="handleclose">
+    <el-menu default-active="2" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose">
       <el-submenu index="1">
         <template slot="title"><i class="el-icon-message"></i>Navigator One</template>
         <el-menu-item-group title="Group One">
@@ -75,7 +84,7 @@ Vertical NavMenu with sub-menus.
   </el-col>
   <el-col :span="8">
     <h5>Without icons</h5>
-    <el-menu default-active="2" class="el-menu-vertical-demo" @open="handleopen" @close="handleclose" theme="dark">
+    <el-menu default-active="2" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose" theme="dark">
       <el-submenu index="1">
         <template slot="title">Navigator One</template>
         <el-menu-item-group title="Group One">
@@ -114,6 +123,19 @@ Vertical NavMenu with sub-menus.
     </el-menu>
   </el-col>
 </el-row>
+
+<script>
+  export default {
+    methods: {
+      handleOpen(key, keyPath) {
+        console.log(key, keyPath);
+      },
+      handleClose(key, keyPath) {
+        console.log(key, keyPath);
+      }
+    }
+  }
+</script>
 ```
 :::
 

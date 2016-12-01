@@ -1,10 +1,5 @@
-import { t } from 'element-ui/src/locale';
-
-const CONFIRM_TEXT = t('el.messagebox.confirm');
-const CANCEL_TEXT = t('el.messagebox.cancel');
-
 const defaults = {
-  title: '提示',
+  title: undefined,
   message: '',
   type: '',
   showInput: false,
@@ -22,8 +17,8 @@ const defaults = {
   confirmButtonPosition: 'right',
   confirmButtonHighlight: false,
   cancelButtonHighlight: false,
-  confirmButtonText: CONFIRM_TEXT,
-  cancelButtonText: CANCEL_TEXT,
+  confirmButtonText: '',
+  cancelButtonText: '',
   confirmButtonClass: '',
   cancelButtonClass: ''
 };
@@ -109,10 +104,10 @@ const showNextMsg = () => {
 const MessageBox = function(options, callback) {
   if (typeof options === 'string') {
     options = {
-      title: options
+      message: options
     };
     if (arguments[1]) {
-      options.message = arguments[1];
+      options.title = arguments[1];
     }
     if (arguments[2]) {
       options.type = arguments[2];

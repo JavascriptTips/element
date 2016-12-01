@@ -20,7 +20,7 @@
             @click="handleShortcutClick(shortcut)">{{ shortcut.text }}</button>
         </div>
         <div class="el-picker-panel__body">
-         <div class="el-date-picker__time-header" v-if="showTime">
+          <div class="el-date-picker__time-header" v-if="showTime">
             <span class="el-date-picker__editor-wrap">
               <input
                 :placehoder="t('el.datepicker.selectDate')"
@@ -145,8 +145,8 @@
       },
 
       value(newVal) {
-        if (newVal instanceof Date) {
-
+        newVal = new Date(newVal);
+        if (!isNaN(newVal)) {
           if (typeof this.disabledDate === 'function' &&
             this.disabledDate(new Date(newVal))) {
             return;
@@ -183,7 +183,7 @@
     methods: {
       handleClear() {
         this.date = new Date();
-        this.$emit('pick');
+        this.$emit('pick', '');
       },
 
       resetDate() {
@@ -228,6 +228,8 @@
           this.$refs.yearTable.nextTenYear();
         } else {
           this.year++;
+          this.date.setFullYear(this.year);
+          this.resetDate();
         }
       },
 
@@ -236,6 +238,8 @@
           this.$refs.yearTable.prevTenYear();
         } else {
           this.year--;
+          this.date.setFullYear(this.year);
+          this.resetDate();
         }
       },
 
@@ -271,6 +275,7 @@
           this.resetDate();
         } else {
           this.date.setMonth(month);
+          this.year && this.date.setFullYear(this.year);
           this.resetDate();
           const value = new Date(this.date.getFullYear(), month, 1);
           this.$emit('pick', value);
@@ -305,7 +310,7 @@
 
         this.date.setFullYear(year);
         if (this.selectionMode === 'year') {
-          this.$emit('pick', year);
+          this.$emit('pick', new Date(year));
         } else {
           this.currentView = 'month';
         }

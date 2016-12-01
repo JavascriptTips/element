@@ -1,6 +1,6 @@
 <template>
   <transition name="dialog-fade">
-    <div class="el-dialog__wrapper" v-show="value" @click.self="handleWrapperClick">
+    <div class="el-dialog__wrapper" v-show="visible" @click.self="handleWrapperClick">
       <div
         class="el-dialog"
         :class="[sizeClass, customClass]"
@@ -9,7 +9,7 @@
         <div class="el-dialog__header">
           <span class="el-dialog__title">{{title}}</span>
           <div class="el-dialog__headerbtn">
-            <i class="el-dialog__close el-icon el-icon-close" @click='close()'></i>
+            <i v-if="showClose" class="el-dialog__close el-icon el-icon-close" @click='close()'></i>
           </div>
         </div>
         <div class="el-dialog__body" v-if="rendered"><slot></slot></div>
@@ -55,6 +55,11 @@
         default: true
       },
 
+      showClose: {
+        type: Boolean,
+        default: true
+      },
+
       size: {
         type: String,
         default: 'small'
@@ -70,9 +75,18 @@
         default: '15%'
       }
     },
+    data() {
+      return {
+        visible: false
+      };
+    },
 
     watch: {
       value(val) {
+        this.visible = val;
+      },
+      visible(val) {
+        this.$emit('input', val);
         if (val) {
           this.$emit('open');
           this.$nextTick(() => {
@@ -96,7 +110,7 @@
     methods: {
       handleWrapperClick() {
         if (this.closeOnClickModal) {
-          this.$emit('input', false);
+          this.close();
         }
       }
     },

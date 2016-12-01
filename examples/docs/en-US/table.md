@@ -110,6 +110,17 @@
     },
 
     methods: {
+      handleClick() {
+        console.log('click');
+      },
+
+      handleEdit(index, row) {
+        console.log(index, row);
+      },
+
+      handleDelete(index, row) {
+        console.log(index, row);
+      },
       handleSelectionChange(val) {
         this.multipleSelection = val;
       },
@@ -504,11 +515,12 @@ When there are too many columns, you can fix some of them.
     </el-table-column>
     <el-table-column
       inline-template
+      :context="_self"
       fixed="right"
       label="Operations"
       width="120">
       <span>
-        <el-button type="text" size="small">Detail</el-button>
+        <el-button @click="handleClick" type="text" size="small">Detail</el-button>
         <el-button type="text" size="small">Edit</el-button>
       </span>
     </el-table-column>
@@ -517,6 +529,11 @@ When there are too many columns, you can fix some of them.
 
 <script>
   export default {
+    methods: {
+      handleClick() {
+        console.log('click');
+      }
+    },
     data() {
       return {
         tableData: [{
@@ -601,6 +618,115 @@ When you have huge chunks of data to put in a table, you can fix the header and 
       prop="zip"
       label="Zip"
       width="120">
+    </el-table-column>
+  </el-table>
+</template>
+
+<script>
+  export default {
+    data() {
+      return {
+        tableData3: [{
+          date: '2016-05-03',
+          name: 'Tom',
+          state: 'California',
+          city: 'Los Angeles',
+          address: 'No. 189, Grove St, Los Angeles',
+          zip: 'CA 90036'
+        }, {
+          date: '2016-05-02',
+          name: 'Tom',
+          state: 'California',
+          city: 'Los Angeles',
+          address: 'No. 189, Grove St, Los Angeles',
+          zip: 'CA 90036'
+        }, {
+          date: '2016-05-04',
+          name: 'Tom',
+          state: 'California',
+          city: 'Los Angeles',
+          address: 'No. 189, Grove St, Los Angeles',
+          zip: 'CA 90036'
+        }, {
+          date: '2016-05-01',
+          name: 'Tom',
+          state: 'California',
+          city: 'Los Angeles',
+          address: 'No. 189, Grove St, Los Angeles',
+          zip: 'CA 90036'
+        }, {
+          date: '2016-05-08',
+          name: 'Tom',
+          state: 'California',
+          city: 'Los Angeles',
+          address: 'No. 189, Grove St, Los Angeles',
+          zip: 'CA 90036'
+        }, {
+          date: '2016-05-06',
+          name: 'Tom',
+          state: 'California',
+          city: 'Los Angeles',
+          address: 'No. 189, Grove St, Los Angeles',
+          zip: 'CA 90036'
+        }, {
+          date: '2016-05-07',
+          name: 'Tom',
+          state: 'California',
+          city: 'Los Angeles',
+          address: 'No. 189, Grove St, Los Angeles',
+          zip: 'CA 90036'
+        }]
+      }
+    }
+  }
+</script>
+```
+:::
+
+### Grouping table head
+
+When the data structure is complex, you can use group header to show the data hierarchy.
+
+:::demo Only need to place el-table-column inside a el-table-column, you can achieve group header.
+```html
+<template>
+  <el-table
+    :data="tableData3"
+    border
+    style="width: 100%">
+    <el-table-column
+      prop="date"
+      label="Date"
+      width="150">
+    </el-table-column>
+    <el-table-column label="Delivery Info">
+      <el-table-column
+        prop="name"
+        label="Name"
+        width="120">
+      </el-table-column>
+      <el-table-column label="Address Info">
+        <el-table-column
+          prop="state"
+          label="State"
+          width="120">
+        </el-table-column>
+        <el-table-column
+          prop="city"
+          label="City"
+          width="120">
+        </el-table-column>
+        <el-table-column
+          prop="address"
+          label="Address"
+          width="300">
+        </el-table-column>
+        <el-table-column
+          prop="zip"
+          label="Zip"
+          width="120">
+        </el-table-column>
+      </el-table-column>
     </el-table-column>
   </el-table>
 </template>
@@ -959,17 +1085,108 @@ Filter the table to find desired data.
 ```
 :::
 
+### Custom column template
+ 
+Customize table column so it can be integrated with other components.
+:::demo Activate custom column template by adding the `inline-template` attribute. By default, the context of `el-table-column` is the one where `el-table` lies, and you can customize it with the `context` attribute, e.g. `:context="_self"` refers to the current context. This is useful when sometimes Table is encapsulated into another component, and `table-column` is distributed by slots. In `el-column`, you have access to the following data: row, column, $index and store (state management of Table).
+```html
+<template>
+  <el-table
+    :data="tableData"
+    border
+    style="width: 100%">
+    <el-table-column
+      inline-template
+      label="Date"
+      width="180">
+      <div>
+        <el-icon name="time"></el-icon>
+        <span style="margin-left: 10px">{{ row.date }}</span>
+      </div>
+    </el-table-column>
+    <el-table-column
+      inline-template
+      label="Name"
+      width="180">
+      <el-popover trigger="hover" placement="top">
+        <p>Name: {{ row.name }}</p>
+        <p>Addr: {{ row.address }}</p>
+        <div slot="reference" class="name-wrapper">
+          <el-tag>{{ row.name }}</el-tag>
+        </div>
+      </el-popover>
+    </el-table-column>
+    <el-table-column
+      :context="_self"
+      inline-template
+      label="Operations">
+      <div>
+        <el-button
+          size="small"
+          @click="handleEdit($index, row)">
+          Edit
+        </el-button>
+        <el-button
+          size="small"
+          type="danger"
+          @click="handleDelete($index, row)">
+          Delete
+        </el-button>
+      </div>
+    </el-table-column>
+  </el-table>
+</template>
+
+<script>
+  export default {
+    data() {
+      return {
+        tableData: [{
+          date: '2016-05-03',
+          name: 'Tom',
+          address: 'No. 189, Grove St, Los Angeles'
+        }, {
+          date: '2016-05-02',
+          name: 'Tom',
+          address: 'No. 189, Grove St, Los Angeles'
+        }, {
+          date: '2016-05-04',
+          name: 'Tom',
+          address: 'No. 189, Grove St, Los Angeles'
+        }, {
+          date: '2016-05-01',
+          name: 'Tom',
+          address: 'No. 189, Grove St, Los Angeles'
+        }]
+      }
+    },
+    methods: {
+      handleEdit(index, row) {
+        console.log(index, row);
+      },
+      handleDelete(index, row) {
+        console.log(index, row);
+      }
+    }
+  }
+</script>
+```
+:::
+
 ### Table Attributes
 | Attribute      | Description          | Type      | Accepted Values       | Default  |
 |---------- |-------------- |---------- |--------------------------------  |-------- |
 | data | table data | array | — | — |
-| height | table's height. By default  | string/number | — | — |
+| height | Table's height. By default it has an auto height. If its value is a number, the height is measured in pixels; if its value is a string, the height is affected by external styles | string/number | — | — |
 | stripe | whether table is striped | boolean | — | false |
 | border | whether table has vertical border | boolean | — | false |
 | fit | whether width of column automatically fits its container | boolean | — | true |
+| show-header | whether table header is visible | boolean | - | true |
 | highlight-current-row | whether current row is highlighted | boolean | — | false |
-| row-class-name | function that returns custom class names for a row | Function(row, index) | — | — |
-| row-key | Key of row data, used for optimizing rendering. Required if `reserve-selection` is on | Function(row)/String | — | — |
+| row-class-name | function that returns custom class names for a row, or a string assigning class names for every row | Function(row, index)/String | — | — |
+| row-style | function that returns custom style for a row,  or a string assigning custom style for every row | Function(row, index)/Object | — | — |
+| row-key | key of row data, used for optimizing rendering. Required if `reserve-selection` is on | Function(row)/String | — | — |
+| context | context of Table, e.g. `_self` refers to the current context, `$parent` parent context, `$root` root context, can be overridden by `context` in `el-table-column` | Object | - | current context where Table lies |
 
 ### Table Events
 | Event Name | Description | Parameters |
@@ -981,6 +1198,7 @@ Filter the table to find desired data.
 | cell-mouse-leave | triggers when hovering out of a cell | row, column, cell, event |
 | cell-click | triggers when clicking a cell | row, column, cell, event |
 | row-click | triggers when clicking a row | row, event |
+| header-click | triggers when clicking a column header | column, event |
 | sort-change | triggers when Table's sorting changes | { column, prop, order } |
 | current-change | triggers when current row changes | currentRow, oldCurrentRow |
 
@@ -1005,7 +1223,8 @@ Filter the table to find desired data.
 | resizable | whether column width can be resized, works when `border` of `el-table` is `true` | boolean | — | false |
 | formatter | function that formats content | Function(row, column) | — | — |
 | show-overflow-tooltip | whether to hide extra content and show them in a tooltip when hovering on the cell | boolean | — | false |
-| inline-template | by using this attribute, you can customize column template. Row data can be accessed by `row` object, and current context can be accessed by `_self` in JSX. In this case you don't need to set `prop`. In your template, you have access to the following: `{ row (current row), column (current column), $index (row index), _self( context), store (table store) }` | — | — |
+| context | context of Table-column, e.g. `_self` refers to the current context, `$parent` parent context, `$root` root context | Object | - | current context where Table lies |
+| inline-template | by using this attribute, you can customize column template. Row data can be accessed by `row` object. In your template, you have access to the following: `{ row (current row), column (current column), $index (row index), store (table store) }` | — | — |
 | align | alignment | string | left/center/right | left |
 | class-name | class name of cells in the column | string | — | — |
 | selectable | function that determines if a certain row can be selected, works when `type` is 'selection' | Function(row, index) | — | — |

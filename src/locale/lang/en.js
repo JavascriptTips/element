@@ -63,6 +63,7 @@ export default {
       pageClassifier: ''
     },
     messagebox: {
+      title: 'Message',
       confirm: 'OK',
       cancel: 'Cancel',
       error: 'Illegal input'
@@ -77,6 +78,9 @@ export default {
       confirmFilter: 'Confirm',
       resetFilter: 'Reset',
       clearFilter: 'All'
+    },
+    tree: {
+      emptyText: 'No Data'
     }
   }
 };

@@ -5,7 +5,7 @@
       class="el-switch__input"
       type="checkbox"
       @change="handleChange"
-      v-model="currentValue"
+      v-model="_value"
       :name="name"
       :disabled="disabled">
     <span class="el-switch__core" ref="core" :style="{ 'width': coreWidth + 'px' }">
@@ -79,27 +79,32 @@
     },
     data() {
       return {
-        currentValue: this.value,
         coreWidth: this.width,
-        buttonStyle: {}
+        buttonStyle: {
+          transform: ''
+        }
       };
     },
     computed: {
       hasText() {
         /* istanbul ignore next */
         return this.onText || this.offText;
+      },
+      _value: {
+        get() {
+          return this.value;
+        },
+        set(val) {
+          this.$emit('input', val);
+        }
       }
     },
     watch: {
-      value(val) {
-        this.currentValue = val;
+      value() {
         if (this.onColor || this.offColor) {
-          this.handleCoreColor();
+          this.setBackgroundColor();
         }
         this.handleButtonTransform();
-      },
-      currentValue(val) {
-        this.$emit('input', val);
       }
     },
     methods: {
@@ -109,9 +114,10 @@
       handleButtonTransform() {
         this.buttonStyle.transform = this.value ? `translate(${ this.coreWidth - 20 }px, 2px)` : 'translate(2px, 2px)';
       },
-      handleCoreColor() {
-        this.$refs.core.style.borderColor = this.value ? this.onColor : this.offColor;
-        this.$refs.core.style.backgroundColor = this.value ? this.onColor : this.offColor;
+      setBackgroundColor() {
+        let newColor = this.value ? this.onColor : this.offColor;
+        this.$refs.core.style.borderColor = newColor;
+        this.$refs.core.style.backgroundColor = newColor;
       }
     },
     mounted() {
@@ -121,7 +127,7 @@
       }
       this.handleButtonTransform();
       if ((this.onColor || this.offColor) && !this.disabled) {
-        this.handleCoreColor();
+        this.setBackgroundColor();
       }
     }
   };

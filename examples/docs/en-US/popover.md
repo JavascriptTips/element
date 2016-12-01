@@ -79,22 +79,6 @@
         multipleSelection: [],
         model: ''
       };
-    },
-
-    watch: {
-      singleSelection(val) {
-        console.log('selection: ', val);
-      },
-
-      multipleSelection(val) {
-        console.log('selection: ', val);
-      }
-    },
-
-    events: {
-      handleClick(row) {
-        console.log('you clicked ', row);
-      }
     }
   };
 </script>
@@ -141,7 +125,7 @@ Similar to Tooltip, Popover is also built with `Vue-popper`. So for some duplica
 
 ### Nested information
 
-Other components can be nested in popover. Following is an example of nested table. 
+Other components can be nested in popover. Following is an example of nested table.
 
 :::demo replace the `content` attribute with a default `slot`.
 
@@ -159,6 +143,32 @@ Other components can be nested in popover. Following is an example of nested tab
 </el-popover>
 
 <el-button v-popover:popover4>Click to activate</el-button>
+
+<script>
+  export default {
+    data() {
+      return {
+        gridData: [{
+          date: '2016-05-02',
+          name: 'Jack',
+          address: 'New York City'
+        }, {
+          date: '2016-05-04',
+          name: 'Jack',
+          address: 'New York City'
+        }, {
+          date: '2016-05-01',
+          name: 'Jack',
+          address: 'New York City'
+        }, {
+          date: '2016-05-03',
+          name: 'Jack',
+          address: 'New York City'
+        }]
+      };
+    }
+  };
+</script>
 ```
 :::
 
@@ -175,19 +185,29 @@ Of course, you can nest other operations. It's more light-weight than using a di
   v-model="visible2">
   <p>Are you sure to delete this?</p>
   <div style="text-align: right; margin: 0">
-    <el-button size="mini" type="text" @click.native="visible2 = false">cancel</el-button>
-    <el-button type="primary" size="mini" @click.native="visible2 = false">confirm</el-button>
+    <el-button size="mini" type="text" @click="visible2 = false">cancel</el-button>
+    <el-button type="primary" size="mini" @click="visible2 = false">confirm</el-button>
   </div>
 </el-popover>
 
 <el-button v-popover:popover5>Delete</el-button>
+
+<script>
+  export default {
+    data() {
+      return {
+        visible2: false,
+      };
+    }
+  }
+</script>
 ```
 :::
 
 ### Attributes
 | Attribute      | Description          | Type      | Accepted Values       | Default  |
 |--------------------|----------------------------------------------------------|-------------------|-------------|--------|
-| trigger | how the popover is triggered | string  | click/focus/hover |    click    |
+| trigger | how the popover is triggered | string  | click/focus/hover/manual |    click    |
 |  title              | popover title | string | — | — |
 |  content        |  popover content, can be replaced with a default `slot`    | string            | — | — |
 |  width        |  popover width  | string, number            | — | Min width 150px |
@@ -205,3 +225,8 @@ Of course, you can nest other operations. It's more light-weight than using a di
 | — | text content of popover |
 | reference | HTML element that triggers popover |
 
+### Events
+| Event Name | Description | 回调参数 |
+|---------|--------|---------|
+| show | triggers when popover shows | - |
+| hide | triggers when popover hides | - |

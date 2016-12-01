@@ -30,7 +30,7 @@ Radio should not have too many options. Otherwise, use the Select component inst
   export default {
     data () {
       return {
-        radio: ''
+        radio: '1'
       };
     }
   }
@@ -73,6 +73,16 @@ Suitable for choosing from some mutually exclusive options.
   <el-radio :label="6">optionB</el-radio>
   <el-radio :label="9">optionC</el-radio>
 </el-radio-group>
+
+<script>
+  export default {
+    data () {
+      return {
+        radio2: 3
+      };
+    }
+  }
+</script>
 ```
 :::
 
@@ -127,5 +137,7 @@ change | triggers when the bound value changes | the label value of the chosen r
 ---- | ---- | ---- | ---- | ----
 label | the value of radio | string/number | — | —
 disabled | whether radio is disabled | boolean | — | false
+fill  | border and background color when button is active | string   | — | #20a0ff   |
+text-color | font color when button is active | string   | — | #ffffff   |
 
 

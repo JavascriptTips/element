@@ -1,20 +1,69 @@
 ## 更新日志
 
+### 1.0.3
+*2016-11-28*
+
+- 修复 Pagination 的 `currentPage` 在某些情况下设置无效的情况，#1336
+- 修复 DatePicker 为 `month` 且设置了 `disabledDate` 的情况下切换年份时界面未更新的问题，#1158
+- 修复 DatePicker readonly 时未禁用清除按钮的问题，#1238
+- 修复 Slider 绑定值为 `NaN` 以及 `step` 小于 1 时无法正常工作的问题，#1239 #1282
+- 增加 Table 的多表头功能，#1312
+- 增加 Table 的 `rowStyle` 属性，#1348
+- 修复 TableColumn 的某些属性无法动态设置的问题，#1314
+- 增加 Tree 的 `filter-node-method` 属性和 `filter` 方法，#1257
+- 增加 Tree 的 `getCheckedKeys` 和 `setCheckedKeys` 方法，#1254
+- 重构 Checkbox/Radio 支持嵌套 Group 绑定值，#1152
+- 修复 Popper 在 keep-alive 下无法触发销毁的问题，#1359
+- 增加 Form 中深对象验证的支持，#1363
+- 增加 Autocomplete 里的 `append` 和 `prepend` API，#1369
+- 增加 Pagination `pageSizes` 属性的动态支持，#1372
+- 增加 Radio Button 自定义选中按钮样式的 API，#1380
+- 增加 Menu Group 支持通过 slot 来设置 title，#1382
+- 修复 DatePicker 选择年的 bug，#1385
+- 新增 Upload 默认已上传的文件列表 API，#1393
+- 增加 Checkbox `label` 属性绑定的多类型支持，#1400
+- 增加 Tree 的 `setChecked` 方法，#1422
+
+### 1.0.2
+*2016-11-18*
+
+- 新增 Table `context` 属性，可以指定自定义 column 内部可获取的上下文，#1161
+- 新增 多种语言支持
+- 修复 没有正确动态渲染语言的问题，#1160
+- 新增 Alert 的 `render-content` 属性，#568
+- 新增 Button 的 focus 样式，#982
+- 修复 Switch 的 `change` 事件触发时机错误的问题，#1162
+- 修复 TimeSelect 开始时间设置 `00:00` 后会被禁用的问题，#676
+- 新增 Table `show-header` 属性，`header-click` 事件。#1195
+- 完善 Table 的 `height` 属性，当 `height` 属性为字符串的时候，表示 Table 的高度受外部样式控制，#1195
+- 修复 Table 的 `selection-change` 在某些情况下不触发的问题，#1198
+- 修复 Table 动态修改 `fixed` 属性可能会造成锁定列不消失的问题，#1182
+
 ### 1.0.1
-*2016-XX-XX*
+*2016-11-16*
 
 - 修复 Pagination 错误地多次触发 `current-change` 事件的问题
 - 修复 Switch 在 Form 中的样式错误，#967
 - 修复 Loading 在某些情况下错误地锁定 `body` 滚动的问题，#968
 - Col 组件的 `span` 属性不再是必填属性，在省略的情况下其默认值为 `24`
-- 新增 DatePicker `disabled` 和 `editable` 属性, #976
-- 修复 DatePicker 的 `readonly` 与原生行为一致，现在通过设置 editable=false 禁止输入但是可通过弹框选日期, #976
+- 新增 DatePicker `disabled` 和 `editable` 属性，#976
+- 修复 DatePicker 的 `readonly` 与原生行为一致，现在通过设置 editable=false 禁止输入但是可通过弹框选日期，#976
 - 新增 Message 和 Notification 的 `close` 方法，用于手动关闭实例
-- 新增 DatePicker 清除功能, #759
-- 修复 Form 重置日期报错, #937
+- 新增 DatePicker 清除功能，#759
+- 修复 Form 重置日期报错，#937
+- 修复 Tab 设置active-name不是首个tab时的样式问题，#1034
 - 修复 Table 的 inline-template 在 vue-loader 9.9.0 渲染报错
-- 新增 Step 支持内容居中对齐, #994
-- 修复 Upload 单独引入时提示 progress 组件不存在, #1013
+- 新增 Step 支持内容居中对齐，#994
+- 修复 Upload 单独引入时提示 Progress 组件不存在，#1013
+- Layout 支持响应式布局
+- 新增 Dialog `show-close` 属性
+- 修复 和 `vue-i18n` 一起使用时，未初始化 i18n 会报错，#973
+- 修复 DatePicker 设置初始值后界面未更新 #1050
+- 修复 DatePicker 月份选择器直接切换年份并未更新年份数据 #1070
+- 新增 $loading 服务，用以调用 Loading
+- 新增 Popover 可手动控制显示隐藏，将 trigger 设置为 `manual`
+- 新增 Tree 的 `nodeKey`、`emptyText`、`checkStrictly`、`defaultExpandAll`、`autoExpandParent`、`defaultCheckedKeys`、`defaultExpandedKeys` 属性，`setCheckedNodes` 方法。
+
 
 ### 1.0.0
 

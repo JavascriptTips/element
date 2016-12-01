@@ -2,13 +2,14 @@
   export default {
     data() {
       var checkAge = (rule, value, callback) => {
-        var age = parseInt(value, 10);
-
+        if (!value) {
+          return callback(new Error('年龄不能为空'));
+        }
         setTimeout(() => {
-          if (!Number.isInteger(age)) {
+          if (!Number.isInteger(value)) {
             callback(new Error('请输入数字值'));
-          } else{
-            if (age < 18) {
+          } else {
+            if (value < 18) {
               callback(new Error('必须年满18岁'));
             } else {
               callback();
@@ -110,22 +111,19 @@
         },
         rules2: {
           pass: [
-            { required: true, message: '请输入密码', trigger: 'blur' },
-            { validator: validatePass }
+            { validator: validatePass, trigger: 'blur' }
           ],
           checkPass: [
-            { required: true, message: '请再次输入密码', trigger: 'blur' },
-            { validator: validatePass2 }
+            { validator: validatePass2, trigger: 'blur' }
           ],
           age: [
-            { required: true, message: '请填写年龄', trigger: 'blur' },
-            { validator: checkAge, trigger: 'change' }
+            { validator: checkAge, trigger: 'blur' }
           ]
         },
         dynamicForm: {
           domains: [{
-            key: 1,
-            value: ''
+            value: '',
+            key: Date.now()
           }],
           email: ''
         },
@@ -174,6 +172,9 @@
       handleReset2() {
         this.$refs.ruleForm2.resetFields();
       },
+      handleReset3() {
+        this.$refs.dynamicForm.resetFields();
+      },
       handleValidate(prop, errorMsg) {
         console.log(prop, errorMsg);
       },
@@ -191,8 +192,8 @@
       },
       addDomain() {
         this.dynamicForm.domains.push({
-          key: this.dynamicForm.domains.length,
-          value: ''
+          value: '',
+          key: Date.now()
         });
       }
     }
@@ -626,7 +627,7 @@
     <el-input type="password" v-model="ruleForm2.checkPass" auto-complete="off"></el-input>
   </el-form-item>
   <el-form-item label="年龄" prop="age">
-    <el-input v-model="ruleForm2.age"></el-input>
+    <el-input v-model.number="ruleForm2.age"></el-input>
   </el-form-item>
   <el-form-item>
     <el-button type="primary" @click="handleSubmit2">提交</el-button>
@@ -637,13 +638,14 @@
   export default {
     data() {
       var checkAge = (rule, value, callback) => {
-        var age = parseInt(value, 10);
-
+        if (!value) {
+          return callback(new Error('年龄不能为空'));
+        }
         setTimeout(() => {
-          if (!Number.isInteger(age)) {
+          if (!Number.isInteger(value)) {
             callback(new Error('请输入数字值'));
-          } else{
-            if (age < 18) {
+          } else {
+            if (value < 18) {
               callback(new Error('必须年满18岁'));
             } else {
               callback();
@@ -678,16 +680,13 @@
         },
         rules2: {
           pass: [
-            { required: true, message: '请输入密码', trigger: 'blur' },
-            { validator: validatePass }
+            { validator: validatePass, trigger: 'blur' }
           ],
           checkPass: [
-            { required: true, message: '请再次输入密码', trigger: 'blur' },
-            { validator: validatePass2 }
+            { validator: validatePass2, trigger: 'blur' }
           ],
           age: [
-            { required: true, message: '请填写年龄', trigger: 'blur' },
-            { validator: checkAge, trigger: 'change' }
+            { validator: checkAge, trigger: 'blur' }
           ]
         }
       };
@@ -724,19 +723,17 @@
     v-for="(domain, index) in dynamicForm.domains"
     :label="'域名' + index"
     :key="domain.key"
-    :prop="'domains:' + index"
+    :prop="'domains.' + index + '.value'"
     :rules="{
-      type: 'object', required: true,
-      fields: {
-        value: { required: true, message: '域名不能为空', trigger: 'blur' }
-      }
+      required: true, message: '域名不能为空', trigger: 'blur'
     }"
   >
-    <el-input v-model="domain.value"></el-input><el-button @click.native.prevent="removeDomain(domain)">删除</el-button>
+    <el-input v-model="domain.value"></el-input><el-button @click.prevent="removeDomain(domain)">删除</el-button>
   </el-form-item>
   <el-form-item>
     <el-button type="primary" @click="handleSubmit3">提交</el-button>
     <el-button @click="addDomain">新增域名</el-button>
+    <el-button @click="handleReset3">重置</el-button>
   </el-form-item>
 </el-form>
 <script>
@@ -745,7 +742,6 @@
       return {
         dynamicForm: {
           domains: [{
-            key: 1,
             value: ''
           }],
           email: ''
@@ -769,6 +765,9 @@
           }
         });
       },
+      handleReset3() {
+        this.$refs.dynamicForm.resetFields();
+      },
       removeDomain(item) {
         var index = this.dynamicForm.domains.indexOf(item)
         if (index !== -1) {
@@ -777,8 +776,8 @@
       },
       addDomain() {
         this.dynamicForm.domains.push({
-          key: this.dynamicForm.domains.length,
-          value: ''
+          value: '',
+          key: Date.now()
         });
       }
     }
@@ -814,3 +813,5 @@
 | label | 标签文本 | string | — | — |
 | label-width | 表单域标签的的宽度，例如 '50px' | string |       —       | — |
 | required | 是否必填，如不设置，则会根据校验规则自动生成 | bolean | — | false |
+| rules    | 表单验证规则 | object | — | — |
+| error    | 表单域验证错误信息, 设置该值会使表单验证状态变为`error`，并显示该错误信息 | string | — | — |

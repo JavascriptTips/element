@@ -31,13 +31,13 @@
 <script>
   export default {
     methods: {
-      handleopen(key, keyPath) {
+      handleOpen(key, keyPath) {
         console.log(key, keyPath);
       },
-      handleclose(key, keyPath) {
+      handleClose(key, keyPath) {
         console.log(key, keyPath);
       },
-      handleselect(key, keyPath) {
+      handleSelect(key, keyPath) {
         console.log(key, keyPath);
       }
     }
@@ -52,9 +52,9 @@
 
 适用广泛的基础用法。
 
-::: demo
+::: demo 导航菜单默认为垂直模式，通过 `mode` 属性可以使导航菜单变更为水平模式。另外，在菜单中通过 `submenu` 组件可以生成二级菜单。
 ```html
-<el-menu theme="dark" default-active="1" class="el-menu-demo" mode="horizontal" @select="handleselect">
+<el-menu theme="dark" default-active="1" class="el-menu-demo" mode="horizontal" @select="handleSelect">
   <el-menu-item index="1">处理中心</el-menu-item>
   <el-submenu index="2">
     <template slot="title">我的工作台</template>
@@ -65,7 +65,7 @@
   <el-menu-item index="3">订单管理</el-menu-item>
 </el-menu>
 <div class="line"></div>
-<el-menu default-active="1" class="el-menu-demo" mode="horizontal" @select="handleselect">
+<el-menu default-active="1" class="el-menu-demo" mode="horizontal" @select="handleSelect">
   <el-menu-item index="1">处理中心</el-menu-item>
   <el-submenu index="2">
     <template slot="title">我的工作台</template>
@@ -75,6 +75,16 @@
   </el-submenu>
   <el-menu-item index="3">订单管理</el-menu-item>
 </el-menu>
+
+<script>
+  export default {
+    methods: {
+      handleSelect(key, keyPath) {
+        console.log(key, keyPath);
+      }
+    }
+  }
+</script>
 ```
 :::
 
@@ -82,15 +92,16 @@
 
 垂直菜单，可内嵌子菜单。
 
-::: demo
+::: demo 通过 `el-menu-item-group` 组件可以实现菜单进行分组，分组名可以通过 `title` 属性直接设定也可以通过具名 slot 来设定。
 ```html
 <el-row class="tac">
   <el-col :span="8">
     <h5>带 icon</h5>
-    <el-menu default-active="2" class="el-menu-vertical-demo" @open="handleopen" @close="handleclose">
+    <el-menu default-active="2" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose">
       <el-submenu index="1">
         <template slot="title"><i class="el-icon-message"></i>导航一</template>
-        <el-menu-item-group title="分组一">
+        <el-menu-item-group>
+          <template slot="title">分组一</template>
           <el-menu-item index="1-1">选项1</el-menu-item>
           <el-menu-item index="1-2">选项2</el-menu-item>
         </el-menu-item-group>
@@ -104,7 +115,7 @@
   </el-col>
   <el-col :span="8">
     <h5>不带 icon</h5>
-    <el-menu default-active="2" class="el-menu-vertical-demo" @open="handleopen" @close="handleclose" theme="dark">
+    <el-menu default-active="2" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose" theme="dark">
       <el-submenu index="1">
         <template slot="title">导航一</template>
         <el-menu-item-group title="分组一">
@@ -143,6 +154,19 @@
     </el-menu>
   </el-col>
 </el-row>
+
+<script>
+  export default {
+    methods: {
+      handleOpen(key, keyPath) {
+        console.log(key, keyPath);
+      },
+      handleClose(key, keyPath) {
+        console.log(key, keyPath);
+      }
+    }
+  }
+</script>
 ```
 :::
 

@@ -126,7 +126,7 @@ Popover 的属性与 Tooltip 很类似，它们都是基于`Vue-popper`开发的
   title="标题"
   width="200"
   trigger="hover"
-  content="这是一段容,这是一段容,这是一段容,这是一段容。">
+  content="这是一段内容,这是一段内容,这是一段内容,这是一段内容。">
 </el-popover>
 
 <el-popover
@@ -135,7 +135,7 @@ Popover 的属性与 Tooltip 很类似，它们都是基于`Vue-popper`开发的
   title="标题"
   width="200"
   trigger="click"
-  content="这是一段容,这是一段容,这是一段容,这是一段容。">
+  content="这是一段内容,这是一段内容,这是一段内容,这是一段内容。">
 </el-popover>
 
 <el-button v-popover:popover1>hover 激活</el-button>
@@ -145,7 +145,7 @@ Popover 的属性与 Tooltip 很类似，它们都是基于`Vue-popper`开发的
   title="标题"
   width="200"
   trigger="focus"
-  content="这是一段容,这是一段容,这是一段容,这是一段容。">
+  content="这是一段内容,这是一段内容,这是一段内容,这是一段内容。">
   <el-button slot="reference">focus 激活</el-button>
 </el-popover>
 ```
@@ -170,6 +170,32 @@ Popover 的属性与 Tooltip 很类似，它们都是基于`Vue-popper`开发的
 </el-popover>
 
 <el-button v-popover:popover4>click 激活</el-button>
+
+<script>
+  export default {
+    data() {
+      return {
+        gridData: [{
+          date: '2016-05-02',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1518 弄'
+        }, {
+          date: '2016-05-04',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1518 弄'
+        }, {
+          date: '2016-05-01',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1518 弄'
+        }, {
+          date: '2016-05-03',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1518 弄'
+        }]
+      };
+    }
+  };
+</script>
 ```
 :::
 
@@ -186,19 +212,29 @@ Popover 的属性与 Tooltip 很类似，它们都是基于`Vue-popper`开发的
   v-model="visible2">
   <p>这是一段内容这是一段内容确定删除吗？</p>
   <div style="text-align: right; margin: 0">
-    <el-button size="mini" type="text" @click.native="visible2 = false">取消</el-button>
-    <el-button type="primary" size="mini" @click.native="visible2 = false">确定</el-button>
+    <el-button size="mini" type="text" @click="visible2 = false">取消</el-button>
+    <el-button type="primary" size="mini" @click="visible2 = false">确定</el-button>
   </div>
 </el-popover>
 
 <el-button v-popover:popover5>删除</el-button>
+
+<script>
+  export default {
+    data() {
+      return {
+        visible2: false,
+      };
+    }
+  }
+</script>
 ```
 :::
 
 ### Attributes
 | 参数               | 说明                                                     | 类型              | 可选值      | 默认值 |
 |--------------------|----------------------------------------------------------|-------------------|-------------|--------|
-| trigger | 触发方式 | String  | click/focus/hover |    click    |
+| trigger | 触发方式 | String  | click/focus/hover/manual |    click    |
 |  title              | 标题 | String | — | — |
 |  content        |  显示的内容，也可以通过 `slot` 传入 DOM   | String            | — | — |
 |  width        |  宽度  | String, Number            | — | 最小宽度 150px |
@@ -215,3 +251,9 @@ Popover 的属性与 Tooltip 很类似，它们都是基于`Vue-popper`开发的
 |--- | ---|
 | — | Popover 内嵌 HTML 文本 |
 | reference | 触发 Popover 显示的 HTML 元素 |
+
+### Events
+| 事件名称 | 说明 | 回调参数 |
+|---------|--------|---------|
+| show | 显示时触发 | — |
+| hide | 隐藏时触发 | — |

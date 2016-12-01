@@ -2,7 +2,7 @@ import Pager from './pager.vue';
 import ElSelect from 'element-ui/packages/select';
 import ElOption from 'element-ui/packages/option';
 import Migrating from 'element-ui/src/mixins/migrating';
-import { t } from 'element-ui/src/locale';
+import Locale from 'element-ui/src/mixins/locale';
 
 export default {
   name: 'ElPagination',
@@ -54,7 +54,7 @@ export default {
       jumper: <jumper></jumper>,
       pager: <pager currentPage={ this.internalCurrentPage } pageCount={ this.internalPageCount } on-change={ this.handleCurrentChange }></pager>,
       next: <next></next>,
-      sizes: <sizes></sizes>,
+      sizes: <sizes pageSizes={ this.pageSizes }></sizes>,
       slot: <slot></slot>,
       total: <total></total>
     };
@@ -117,11 +117,22 @@ export default {
     },
 
     Sizes: {
-      created() {
-        if (Array.isArray(this.$parent.pageSizes)) {
-          this.$parent.internalPageSize = this.$parent.pageSizes.indexOf(this.$parent.pageSize) > -1
-            ? this.$parent.pageSize
-            : this.$parent.pageSizes[0];
+      mixins: [Locale],
+
+      props: {
+        pageSizes: Array
+      },
+
+      watch: {
+        pageSizes: {
+          immediate: true,
+          handler(value) {
+            if (Array.isArray(value)) {
+              this.$parent.internalPageSize = value.indexOf(this.$parent.pageSize) > -1
+                ? this.$parent.pageSize
+                : this.pageSizes[0];
+            }
+          }
         }
       },
 
@@ -134,10 +145,10 @@ export default {
               on-change={ this.handleChange }
               width={ 110 }>
               {
-                this.$parent.pageSizes.map(item =>
+                this.pageSizes.map(item =>
                     <el-option
                       value={ item }
-                      label={ item + ' ' + t('el.pagination.pagesize') }>
+                      label={ item + ' ' + this.t('el.pagination.pagesize') }>
                     </el-option>
                   )
               }
@@ -162,6 +173,8 @@ export default {
     },
 
     Jumper: {
+      mixins: [Locale],
+
       data() {
         return {
           oldValue: null
@@ -174,11 +187,7 @@ export default {
         },
 
         handleChange({ target }) {
-          const oldPage = this.$parent.internalCurrentPage;
           this.$parent.internalCurrentPage = this.$parent.getValidCurrentPage(target.value);
-          if (oldPage !== this.$parent.internalCurrentPage) {
-            this.$parent.$emit('current-change', this.$parent.internalCurrentPage);
-          }
           this.oldValue = null;
         }
       },
@@ -186,7 +195,7 @@ export default {
       render(h) {
         return (
           <span class="el-pagination__jump">
-            { t('el.pagination.goto') }
+            { this.t('el.pagination.goto') }
             <input
               class="el-pagination__editor"
               type="number"
@@ -197,17 +206,19 @@ export default {
               on-focus={ this.handleFocus }
               style={{ width: '30px' }}
               number/>
-            { t('el.pagination.pageClassifier') }
+            { this.t('el.pagination.pageClassifier') }
           </span>
         );
       }
     },
 
     Total: {
+      mixins: [Locale],
+
       render(h) {
         return (
           typeof this.$parent.total === 'number'
-            ? <span class="el-pagination__total">{ t('el.pagination.total', { total: this.$parent.total }) }</span>
+            ? <span class="el-pagination__total">{ this.t('el.pagination.total', { total: this.$parent.total }) }</span>
             : ''
         );
       }
@@ -228,31 +239,17 @@ export default {
     },
 
     handleCurrentChange(val) {
-      const oldPage = this.internalCurrentPage;
       this.internalCurrentPage = this.getValidCurrentPage(val);
-      if (oldPage !== this.internalCurrentPage) {
-        this.$emit('current-change', this.internalCurrentPage);
-      }
     },
 
     prev() {
-      const oldPage = this.internalCurrentPage;
       const newVal = this.internalCurrentPage - 1;
       this.internalCurrentPage = this.getValidCurrentPage(newVal);
-
-      if (this.internalCurrentPage !== oldPage) {
-        this.$emit('current-change', this.internalCurrentPage);
-      }
     },
 
     next() {
-      const oldPage = this.internalCurrentPage;
       const newVal = this.internalCurrentPage + 1;
       this.internalCurrentPage = this.getValidCurrentPage(newVal);
-
-      if (this.internalCurrentPage !== oldPage) {
-        this.$emit('current-change', this.internalCurrentPage);
-      }
     },
 
     getValidCurrentPage(value) {
@@ -293,19 +290,6 @@ export default {
   },
 
   watch: {
-    internalPageCount(newVal) {
-      /* istanbul ignore if */
-      const oldPage = this.internalCurrentPage;
-      if (newVal > 0 && oldPage === 0) {
-        this.internalCurrentPage = 1;
-      } else if (oldPage > newVal) {
-        this.internalCurrentPage = newVal === 0 ? 1 : newVal;
-      }
-      if (oldPage !== this.internalCurrentPage) {
-        this.$emit('current-change', this.internalCurrentPage);
-      }
-    },
-
     currentPage: {
       immediate: true,
       handler(val) {
@@ -333,7 +317,22 @@ export default {
       if (newVal !== undefined) {
         this.$nextTick(() => {
           this.internalCurrentPage = newVal;
+          if (oldVal !== newVal) {
+            this.$emit('current-change', this.internalCurrentPage);
+          }
         });
+      } else {
+        this.$emit('current-change', this.internalCurrentPage);
+      }
+    },
+
+    internalPageCount(newVal) {
+      /* istanbul ignore if */
+      const oldPage = this.internalCurrentPage;
+      if (newVal > 0 && oldPage === 0) {
+        this.internalCurrentPage = 1;
+      } else if (oldPage > newVal) {
+        this.internalCurrentPage = newVal === 0 ? 1 : newVal;
       }
     }
   }

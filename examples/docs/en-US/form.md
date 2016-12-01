@@ -2,13 +2,14 @@
   export default {
     data() {
       var checkAge = (rule, value, callback) => {
-        var age = parseInt(value, 10);
-
+        if (!value) {
+          return callback(new Error('Please input the age'));
+        }
         setTimeout(() => {
-          if (!Number.isInteger(age)) {
+          if (!Number.isInteger(value)) {
             callback(new Error('Please input digits'));
-          } else{
-            if (age < 18) {
+          } else {
+            if (value < 18) {
               callback(new Error('Age must be greater than 18'));
             } else {
               callback();
@@ -110,21 +111,18 @@
         },
         rules2: {
           pass: [
-            { required: true, message: 'Please input the password', trigger: 'blur' },
-            { validator: validaePass }
+            { validator: validaePass, trigger: 'blur' }
           ],
           checkPass: [
-            { required: true, message: 'Please input the password again', trigger: 'blur' },
-            { validator: validaePass2 }
+            { validator: validaePass2, trigger: 'blur' }
           ],
           age: [
-            { required: true, message: 'Please input the age', trigger: 'blur' },
-            { validator: checkAge, trigger: 'change' }
+            { validator: checkAge, trigger: 'blur' }
           ]
         },
         dynamicForm: {
           domains: [{
-            key: 1,
+            key: Date.now(),
             value: ''
           }],
           email: ''
@@ -174,6 +172,9 @@
       handleReset2() {
         this.$refs.ruleForm2.resetFields();
       },
+      handleReset3() {
+        this.$refs.dynamicForm.resetFields();
+      },
       handleValidate(prop, errorMsg) {
         console.log(prop, errorMsg);
       },
@@ -191,7 +192,7 @@
       },
       addDomain() {
         this.dynamicForm.domains.push({
-          key: this.dynamicForm.domains.length,
+          key: Date.now(),
           value: ''
         });
       }
@@ -634,7 +635,7 @@ Form component allows you to verify your data, helping you find and correct erro
     <el-input type="password" v-model="ruleForm2.checkPass" auto-complete="off"></el-input>
   </el-form-item>
   <el-form-item label="Age" prop="age">
-    <el-input v-model="ruleForm2.age"></el-input>
+    <el-input v-model.number="ruleForm2.age"></el-input>
   </el-form-item>
   <el-form-item>
     <el-button type="primary" @click="handleSubmit2">Submit</el-button>
@@ -645,21 +646,22 @@ Form component allows you to verify your data, helping you find and correct erro
   export default {
     data() {
       var checkAge = (rule, value, callback) => {
-        var age = parseInt(value, 10);
-
+        if (!value) {
+          return callback(new Error('Please input the age'));
+        }
         setTimeout(() => {
-          if (!Number.isInteger(age)) {
+          if (!Number.isInteger(value)) {
             callback(new Error('Please input digits'));
-          } else{
-            if (age < 18) {
+          } else {
+            if (value < 18) {
               callback(new Error('Age must be greater than 18'));
             } else {
               callback();
             }
-          } 
+          }
         }, 1000);
       };
-      var validatePass = (rule, value, callback) => {
+      var validaePass = (rule, value, callback) => {
         if (value === '') {
           callback(new Error('Please input the password'));
         } else {
@@ -669,7 +671,7 @@ Form component allows you to verify your data, helping you find and correct erro
           callback();
         }
       };
-      var validatePass2 = (rule, value, callback) => {
+      var validaePass2 = (rule, value, callback) => {
         if (value === '') {
           callback(new Error('Please input the password again'));
         } else if (value !== this.ruleForm2.pass) {
@@ -686,16 +688,13 @@ Form component allows you to verify your data, helping you find and correct erro
         },
         rules2: {
           pass: [
-            { required: true, message: 'Please input the password', trigger: 'blur' },
-            { validator: validatePass }
+            { validator: validaePass, trigger: 'blur' }
           ],
           checkPass: [
-            { required: true, message: 'Please input the password again', trigger: 'blur' },
-            { validator: validatePass2 }
+            { validator: validaePass2, trigger: 'blur' }
           ],
           age: [
-            { required: true, message: 'Please input the age', trigger: 'blur' },
-            { validator: checkAge, trigger: 'change' }
+            { validator: checkAge, trigger: 'blur' }
           ]
         }
       };
@@ -718,6 +717,7 @@ Form component allows you to verify your data, helping you find and correct erro
   }
 </script>
 ```
+:::
 
 ### Delete or add form items dynamically
 
@@ -732,19 +732,17 @@ Form component allows you to verify your data, helping you find and correct erro
     v-for="(domain, index) in dynamicForm.domains"
     :label="'Domain' + index"
     :key="domain.key"
-    :prop="'domains:' + index"
+    :prop="'domains.' + index + '.value'"
     :rules="{
-      type: 'object', required: true,
-      fields: {
-        value: { required: true, message: 'domain can not be null', trigger: 'blur' }
-      }
+      required: true, message: 'domain can not be null', trigger: 'blur'
     }"
   >
-    <el-input v-model="domain.value"></el-input><el-button @click.native.prevent="removeDomain(domain)">Delete</el-button>
+    <el-input v-model="domain.value"></el-input><el-button @click.prevent="removeDomain(domain)">Delete</el-button>
   </el-form-item>
   <el-form-item>
     <el-button type="primary" @click="handleSubmit3">Submit</el-button>
     <el-button @click="addDomain">New domain</el-button>
+    <el-button @click="handleReset3">Reset</el-button>
   </el-form-item>
 </el-form>
 <script>
@@ -777,15 +775,18 @@ Form component allows you to verify your data, helping you find and correct erro
           }
         });
       },
+      handleReset3() {
+        this.$refs.dynamicForm.resetFields();
+      },
       removeDomain(item) {
-        var index = this.dynamicForm.domains.indexOf(item)
+        var index = this.dynamicForm.domains.indexOf(item);
         if (index !== -1) {
-          this.dynamicForm.domains.splice(index, 1)
+          this.dynamicForm.domains.splice(index, 1);
         }
       },
       addDomain() {
         this.dynamicForm.domains.push({
-          key: this.dynamicForm.domains.length,
+          key: Date.now(),
           value: ''
         });
       }
@@ -822,7 +823,5 @@ Form component allows you to verify your data, helping you find and correct erro
 | label | label | string | — | — |
 | label-width | width of label, e.g. '50px' | string | — | — |
 | required | whether the field is required or not, will be determined by validation rules if omitted | string |  — | false |
-
-
-
-
+| rules | validation rules of form | object | — | — |
+| error | field error message, set its value and the field will validate error and show this message immediately | string | — | — |

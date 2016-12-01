@@ -8,6 +8,7 @@ class TableLayout {
     this.store = null;
     this.columns = null;
     this.fit = true;
+    this.showHeader = true;
 
     this.height = null;
     this.scrollX = false;
@@ -41,6 +42,8 @@ class TableLayout {
   }
 
   updateScrollY() {
+    const height = this.height;
+    if (typeof height !== 'string' || typeof height !== 'number') return;
     const bodyWrapper = this.table.$refs.bodyWrapper;
     if (this.table.$el && bodyWrapper) {
       const body = bodyWrapper.querySelector('.el-table__body');
@@ -50,16 +53,21 @@ class TableLayout {
   }
 
   setHeight(height) {
-    if (typeof height === 'string' && /^\d+$/.test(height)) {
-      height = Number(height);
+    const el = this.table.$el;
+    if (typeof height === 'string') {
+      if (/^\d+$/.test(height)) {
+        height = Number(height);
+      }
     }
 
     this.height = height;
 
-    const el = this.table.$el;
-    if (!isNaN(height) && el) {
+    if (!el) return;
+    if (!isNaN(height)) {
       el.style.height = height + 'px';
 
+      this.updateHeight();
+    } else if (typeof height === 'string') {
       this.updateHeight();
     }
   }
@@ -67,12 +75,23 @@ class TableLayout {
   updateHeight() {
     const height = this.tableHeight = this.table.$el.clientHeight;
     const { headerWrapper } = this.table.$refs;
-    if (!headerWrapper) return;
-    const headerHeight = this.headerHeight = headerWrapper.offsetHeight;
-    const bodyHeight = height - headerHeight;
-    if (this.height !== null && !isNaN(this.height)) this.bodyHeight = bodyHeight;
-    this.fixedBodyHeight = this.scrollX ? bodyHeight - this.gutterWidth : bodyHeight;
-    this.viewportHeight = this.scrollX ? height - this.gutterWidth : height;
+    if (this.showHeader && !headerWrapper) return;
+    if (!this.showHeader) {
+      this.headerHeight = 0;
+      if (this.height !== null && (!isNaN(this.height) || typeof this.height === 'string')) {
+        this.bodyHeight = height;
+      }
+      this.fixedBodyHeight = this.scrollX ? height - this.gutterWidth : height;
+      this.viewportHeight = this.scrollX ? height - this.gutterWidth : height;
+    } else {
+      const headerHeight = this.headerHeight = headerWrapper.offsetHeight;
+      const bodyHeight = height - headerHeight;
+      if (this.height !== null && (!isNaN(this.height) || typeof this.height === 'string')) {
+        this.bodyHeight = bodyHeight;
+      }
+      this.fixedBodyHeight = this.scrollX ? bodyHeight - this.gutterWidth : bodyHeight;
+      this.viewportHeight = this.scrollX ? height - this.gutterWidth : height;
+    }
   }
 
   update() {
@@ -130,6 +149,8 @@ class TableLayout {
       flattenColumns.forEach((column) => {
         if (!column.width && !column.minWidth) {
           column.realWidth = 80;
+        } else {
+          column.realWidth = column.width || column.minWidth;
         }
 
         bodyMinWidth += column.realWidth;

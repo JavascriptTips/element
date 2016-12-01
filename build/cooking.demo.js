@@ -26,7 +26,7 @@ cooking.set({
       favicon: './examples/favicon.ico'
     }
   ],
-  publicPath: process.env.CI_ENV || '/',
+  publicPath: process.env.CI_ENV || '',
   hash: true,
   devServer: {
     port: 8085,
@@ -42,6 +42,11 @@ cooking.set({
   extends: ['vue2', 'lint'],
   postcss: config.postcss
 });
+
+// fix publicPath
+if (!process.env.CI_ENV) {
+  cooking.add('output.publicPath', '');
+}
 
 cooking.add('loader.md', {
   test: /\.md$/,
@@ -66,7 +71,7 @@ cooking.add('vueMarkdown', {
         if (tokens[idx].nesting === 1) {
           var description = (m && m.length > 1) ? m[1] : '';
           var content = tokens[idx + 1].content;
-          var html = convert(striptags.strip(content, ['script', 'style']));
+          var html = convert(striptags.strip(content, ['script', 'style'])).replace(/(<[^>]*)=""(?=.*>)/g, '$1');
           var script = striptags.fetch(content, 'script');
           var style = striptags.fetch(content, 'style');
           var jsfiddle = { html: html, script: script, style: style };

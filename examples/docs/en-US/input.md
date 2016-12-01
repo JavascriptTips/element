@@ -83,7 +83,7 @@
 <style>
   .demo-input.demo-en-US {
     .el-select .el-input {
-      width: 100px;
+      width: 120px;
     }
     .text {
       font-size: 14px;
@@ -110,17 +110,14 @@
       display: inline-block;
     }
     .inline-input {
-      .el-input {
+      &.el-input {
         display: inline-block;
         vertical-align: top;
         margin: 10px 5px;
       }
-      .el-autocomplete {
+      &.el-autocomplete {
+        display: inline-block;
         margin: 10px 0 0;
-
-        .el-input {
-          margin: 0;
-        }
       }
     }
     .tac {
@@ -166,6 +163,16 @@ Input data using mouse or keyboard.
   placeholder="Please input"
   v-model="input">
 </el-input>
+
+<script>
+export default {
+  data() {
+    return {
+      input: ''
+    }
+  }
+}
+</script>
 ```
 :::
 
@@ -179,6 +186,16 @@ Input data using mouse or keyboard.
   v-model="input1"
   :disabled="true">
 </el-input>
+
+<script>
+export default {
+  data() {
+    return {
+      input1: ''
+    }
+  }
+}
+</script>
 ```
 :::
 
@@ -195,6 +212,21 @@ Add an icon to indicate input type.
   v-model="input2"
   @click="handleIconClick">
 </el-input>
+
+<script>
+export default {
+  data() {
+    return {
+      input2: ''
+    }
+  },
+  methods: {
+    handleIconClick(ev) {
+      console.log(ev);
+    }
+  }
+}
+</script>
 ```
 :::
 
@@ -211,7 +243,19 @@ Resizable for entering multiple lines of text information.
   placeholder="Please input"
   v-model="textarea">
 </el-input>
+
+<script>
+export default {
+  data() {
+    return {
+      textarea: ''
+    }
+  }
+}
+</script>
 ```
+:::
+
 ### Mixed input
 
 Prepend or append an element, generally a label or a button.
@@ -226,13 +270,32 @@ Prepend or append an element, generally a label or a button.
   <template slot="append">.com</template>
 </el-input>
 <el-input placeholder="Please input" v-model="input5" style="width: 300px;">
-  <el-select v-model="select" slot="prepend">
-    <el-option label="restaurant" value="1"></el-option>
-    <el-option label="order number" value="2"></el-option>
-    <el-option label="tel" value="3"></el-option>
+  <el-select v-model="select" slot="prepend" placeholder="Select">
+    <el-option label="Restaurant" value="1"></el-option>
+    <el-option label="Order No." value="2"></el-option>
+    <el-option label="Tel" value="3"></el-option>
   </el-select>
   <el-button slot="append" icon="search"></el-button>
 </el-input>
+
+<style>
+.el-select .el-input {
+  width: 120px;
+}
+</style>
+
+<script>
+export default {
+  data() {
+    return {
+      input3: '',
+      input4: '',
+      input5: '',
+      select: ''
+    }
+  }
+}
+</script>
 ```
 :::
 
@@ -240,27 +303,44 @@ Prepend or append an element, generally a label or a button.
 
 ::: demo Add `size` attribute to change the size of Input. In addition to the default size, there are three other options: `large`, `small` and `mini`.
 ```html
-<div class="inline-input">
+<div>
   <el-input
+    class="inline-input"
     size="large"
     placeholder="Please input"
     v-model="input6">
   </el-input>
   <el-input
+    class="inline-input"
     placeholder="Please input"
     v-model="input7">
   </el-input>
   <el-input
+    class="inline-input"
     size="small"
     placeholder="Please input"
     v-model="input8">
   </el-input>
   <el-input
+    class="inline-input"
     size="mini"
     placeholder="Please input"
     v-model="input9">
   </el-input>
 </div>
+
+<script>
+export default {
+  data() {
+    return {
+      input6: '',
+      input7: '',
+      input8: '',
+      input9: ''
+    }
+  }
+}
+</script>
 ```
 :::
 
@@ -270,10 +350,11 @@ You can get some recommended tips based on the current input.
 
 ::: demo Autocomplete component provides input suggestions. The `fetch-suggestions` attribute is a method that returns suggested input. In this example, `querySearch(queryString, cb)` returns suggestions to Autocomplete via `cb(data)` when suggestions are ready.
 ```html
-<el-row class="inline-input border-grid">
+<el-row class="border-grid">
   <el-col :span="12" class="tac">
     <div class="text">list suggestions when activated</div>
     <el-autocomplete
+      class="inline-input"
       v-model="state1"
       :fetch-suggestions="querySearch"
       placeholder="Please input"
@@ -283,6 +364,7 @@ You can get some recommended tips based on the current input.
   <el-col :span="12" class="tac">
     <div class="text">list suggestions on input</div>
     <el-autocomplete
+      class="inline-input"
       v-model="state2"
       :fetch-suggestions="querySearch"
       placeholder="Please input"
@@ -350,8 +432,25 @@ Customize how suggestions are displayed.
   @select="handleSelect"
 ></el-autocomplete>
 
+<style>
+  .my-autocomplete {
+    li {
+      line-height: normal;
+      padding: 7px;
+
+      .value {
+        text-overflow: ellipsis;
+        overflow: hidden;
+      }
+      .link {
+        font-size: 12px;
+        color: #b4b4b4;
+      }
+    }
+  }
+</style>
+
 <script>
-  var Vue = require('vue');
   Vue.component('my-item-en', {
     functional: true,
     render: function (h, ctx) {
@@ -466,7 +565,7 @@ Search data from server-side.
 ```
 :::
 
-### Input API
+### Input Attributes
 
 | Attribute      | Description          | Type      | Accepted Values       | Default  |
 | ----| ----| ----| ---- | ----- |
@@ -494,7 +593,7 @@ Search data from server-side.
 |----| ----| ----|
 |click | triggers when the icon inside Input is clicked | event object |
 
-### Autocomplete API
+### Autocomplete Attributes
 
 Attribute | Description | Type | Options | Default
 |----| ----| ----| ---- | -----|
