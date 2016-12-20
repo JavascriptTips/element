@@ -1,5 +1,5 @@
 <template>
-  <transition name="md-fade-bottom" @after-leave="$emit('dodestroy')">
+  <transition name="el-zoom-in-top" @after-leave="$emit('dodestroy')">
     <div
       v-show="visible"
       :style="{ width: width + 'px' }"
@@ -21,20 +21,23 @@
           <div class="el-date-range-picker__time-header" v-if="showTime">
             <span class="el-date-range-picker__editors-wrap">
               <span class="el-date-range-picker__time-picker-wrap">
-                <input
+                <el-input
+                  size="small"
+                  ref="minInput"
                   :placeholder="t('el.datepicker.startDate')"
                   class="el-date-range-picker__editor"
                   :value="minVisibleDate"
-                  @input="handleDateInput($event, 'min')"
-                  @change="handleDateChange($event, 'min')"/>
+                  @input.native="handleDateInput($event, 'min')"
+                  @change.native="handleDateChange($event, 'min')" />
               </span>
               <span class="el-date-range-picker__time-picker-wrap">
-                <input
+                <el-input
+                  size="small"
                   :placeholder="t('el.datepicker.startTime')"
                   class="el-date-range-picker__editor"
                   :value="minVisibleTime"
                   @focus="minTimePickerVisible = !minTimePickerVisible"
-                  @change="handleTimeChange($event, 'min')"/>
+                  @change.native="handleTimeChange($event, 'min')" />
                 <time-picker
                   :picker-width="minPickerWidth"
                   ref="minTimePicker"
@@ -47,24 +50,25 @@
             <span class="el-icon-arrow-right"></span>
             <span class="el-date-range-picker__editors-wrap is-right">
               <span class="el-date-range-picker__time-picker-wrap">
-                <input
-                  ref="minInput"
+                <el-input
+                  size="small"
                   :placeholder="t('el.datepicker.endDate')"
                   class="el-date-range-picker__editor"
                   :value="maxVisibleDate"
                   :readonly="!minDate"
-                  @input="handleDateInput($event, 'max')"
-                  @change="handleDateChange($event, 'max')" />
+                  @input.native="handleDateInput($event, 'max')"
+                  @change.native="handleDateChange($event, 'max')" />
               </span>
               <span class="el-date-range-picker__time-picker-wrap">
-                <input
+                <el-input
+                  size="small"
                   ref="maxInput"
                   :placeholder="t('el.datepicker.endTime')"
                   class="el-date-range-picker__editor"
                   :value="maxVisibleTime"
                   @focus="minDate && (maxTimePickerVisible = !maxTimePickerVisible)"
                   :readonly="!minDate"
-                  @change="handleTimeChange($event, 'max')" />
+                  @change.native="handleTimeChange($event, 'max')" />
                 <time-picker
                   :picker-width="maxPickerWidth"
                   ref="maxTimePicker"
@@ -142,6 +146,9 @@
 <script type="text/babel">
   import { nextMonth, prevMonth, toDate, formatDate, parseDate } from '../util';
   import Locale from 'element-ui/src/mixins/locale';
+  import TimePicker from './time';
+  import DateTable from '../basic/date-table';
+  import ElInput from 'element-ui/packages/input';
 
   export default {
     mixins: [Locale],
@@ -176,19 +183,19 @@
       },
 
       minVisibleDate() {
-        return formatDate(this.minDate);
+        return this.minDate ? formatDate(this.minDate) : '';
       },
 
       maxVisibleDate() {
-        return formatDate(this.maxDate || this.minDate);
+        return (this.maxDate || this.minDate) ? formatDate(this.maxDate || this.minDate) : '';
       },
 
       minVisibleTime() {
-        return formatDate(this.minDate, 'HH:mm:ss');
+        return this.minDate ? formatDate(this.minDate, 'HH:mm:ss') : '';
       },
 
       maxVisibleTime() {
-        return formatDate(this.maxDate, 'HH:mm:ss');
+        return (this.maxDate || this.minDate) ? formatDate(this.maxDate || this.minDate, 'HH:mm:ss') : '';
       },
 
       rightDate() {
@@ -234,8 +241,8 @@
       showTime(val) {
         if (!val) return;
         this.$nextTick(_ => {
-          const minInputElm = this.$refs.minInput;
-          const maxInputElm = this.$refs.maxInput;
+          const minInputElm = this.$refs.minInput.$el;
+          const maxInputElm = this.$refs.maxInput.$el;
           if (minInputElm) {
             this.minPickerWidth = minInputElm.getBoundingClientRect().width + 10;
           }
@@ -275,6 +282,8 @@
         } else if (Array.isArray(newVal)) {
           this.minDate = newVal[0] ? toDate(newVal[0]) : null;
           this.maxDate = newVal[1] ? toDate(newVal[1]) : null;
+          if (this.minDate) this.date = new Date(this.minDate);
+          this.handleConfirm(true);
         }
       }
     },
@@ -446,8 +455,8 @@
         this.resetDate();
       },
 
-      handleConfirm() {
-        this.$emit('pick', [this.minDate, this.maxDate]);
+      handleConfirm(visible) {
+        this.$emit('pick', [this.minDate, this.maxDate], visible);
       },
 
       resetDate() {
@@ -455,9 +464,6 @@
       }
     },
 
-    components: {
-      TimePicker: require('./time'),
-      DateTable: require('../basic/date-table')
-    }
+    components: { TimePicker, DateTable, ElInput }
   };
 </script>

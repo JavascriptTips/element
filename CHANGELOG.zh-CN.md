@@ -1,5 +1,57 @@
 ## 更新日志
 
+### 1.0.7
+*2016-12-14*
+
+- 修复 DatePicker 在有值的情况下 hover 清空按钮时会错误地显示弹框
+- 修复 DatePicker 设置默认值为 null 会错误地显示时间值
+- 新增 Table 的 `row-contextmenu` 事件和 `max-height` 属性，#1663 #1674
+- 新增 MessageBox 的 `customClass` 属性，#1707
+- 新增 Message 和 Notification 的 `iconClass` 和 `customClass` 属性，#1671
+- 新增 Table 支持 empty slot，#1737
+- 改进 InputNumber change 事件增加 old value 的参数
+
+### 1.0.6
+*2016-12-09*
+
+- 新增 Tabs 组件的 `disabled` 属性，#1620
+- 新增 DatePicker 的 input 支持 `size`，#1440
+- 修复 DatePicker 为 `datetimerange` 类型并设置初始值时，面板未显示正确日期的问题，#1129
+- 修复 DatePicker 切换年份时显示异常的问题，#1607
+- 修复 DatePicker 点击 icon 未触发 clickoutside 的问题，#1604
+- 修复 TimePicker 点击清空按钮后再次点击不会更新初始值的问题，#1583
+- 修复 Select 远程搜索且 value 为对象类型时的显示问题，#1593
+- 修复 Select 为 `disabled` 时，`clearable` 仍然可以工作的问题，#1619
+- 修复 自定义背景颜色的 Switch 在动态切换 `disabled` 时，背景颜色错误的问题，#1627
+- 修复 Table 的一些样式问题
+
+### 1.0.5
+*2016-12-06*
+
+- 修复 Select 异步获取选项和绑定值时，输入框中显示 value 而不是 label 的问题，#1537
+- 修复 Select 的初始值为一个空对象时会报错的问题，#1533
+- 修复 Select 远程搜索有时不显示下拉框的问题，#1531
+- 修复 Slider 拖动释放后，滑块有几率产生一小段位移的问题，#1546
+- 修复 IE9 下 Steps 的样式问题，#1543
+- 新增 Upload 对所有文件类型生成 URL 的功能，#1530
+- 修复 TimeSelect 的样式，移除 flexbox, #1335
+
+### 1.0.4
+*2016-12-02*
+
+- 新增 Input Number 的 `controls` 属性，#1473
+- 修复 Checkbox Group、Radio Group 在异步赋值时出现的问题，#1511 #1514
+- 增加 Notification 的 `offset` 属性，#1419
+- 修复 Slider 在快速拖动时取值不准确的问题，#1458
+- 修复 Slider 在某些情况下绑定值为多位小数的问题，#1450
+- 修复 Select 在某些情况下绑定值和显示值不同步的问题
+- 新增 Select 的 `multiple-limit` 和 `allow-create` 属性
+- 修复 Tree 的叶子节点在点击展开后三角图标不消失的问题，#1438
+- 修复 Tree 有时在获取子级数据后视图不更新的问题，#1439
+- 修复 Table 在 windows 系统下的若干样式问题，#1464 #1507
+- 修复 Table 多级表头与固定列同时使用时，多级表头第一列 label 不显示的问题，#1451
+- 新增 Table 的 `row-dblclick` 事件，#1362
+
 ### 1.0.3
 *2016-11-28*
 

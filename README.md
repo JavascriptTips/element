@@ -1,3 +1,6 @@
+<p align="center">
+  <img src="https://cdn.rawgit.com/ElemeFE/element/dev/element_logo.svg">
+</p>
 # Element
 [![Build Status](https://travis-ci.org/ElemeFE/element.svg?branch=master)](https://travis-ci.org/ElemeFE/element)
 [![Coverage Status](https://coveralls.io/repos/github/ElemeFE/element/badge.svg?branch=master)](https://coveralls.io/github/ElemeFE/element?branch=master)
@@ -13,6 +16,7 @@
 ## Links
 - [Home Page](http://element.eleme.io/)
 - [Docs](http://element.eleme.io/#/component)
+- [awesome-element](https://github.com/ElementUI/awesome-element)
 - [FAQ](./FAQ.md)
 - [Customize Theme](http://element.eleme.io/#/en-US/component/custom-theme)
 - Starter Kit
@@ -65,6 +69,23 @@ We have collected some [frequently asked questions](https://github.com/ElemeFE/e
 
 ## Contribution
 Please make sure to read the [Contributing Guide](https://github.com/ElemeFE/element/blob/master/.github/CONTRIBUTING.md) before making a pull request.
+
+## Special Thanks
+English documentation is brought to you by SwiftGG Translation Team. Our special thanks go to these fellows:
+- [raychenfj](https://github.com/raychenfj)
+- [kevin](http://thekevin.cn/)
+- [曾小涛](https://github.com/zengxiaotao)
+- [湾仔王二](https://github.com/wanzaiwanger)
+- [BlooDLine](http://www.ibloodline.com/)
+- [陈铭嘉](https://chenmingjia.github.io/)
+- [千叶知风](http://mpc6.com/)
+- [梁杰](http://numbbbbb.com)
+- [Changing](https://github.com/sunzhuo11)
+- [mmoaay](https://github.com/mmoaay)
+
+## Donation
+If you find Element useful, you can buy us a cup of coffee
+<img width="650" src="http://fuss10.elemecdn.com/2/d0/ab1b8e5a1d96bcdcd6092ce0c66ecjpeg.jpeg" alt="">
 
 ## LICENSE
 MIT

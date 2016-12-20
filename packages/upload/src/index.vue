@@ -83,6 +83,20 @@ export default {
     };
   },
 
+  watch: {
+    defaultFileList: {
+      immediate: true,
+      handler(fileList) {
+        this.fileList = fileList.map(item => {
+          item.status = 'finished';
+          item.percentage = 100;
+          item.uid = Date.now() + this.tempIndex++;
+          return item;
+        });
+      }
+    }
+  },
+
   methods: {
     handleStart(file) {
       file.uid = Date.now() + this.tempIndex++;
@@ -95,13 +109,11 @@ export default {
         showProgress: true
       };
 
-      if (this.thumbnailMode) {
-        try {
-          _file.url = URL.createObjectURL(file);
-        } catch (err) {
-          console.log(err);
-          return;
-        }
+      try {
+        _file.url = URL.createObjectURL(file);
+      } catch (err) {
+        console.error(err);
+        return;
       }
 
       this.fileList.push(_file);
@@ -158,20 +170,6 @@ export default {
     }
   },
 
-  watch: {
-    defaultFileList: {
-      immediate: true,
-      handler(fileList) {
-        this.fileList = fileList.map(item => {
-          item.status = 'finished';
-          item.percentage = 100;
-          item.uid = Date.now() + this.tempIndex++;
-          return item;
-        });
-      }
-    }
-  },
-
   render(h) {
     var uploadList;
 
@@ -195,7 +193,7 @@ export default {
         headers: this.headers,
         name: this.name,
         data: this.data,
-        accept: this.thumbnailMode ? 'image/*' : this.accept,
+        accept: this.thumbnailMode ? 'image/gif, image/png, image/jpeg, image/bmp, image/webp' : this.accept,
         'on-start': this.handleStart,
         'on-progress': this.handleProgress,
         'on-success': this.handleSuccess,

@@ -1,6 +1,11 @@
 import { getCell, getColumnByCell, getRowIdentity } from './util';
+import ElCheckbox from 'element-ui/packages/checkbox';
 
 export default {
+  components: {
+    ElCheckbox
+  },
+
   props: {
     store: {
       required: true
@@ -36,7 +41,9 @@ export default {
               <tr
                 style={ this.rowStyle ? this.getRowStyle(row, $index) : null }
                 key={ this.$parent.rowKey ? this.getKeyOfRow(row, $index) : $index }
+                on-dblclick={ ($event) => this.handleDoubleClick($event, row) }
                 on-click={ ($event) => this.handleClick($event, row) }
+                on-contextmenu={ ($event) => this.handleContextMenu($event, row) }
                 on-mouseenter={ _ => this.handleMouseEnter($index) }
                 on-mouseleave={ _ => this.handleMouseLeave() }
                 class={ this.getRowClass(row, $index) }>
@@ -193,6 +200,16 @@ export default {
 
     handleMouseLeave() {
       this.store.commit('setHoverRow', null);
+    },
+
+    handleContextMenu(event, row) {
+      const table = this.$parent;
+      table.$emit('row-contextmenu', row, event);
+    },
+
+    handleDoubleClick(event, row) {
+      const table = this.$parent;
+      table.$emit('row-dblclick', row, event);
     },
 
     handleClick(event, row) {

@@ -1,10 +1,10 @@
 <template>
-  <transition name="md-fade-bottom" @after-leave="$emit('dodestroy')">
+  <transition name="el-zoom-in-top" @after-leave="$emit('dodestroy')">
     <div
       v-show="currentVisible"
       :style="{width: width + 'px'}"
       class="el-time-panel">
-      <div class="el-time-panel__content">
+      <div class="el-time-panel__content" :class="{ 'has-seconds': showSeconds }">
         <time-spinner
           ref="spinner"
           @change="handleChange"
@@ -72,6 +72,7 @@
           minutes: date.getMinutes(),
           seconds: date.getSeconds()
         });
+        this.$nextTick(_ => this.ajustScrollTop());
       },
 
       selectableRange(val) {
