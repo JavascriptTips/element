@@ -1,0 +1,32 @@
+{
+  "name": "element-theme-weike",
+  "version": "1.1.2",
+  "description": "Element component default theme.",
+  "main": "lib/index.css",
+  "style": "lib/index.css",
+  "files": [
+    "lib",
+    "src"
+  ],
+  "scripts": {
+    "build": "gulp build"
+  },
+  "repository": {
+    "type": "git"
+  },
+  "keywords": [
+    "element",
+    "theme"
+  ],
+  "author": "haiping.zeng <qingwei.li@ele.me>",
+  "license": "MIT",
+  "bugs": {
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-cssmin": "^0.1.7",
+    "gulp-postcss": "^6.1.1",
+    "postcss-salad": "^1.0.5"
+  },
+  "dependencies": {}
+}

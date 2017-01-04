@@ -42,7 +42,14 @@ cooking.set({
   extractCSS: true,
   alias: config.alias,
   extends: ['vue2', 'lint'],
-  postcss: config.postcss
+  postcss: config.postcss,
+  stats: {
+    // Configure the console output
+    errorDetails: true, // this does show errors
+    colors: false,
+    modules: true,
+    reasons: true
+  }
 });
 
 // fix publicPath

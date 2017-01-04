@@ -2,7 +2,8 @@ var fs = require('fs');
 var path = require('path');
 var Components = require('../../components.json');
 var THEMES = [
-  'theme-default'
+  'theme-default',
+  'theme-weike'
 ];
 var BASEPATH = path.resolve(__dirname, '../../packages/');
 Components = Object.keys(Components);
