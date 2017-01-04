@@ -345,7 +345,7 @@
 
   --button-primary-border: var(--color-primary);
   --button-primary-color: var(--color-white);
-  --button-primary-fill: var(--color-primary);
+  --button-primary-fill: #0097e8; /*var(--color-primary);*/
 
   --button-success-border: var(--color-success);
   --button-success-color: var(--color-white);
