@@ -1,5 +1,88 @@
 ## Changelog
 
+### 1.1.2
+
+*2016-12-30*
+
+- Fixed `sortable` and `fixed` attribute of Table not working in Vue 2.1.7+
+- Fixed Input Number not resetting on blur when input with illegal values, #2098
+- Removed `title` scoped slot of Collapse, and added `title` named slot, #2100
+- Fixed range selection in TimePicker not working issue
+- Fixed Tabs' active tab switching when a non-active tab is removed, #2106
+- Fixed console error reporting when navigating Select with arrow keys, #2120
+- Fixed incorrect validation timing of filterable Select in Form, #2120
+
+### 1.1.1
+
+*2016-12-29*
+
+- Fixed compatibility issue with latest Vue due to compilation
+
+### 1.1.0 Helium
+
+*2016-12-29*
+
+New features:
+- Two brand new components: Carousel and Collapse
+- SSR supported
+- Scrollbars' style inside components is upgraded
+- Table now supports custom templates via [scoped slots](http://vuejs.org/v2/guide/components.html#Scoped-Slots); the good old `inline-template` is still compatible, but it's no longer recommended and is likely to be removed in the future
+- Table now supports expandable rows
+- DatePicker now supports specifying the first day of week
+- TimeSelect now supports `maxTime`
+- Autocomplete now supports `popper-class`
+- To customize template of Tab-Pane, now you can use the `slot` named `label`
+
+Fixes:
+- `change` event of DatePicker incorrectly triggering multiple times, #2070
+- Width shaking of tab-pane while initializing, #1883
+
+Breaking changes:
+- Only compatible with Vue 2.1.6 and beyond
+- Parameters of Form validateField() methods are updated
+- Alert's render-content attribute is removed, and now you can pass your custom template via default slot
+- The box models of Input and Select are updated from `block` to `inline-block`
+- The box model of Tabs is updated from `inline-block` to `block`, and Tab-Pane's `label-content` attribute is removed
+- The dropdown of Autocomplete now inserts directly to `<body>`, not `<el-autocomplete>` any more
+
+### 1.0.9
+
+*2016-12-27*
+
+- Fixed DatePicker incorrectly triggering input event, #1834
+- Fixed Tree reporting `event is undefined` error in Firefox, #1945
+- Added `change` event for DatePicker, whose parameter is the formatted value, #1841
+- Added `header-align` attribute for Table, #1424
+- Fixed single select Table's highlight style not removing when data is removed, #1890
+- Fixed filterable Select lagging issue with more options, #1933
+- Fixed multiple disabled Select not disabling removing selected options issue, #2001
+- Fixed Col style not working in `xs`, #2011
+- Added `value` attribute for Tab, #2008
+- Fixed InputNumber `change` event incorrectly firing multiple times in some conditions, #1999
+- Added `clearable` attribute for DatePicker, #1994
+- Fixed Form always passing validation in async mode, #1936
+
+### 1.0.8
+
+*2016-12-20*
+
+- Fixed nested Popup from event bubbling, #1677
+- Fixed the issue that datetimerange-typed DatePicker can not select time, #1758
+- Fixed `change` event not firing correctly of Slider, #1809
+- Fixed Loading's spinner splitting while animating in some conditions, #1786
+- Added `loading-text`, `no-data-text`, `no-match-text` properties and `visible-change` event for Select, #1849
+- Added `popper-class` property for DatePicker, Select and Tooltip, #1806
+- Added `expand-on-click-node`, `current-node-key` properties and `current-change` event for Tree, #1805 #1807
+- Added the third parameter `column` for Table's `row-click` event, #1808
+- Fixed an error when pages with Checkbox switching routes due to `computed` property being cached, #1860
+- Added the tab instance as a parameter for TabPanel's `label-content` render function, #1857
+- Added infinite submenus support for NavMenu in vertical mode, #1851
+- Updated Checkbox so that it works without a binding value, #1818
+- Added `onProgress` hook for Progress, #1782
+- Fixed Tab not updating active bar with dynamic label, #1761
+- Added `filter-change` event for Table, and `column-key` property for TableColumn, #1876
+- Added `hide-on-click` property for Dropdown, #1879
+
 ### 1.0.7
 
 *2016-12-14*

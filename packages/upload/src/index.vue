@@ -62,6 +62,10 @@ export default {
       type: Function,
       default: noop
     },
+    onProgress: {
+      type: Function,
+      default: noop
+    },
     onError: {
       type: Function,
       default: noop
@@ -120,6 +124,7 @@ export default {
     },
     handleProgress(ev, file) {
       var _file = this.getFile(file);
+      this.onProgress(ev, _file, this.fileList);
       _file.percentage = ev.percent || 0;
     },
     handleSuccess(res, file) {
@@ -204,9 +209,9 @@ export default {
       ref: 'upload-inner'
     };
 
-    var uploadComponent = typeof FormData !== 'undefined'
-      ? <upload {...props}>{this.$slots.default}</upload>
-      : <iframeUpload {...props}>{this.$slots.default}</iframeUpload>;
+    var uploadComponent = (typeof FormData !== 'undefined' || this.$isServer)
+        ? <upload {...props}>{this.$slots.default}</upload>
+        : <iframeUpload {...props}>{this.$slots.default}</iframeUpload>;
 
     if (this.type === 'select') {
       return (

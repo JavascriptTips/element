@@ -48,6 +48,7 @@
       :size="size"
       :disabled="disabled"
       :readonly="!filterable || multiple"
+      :validate-event="false"
       @focus="toggleMenu"
       @click="handleIconClick"
       @mousedown.native="handleMouseDown"
@@ -65,8 +66,10 @@
       <el-select-menu
         ref="popper"
         v-show="visible && emptyText !== false">
-        <ul
-          class="el-select-dropdown__list"
+        <el-scrollbar
+          tag="ul"
+          wrap-class="el-select-dropdown__wrap"
+          view-class="el-select-dropdown__list"
           :class="{ 'is-empty': !allowCreate && filteredOptionsCount === 0 }"
           v-show="options.length > 0 && !loading">
           <el-option
@@ -75,7 +78,7 @@
             v-if="showNewOption">
           </el-option>
           <slot></slot>
-        </ul>
+        </el-scrollbar>
         <p class="el-select-dropdown__empty" v-if="emptyText && !allowCreate">{{ emptyText }}</p>
       </el-select-menu>
     </transition>
@@ -89,9 +92,10 @@
   import ElSelectMenu from './select-dropdown.vue';
   import ElOption from './option.vue';
   import ElTag from 'element-ui/packages/tag';
+  import ElScrollbar from 'element-ui/packages/scrollbar';
   import debounce from 'throttle-debounce/debounce';
   import Clickoutside from 'element-ui/src/utils/clickoutside';
-  import { addClass, removeClass, hasClass } from 'wind-dom/src/class';
+  import { addClass, removeClass, hasClass } from 'element-ui/src/utils/dom';
   import { addResizeListener, removeResizeListener } from 'element-ui/src/utils/resize-event';
   import { t } from 'element-ui/src/locale';
   const sizeMap = {
@@ -124,14 +128,14 @@
 
       emptyText() {
         if (this.loading) {
-          return this.t('el.select.loading');
+          return this.loadingText || this.t('el.select.loading');
         } else {
           if (this.remote && this.query === '' && this.options.length === 0) return false;
           if (this.filterable && this.options.length > 0 && this.filteredOptionsCount === 0) {
-            return this.t('el.select.noMatch');
+            return this.noMatchText || this.t('el.select.noMatch');
           }
           if (this.options.length === 0) {
-            return this.t('el.select.noData');
+            return this.noDataText || this.t('el.select.noData');
           }
         }
         return null;
@@ -148,7 +152,8 @@
       ElInput,
       ElSelectMenu,
       ElOption,
-      ElTag
+      ElTag,
+      ElScrollbar
     },
 
     directives: { Clickoutside },
@@ -162,7 +167,11 @@
       filterable: Boolean,
       allowCreate: Boolean,
       loading: Boolean,
+      popperClass: String,
       remote: Boolean,
+      loadingText: String,
+      noMatchText: String,
+      noDataText: String,
       remoteMethod: Function,
       filterMethod: Function,
       multiple: Boolean,
@@ -194,7 +203,6 @@
         selectedLabel: '',
         hoverIndex: -1,
         query: '',
-        isForcedVisible: false,
         bottomOverflowBeforeHidden: 0,
         topOverflowBeforeHidden: 0,
         optionsAllDisabled: false,
@@ -216,24 +224,22 @@
           } else {
             this.currentPlaceholder = this.cachedPlaceHolder;
           }
-          this.dispatch('ElFormItem', 'el.form.change', val);
         }
         this.setSelected();
         if (this.filterable && !this.multiple) {
           this.inputLength = 20;
         }
         this.$emit('change', val);
+        this.dispatch('ElFormItem', 'el.form.change', val);
       },
 
       query(val) {
-        this.broadcast('ElSelectDropdown', 'updatePopper');
+        this.$nextTick(() => {
+          this.broadcast('ElSelectDropdown', 'updatePopper');
+        });
         this.hoverIndex = -1;
         if (this.multiple && this.filterable) {
           this.resetInputHeight();
-        }
-        if (this.isForcedVisible) {
-          this.isForcedVisible = false;
-          return;
         }
         if (this.remote && typeof this.remoteMethod === 'function') {
           this.hoverIndex = -1;
@@ -271,6 +277,7 @@
             this.getOverflows();
             if (this.selected) {
               this.selectedLabel = this.selected.currentLabel;
+              if (this.filterable) this.query = this.selectedLabel;
             }
           }
         } else {
@@ -282,23 +289,23 @@
               this.$refs.input.focus();
             } else {
               if (!this.remote) {
-                this.isForcedVisible = true;
                 this.broadcast('ElOption', 'queryChange', '');
               }
               this.broadcast('ElInput', 'inputSelect');
             }
           }
           if (!this.dropdownUl) {
-            let dropdownChildNodes = this.$refs.popper.$el.childNodes;
-            this.dropdownUl = [].filter.call(dropdownChildNodes, item => item.tagName === 'UL')[0];
+            this.dropdownUl = this.$refs.popper.$el.querySelector('.el-select-dropdown__wrap');
           }
           if (!this.multiple && this.dropdownUl) {
             this.setOverflow();
           }
         }
+        this.$emit('visible-change', val);
       },
 
       options(val) {
+        if (this.$isServer) return;
         this.optionsAllDisabled = val.length === val.filter(item => item.disabled === true).length;
         if (this.multiple) {
           this.resetInputHeight();
@@ -438,7 +445,9 @@
           let inputChildNodes = this.$refs.reference.$el.childNodes;
           let input = [].filter.call(inputChildNodes, item => item.tagName === 'INPUT')[0];
           input.style.height = Math.max(this.$refs.tags.clientHeight + 6, sizeMap[this.size] || 36) + 'px';
-          this.broadcast('ElSelectDropdown', 'updatePopper');
+          if (this.visible && this.emptyText !== false) {
+            this.broadcast('ElSelectDropdown', 'updatePopper');
+          }
         });
       },
 
@@ -550,7 +559,7 @@
 
       deleteTag(event, tag) {
         let index = this.selected.indexOf(tag);
-        if (index > -1) {
+        if (index > -1 && !this.disabled) {
           this.value.splice(index, 1);
         }
         event.stopPropagation();
@@ -593,6 +602,7 @@
 
       this.$on('handleOptionClick', this.handleOptionSelect);
       this.$on('onOptionDestroy', this.onOptionDestroy);
+      this.$on('setSelected', this.setSelected);
     },
 
     mounted() {

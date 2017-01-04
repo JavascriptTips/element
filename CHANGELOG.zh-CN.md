@@ -1,5 +1,83 @@
 ## 更新日志
 
+### 1.1.2
+*2016-12-30*
+
+- 修复 Vue 2.1.7 升级导致的 Table `sortable` 和 `fixed` 无法使用的问题
+- 修正 Input Number 在手动输入越界值时，blur 触发时没有重置为原来的值的问题，#2098
+- 移除 Collapse 的 `title` scoped slot, 并新增 `title` named slot，#2100
+- 修复 TimePicker 范围选择无法使用的问题
+- 修复 Tabs 删除非当前激活的 tab 后，当前激活的 tab 变化的问题，#2106
+- 修复 Select 在使用方向键导航时控制台报错的问题，#2120
+- 修复 Form 中可搜索的 Select 验证时机错误的问题，#2120
+
+### 1.1.1
+*2016-12-29*
+
+- 修复由于编译而出现的不兼容新版 Vue 的问题
+
+### 1.1.0 Helium
+*2016-12-29*
+
+新特性：
+- 新增 Carousel、Collapse 组件
+- 支持 SSR
+- 组件内的滚动条样式优化
+- Table 支持通过 [Scoped Slots](http://vuejs.org/v2/guide/components.html#Scoped-Slots) 传入模板；原来的 `inline-template` 仍然兼容，但是不再推荐使用，未来可能会被移除
+- Table 支持展开行功能(Expandable rows)
+- DatePicker 支持指定周起始日(first day of week)
+- TimeSelect 支持设置 `maxTime`
+- Autocomplete 新增 `popper-class`属性
+- Tab-Pane 新增 name 为 label 的具名 `slot`，用于实现自定义标签内容
+
+修复：
+- DatePicker 的 `change` 事件错误地触发多次的问题，#2070
+- Tabs 组件内 tab-pane 初始化时宽度抖动的问题，#1883
+
+非兼容性更新：
+- 最低兼容 Vue 2.1.6
+- Form validateField() 方法回调的参数更新
+- Alert 取消了 render-content 属性，现在自定义模板需要通过默认 slot 传入
+- Input 和 Select 盒模型从 `block` 修改为 `inline-block`
+- Tabs 盒模型从 `inline-block` 修改为 `block`，Tab-Pane 移除 `label-content` 属性
+- Autocomplete 下拉列表现在直接插入到 `<body>` 标签下，而不是 `<el-autocomplete>` 下
+
+### 1.0.9
+*2016-12-27*
+
+- 修复 DatePicker 不能正确触发 input 事件的问题，现在只有当日期改变时才触发，#1834
+- 修复 Tree 在 Firefox 下会提示 event is undefined 的问题，#1945
+- 新增 DatePicker 的 `change` 事件，返回和输入框一致的格式化后的值，#1841
+- 新增 Table 的 `header-align` 属性，#1424
+- 修复单选的 Table 在数据移除时，高亮状态仍然存在的问题，#1890
+- 修复可搜索的 Select 在选项较多时的卡顿问题，#1933
+- 修复多选的 Select 在禁用状态下仍然能够手动删除选中项的问题，#2001
+- 修复 Col `xs` 分辨率下样式无效的问题，#2011
+- 新增 Tab 组件的 `value` 属性并支持 `v-model` 用法，#2008
+- 修复 Input Number 在某些条件下 change 事件被触发多次的问题，#1999
+- 新增 DatePicker 的 `clearable` 属性，#1994
+- 修复 Form 异步验证时某些条件下总是验证通过的问题，#1936
+
+### 1.0.8
+*2016-12-20*
+
+- 修复 Popup 在叠加使用时阻止事件冒泡，#1677
+- 修复 DatePicker 类型为 datetimerange 时无法选择时间的问题，#1758
+- 修复 Slider 的 `change` 事件不能正确触发的问题，#1809
+- 修复 Loading 的 spinner 在某些情况下转动时出现碎片的问题，#1786
+- 新增 Select 的 `loading-text`、`no-data-text`、`no-match-text` 属性和 `visible-change` 事件，#1849
+- 新增 DatePicker、Select 和 Tooltip 的 `popper-class` 属性，#1806
+- 新增 Tree 的 `expand-on-click-node`、`current-node-key` 属性和 `current-change` 事件，#1805 #1807
+- 新增 Table `row-click` 事件的第三个参数 `column`，#1808
+- 修复 Checkbox 的在路由切换时因为 computed 属性被缓存导致的bug，#1860
+- 新增 TabPanel `label-content` 渲染钩子方法中增加 tab 实例的参数，#1857
+- 新增 NavMenu 组件增加无限级子菜单（vertical模式）的支持，#1851
+- 新增 Checkbox 现在支持不绑定 value 也可以正常使用，#1818
+- 新增 Progress 的 `onProgress` 钩子函数，#1782
+- 修复 Tab 组件 active bar 在动态 label 下没有更新的问题，#1761
+- 新增 Table 的 `filter-change` 事件和 TableColumn 的 `column-key` 属性，#1876
+- 新增 Dropdown `hide-on-click` 属性，#1879
+
 ### 1.0.7
 *2016-12-14*
 

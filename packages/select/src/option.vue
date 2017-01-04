@@ -86,6 +86,15 @@
       }
     },
 
+    watch: {
+      currentLabel() {
+        this.dispatch('ElSelect', 'setSelected');
+      },
+      value() {
+        this.dispatch('ElSelect', 'setSelected');
+      }
+    },
+
     methods: {
       handleGroupDisabled(val) {
         this.groupDisabled = val;

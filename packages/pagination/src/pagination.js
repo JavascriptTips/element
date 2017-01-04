@@ -1,13 +1,10 @@
 import Pager from './pager.vue';
 import ElSelect from 'element-ui/packages/select';
 import ElOption from 'element-ui/packages/option';
-import Migrating from 'element-ui/src/mixins/migrating';
 import Locale from 'element-ui/src/mixins/locale';
 
 export default {
   name: 'ElPagination',
-
-  mixins: [Migrating],
 
   props: {
     pageSize: {
@@ -55,7 +52,7 @@ export default {
       pager: <pager currentPage={ this.internalCurrentPage } pageCount={ this.internalPageCount } on-change={ this.handleCurrentChange }></pager>,
       next: <next></next>,
       sizes: <sizes pageSizes={ this.pageSizes }></sizes>,
-      slot: <slot></slot>,
+      slot: <my-slot></my-slot>,
       total: <total></total>
     };
     const components = layout.split(',').map((item) => item.trim());
@@ -87,10 +84,20 @@ export default {
   },
 
   components: {
+    MySlot: {
+      render(h) {
+        return (
+          this.$parent.$slots.default
+          ? this.$parent.$slots.default[0]
+          : ''
+        );
+      }
+    },
     Prev: {
       render(h) {
         return (
           <button
+            type="button"
             class={['btn-prev', { disabled: this.$parent.internalCurrentPage <= 1 }]}
             on-click={ this.$parent.prev }>
             <i class="el-icon el-icon-arrow-left"></i>
@@ -103,12 +110,11 @@ export default {
       render(h) {
         return (
           <button
-            class={
-              [
-                'btn-next',
-                { disabled: this.$parent.internalCurrentPage === this.$parent.internalPageCount || this.$parent.internalPageCount === 0 }
-              ]
-            }
+            type="button"
+            class={[
+              'btn-next',
+              { disabled: this.$parent.internalCurrentPage === this.$parent.internalPageCount || this.$parent.internalPageCount === 0 }
+            ]}
             on-click={ this.$parent.next }>
             <i class="el-icon el-icon-arrow-right"></i>
           </button>
@@ -226,16 +232,6 @@ export default {
   },
 
   methods: {
-    getMigratingConfig() {
-      return {
-        props: {},
-        events: {
-          'currentchange': 'Pagination: currentchange has been renamed to current-change',
-          'sizechange': 'Pagination: sizechange has been renamed to size-change'
-        }
-      };
-    },
-
     handleCurrentChange(val) {
       this.internalCurrentPage = this.getValidCurrentPage(val);
     },

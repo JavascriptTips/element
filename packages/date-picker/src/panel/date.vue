@@ -6,10 +6,10 @@
         width: width + 'px'
       }"
       class="el-picker-panel el-date-picker"
-      :class="{
+      :class="[{
         'has-sidebar': $slots.sidebar || shortcuts,
         'has-time': showTime
-      }">
+      }, popperClass]">
       <div class="el-picker-panel__body-wrapper">
         <slot name="sidebar" class="el-picker-panel__sidebar"></slot>
         <div class="el-picker-panel__sidebar" v-if="shortcuts">
@@ -88,6 +88,7 @@
               :value="value"
               :week="week"
               :selection-mode="selectionMode"
+              :first-day-of-week="firstDayOfWeek"
               :disabled-date="disabledDate">
             </date-table>
             <year-table
@@ -189,7 +190,7 @@
     methods: {
       handleClear() {
         this.date = new Date();
-        this.$emit('pick', '');
+        this.$emit('pick');
       },
 
       resetDate() {
@@ -367,6 +368,7 @@
 
     data() {
       return {
+        popperClass: '',
         pickerWidth: 0,
         date: new Date(),
         value: '',
@@ -376,6 +378,7 @@
         visible: false,
         currentView: 'date',
         disabledDate: '',
+        firstDayOfWeek: 7,
         year: null,
         month: null,
         week: null,

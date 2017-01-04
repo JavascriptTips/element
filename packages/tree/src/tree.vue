@@ -33,6 +33,10 @@
       nodeKey: String,
       checkStrictly: Boolean,
       defaultExpandAll: Boolean,
+      expandOnClickNode: {
+        type: Boolean,
+        default: true
+      },
       autoExpandParent: {
         type: Boolean,
         default: true
@@ -58,6 +62,7 @@
         default: false
       },
       highlightCurrent: Boolean,
+      currentNodeKey: [String, Number],
       load: Function,
       filterNodeMethod: Function
     },
@@ -71,6 +76,7 @@
         lazy: this.lazy,
         props: this.props,
         load: this.load,
+        currentNodeKey: this.currentNodeKey,
         checkStrictly: this.checkStrictly,
         defaultCheckedKeys: this.defaultCheckedKeys,
         defaultExpandedKeys: this.defaultExpandedKeys,
@@ -113,6 +119,9 @@
       defaultExpandedKeys(newVal) {
         this.store.defaultExpandedKeys = newVal;
         this.store.setDefaultExpandedKeys(newVal);
+      },
+      currentNodeKey(newVal) {
+        this.store.setCurrentNodeKey(newVal);
       },
       data(newVal) {
         this.store.setData(newVal);

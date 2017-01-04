@@ -83,8 +83,6 @@
           age: ''
         },
         formLabelWidth: '80px',
-        options: [
-        ],
         rules: {
           name: [
             { required: true, message: '请输入活动名称', trigger: 'blur' },
@@ -120,24 +118,24 @@
             { validator: checkAge, trigger: 'blur' }
           ]
         },
-        dynamicForm: {
+        dynamicValidateForm: {
           domains: [{
             value: '',
             key: Date.now()
           }],
           email: ''
         },
-        dynamicRule: {
-          email: [
-            { required: true, message: '请输入邮箱地址', trigger: 'blur' },
-            { type: 'email', message: '请输入正确的邮箱地址', trigger: 'blur,change' }
-          ]
+        numberValidateForm: {
+          age: ''
         }
       };
     },
     methods: {
-      handleSubmit(ev) {
-        this.$refs.ruleForm.validate((valid) => {
+      onSubmit() {
+        console.log('submit!');
+      },
+      submitForm(formName) {
+        this.$refs[formName].validate((valid) => {
           if (valid) {
             alert('submit!');
           } else {
@@ -146,52 +144,17 @@
           }
         });
       },
-      handleSubmit2(ev) {
-        this.$refs.ruleForm2.validate(valid => {
-          if (valid) {
-            alert('申请已提交');
-          } else {
-            console.log('error submit!!');
-            return false;
-          }
-        });
-      },
-      handleSubmit3(ev) {
-        this.$refs.dynamicForm.validate(valid => {
-          if (valid) {
-            alert('申请已提交');
-          } else {
-            console.log('error submit!!');
-            return false;
-          }
-        });
-      },
-      handleReset() {
-        this.$refs.ruleForm.resetFields();
-      },
-      handleReset2() {
-        this.$refs.ruleForm2.resetFields();
-      },
-      handleReset3() {
-        this.$refs.dynamicForm.resetFields();
-      },
-      handleValidate(prop, errorMsg) {
-        console.log(prop, errorMsg);
-      },
-      onSubmit() {
-        console.log('submit!');
-      },
-      onRuleFormSubmit() {
-        console.log('onRuleFormSubmit');
+      resetForm(formName) {
+        this.$refs[formName].resetFields();
       },
       removeDomain(item) {
-        var index = this.dynamicForm.domains.indexOf(item)
+        var index = this.dynamicValidateForm.domains.indexOf(item)
         if (index !== -1) {
-          this.dynamicForm.domains.splice(index, 1)
+          this.dynamicValidateForm.domains.splice(index, 1)
         }
       },
       addDomain() {
-        this.dynamicForm.domains.push({
+        this.dynamicValidateForm.domains.push({
           value: '',
           key: Date.now()
         });
@@ -219,7 +182,7 @@
       padding: 0;
       list-style: none;
 
-      &:after,&:before {
+      &:after, &:before {
         content: ' ';
         display: table;
       }
@@ -263,18 +226,12 @@
     .demo-ruleForm {
       width: 460px;
 
-      .el-input,
-      .el-textarea {
-        width: auto;
-      }
-
       .el-select .el-input {
         width: 360px;
       }
     }
     .demo-dynamic {
       .el-input {
-        display: inline-block;
         margin-right: 10px;
         width: 270px;
         vertical-align: top;
@@ -551,8 +508,8 @@
     <el-input type="textarea" v-model="ruleForm.desc"></el-input>
   </el-form-item>
   <el-form-item>
-    <el-button type="primary" @click="handleSubmit">立即创建</el-button>
-    <el-button @click="handleReset">重置</el-button>
+    <el-button type="primary" @click="submitForm('ruleForm')">立即创建</el-button>
+    <el-button @click="resetForm('ruleForm')">重置</el-button>
   </el-form-item>
 </el-form>
 <script>
@@ -596,11 +553,8 @@
       };
     },
     methods: {
-      handleReset() {
-        this.$refs.ruleForm.resetFields();
-      },
-      handleSubmit(ev) {
-        this.$refs.ruleForm.validate((valid) => {
+      submitForm(formName) {
+        this.$refs[formName].validate((valid) => {
           if (valid) {
             alert('submit!');
           } else {
@@ -608,6 +562,9 @@
             return false;
           }
         });
+      },
+      resetForm(formName) {
+        this.$refs[formName].resetFields();
       }
     }
   }
@@ -630,8 +587,8 @@
     <el-input v-model.number="ruleForm2.age"></el-input>
   </el-form-item>
   <el-form-item>
-    <el-button type="primary" @click="handleSubmit2">提交</el-button>
-    <el-button @click="handleReset2">重置</el-button>
+    <el-button type="primary" @click="submitForm('ruleForm2')">提交</el-button>
+    <el-button @click="resetForm('ruleForm2')">重置</el-button>
   </el-form-item>
 </el-form>
 <script>
@@ -692,11 +649,8 @@
       };
     },
     methods: {
-      handleReset2() {
-        this.$refs.ruleForm2.resetFields();
-      },
-      handleSubmit2(ev) {
-        this.$refs.ruleForm2.validate((valid) => {
+      submitForm(formName) {
+        this.$refs[formName].validate((valid) => {
           if (valid) {
             alert('submit!');
           } else {
@@ -704,6 +658,9 @@
             return false;
           }
         });
+      },
+      resetForm(formName) {
+        this.$refs[formName].resetFields();
       }
     }
   }
@@ -715,12 +672,19 @@
 
 ::: demo 除了在 Form 组件上一次性传递所有的验证规则外还可以在单个的表单域上传递属性的验证规则
 ```html
-<el-form :model="dynamicForm" :rules="dynamicRule" ref="dynamicForm" label-width="100px" class="demo-dynamic">
-  <el-form-item prop="email" label="邮箱">
-    <el-input v-model="dynamicForm.email"></el-input>
+<el-form :model="dynamicValidateForm" ref="dynamicValidateForm" label-width="100px" class="demo-dynamic">
+  <el-form-item
+    prop="email"
+    label="邮箱"
+    :rules="[
+      { required: true, message: '请输入邮箱地址', trigger: 'blur' },
+      { type: 'email', message: '请输入正确的邮箱地址', trigger: 'blur,change' }
+    ]"
+  >
+    <el-input v-model="dynamicValidateForm.email"></el-input>
   </el-form-item>
   <el-form-item
-    v-for="(domain, index) in dynamicForm.domains"
+    v-for="(domain, index) in dynamicValidateForm.domains"
     :label="'域名' + index"
     :key="domain.key"
     :prop="'domains.' + index + '.value'"
@@ -731,32 +695,26 @@
     <el-input v-model="domain.value"></el-input><el-button @click.prevent="removeDomain(domain)">删除</el-button>
   </el-form-item>
   <el-form-item>
-    <el-button type="primary" @click="handleSubmit3">提交</el-button>
+    <el-button type="primary" @click="submitForm('dynamicValidateForm')">提交</el-button>
     <el-button @click="addDomain">新增域名</el-button>
-    <el-button @click="handleReset3">重置</el-button>
+    <el-button @click="resetForm('dynamicValidateForm')">重置</el-button>
   </el-form-item>
 </el-form>
 <script>
   export default {
     data() {
       return {
-        dynamicForm: {
+        dynamicValidateForm: {
           domains: [{
             value: ''
           }],
           email: ''
-        },
-        dynamicRule: {
-          email: [
-            { required: true, message: '请输入邮箱地址', trigger: 'blur' },
-            { type: 'email', message: '请输入正确的邮箱地址', trigger: 'blur,change' }
-          ]
         }
       };
     },
     methods: {
-      handleSubmit3(ev) {
-        this.$refs.dynamicForm.validate((valid) => {
+      submitForm(formName) {
+        this.$refs[formName].validate((valid) => {
           if (valid) {
             alert('submit!');
           } else {
@@ -765,20 +723,69 @@
           }
         });
       },
-      handleReset3() {
-        this.$refs.dynamicForm.resetFields();
+      resetForm(formName) {
+        this.$refs[formName].resetFields();
       },
       removeDomain(item) {
-        var index = this.dynamicForm.domains.indexOf(item)
+        var index = this.dynamicValidateForm.domains.indexOf(item)
         if (index !== -1) {
-          this.dynamicForm.domains.splice(index, 1)
+          this.dynamicValidateForm.domains.splice(index, 1)
         }
       },
       addDomain() {
-        this.dynamicForm.domains.push({
+        this.dynamicValidateForm.domains.push({
           value: '',
           key: Date.now()
         });
+      }
+    }
+  }
+</script>
+```
+:::
+
+### 数字类型验证
+
+::: demo 数字类型的验证需要在 `v-model` 处加上 `.number` 的修饰符，这是 `Vue` 自身提供的用于将绑定值转化为 `number` 类型的修饰符。
+```html
+<el-form :model="numberValidateForm" ref="numberValidateForm" label-width="100px" class="demo-ruleForm">
+  <el-form-item
+    label="年龄"
+    prop="age"
+    :rules="[
+      { required: true, message: '年龄不能为空'},
+      { type: 'number', message: '年龄必须为数字值'}
+    ]"
+  >
+    <el-input type="age" v-model.number="numberValidateForm.age" auto-complete="off"></el-input>
+  </el-form-item>
+  <el-form-item>
+    <el-button type="primary" @click="submitForm('numberValidateForm')">提交</el-button>
+    <el-button @click="resetForm('numberValidateForm')">重置</el-button>
+  </el-form-item>
+</el-form>
+<script>
+  export default {
+    data() {
+      return {
+        numberValidateForm: {
+          age: ''
+        }
+      };
+    },
+    methods: {
+      submitForm(formName) {
+        this.$refs[formName].validate((valid) => {
+          if (valid) {
+            alert('submit!');
+          } else {
+            console.log('error submit!!');
+            return false;
+          }
+        });
+      },
+      resetForm(formName) {
+        this.$refs[formName].resetFields();
       }
     }
   }
@@ -799,11 +806,11 @@
 
 ### Form Methods
 
-| 方法名      | 说明          |
-|---------- |-------------- |
-| validate(cb) | 对整个表单进行校验的方法 |
-| validateField(prop, cb) | 对部分表单字段进行校验的方法 |
-| resetFields | 对整个表单进行重置，将所有字段值重置为空并移除校验结果 |
+| 方法名      | 说明          | 参数
+|---------- |-------------- | --------------
+| validate | 对整个表单进行校验的方法 | Function(callback: Function(boolean))
+| validateField | 对部分表单字段进行校验的方法 | Function(prop: string, callback: Function(errorMessage: string))
+| resetFields | 对整个表单进行重置，将所有字段值重置为空并移除校验结果 | -
 
 ### Form-Item Attributes
 

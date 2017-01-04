@@ -222,15 +222,17 @@ Used for node selection. In the following example, data for each layer is acquir
 | node-key | unique identity key name for nodes, its value should be unique across the whole tree | string | — | — |
 | props | configuration options, see the following table | object | — | — |
 | load | method for loading subtree data | function(node, resolve) | — | — |
-| render-content | render function for tree node | Function(h, { node } | - | - |
-| highlight-current | whether current node is highlighted | boolean | - | false |
-| default-expand-all | whether to expand all nodes by default | boolean | - | false |
+| render-content | render function for tree node | Function(h, { node } | — | — |
+| highlight-current | whether current node is highlighted | boolean | — | false |
+| current-node-key | key of current node, a set only prop | string, number | — | — |
+| default-expand-all | whether to expand all nodes by default | boolean | — | false |
+| expand-on-click-node | whether to expand or collapse node when clicking on the node, if false, then expand or collapse node only when clicking on the arrow icon.  | — | true |
 | auto-expand-parent | whether to expand father node when a child node is expanded | boolean | — | true |
 | default-expanded-keys | array of keys of initially expanded nodes | array | — | — |
 | show-checkbox | whether node is selectable | boolean | — | false |
 | check-strictly | whether checked state of a node not affects its father and child nodes when `show-checkbox` is `true` | boolean | — | false |
 | default-checked-keys | array of keys of initially checked nodes | array | — | — |
-| filter-node-method | this function will be executed on each node when use filter method. if return `false`, tree node will be hidden. | Function(value, data, node) | - | - |
+| filter-node-method | this function will be executed on each node when use filter method. if return `false`, tree node will be hidden. | Function(value, data, node) | — | — |
 
 ### props
 | Attribute      | Description          | Type      | Accepted Values       | Default  |
@@ -254,5 +256,5 @@ Used for node selection. In the following example, data for each layer is acquir
 |---------- |-------- |---------- |
 | node-click | triggers when a node is clicked | three parameters: node object corresponding to the node clicked, `node` property of TreeNode, TreeNode itself |
 | check-change | triggers when the selected state of the node changes | three parameters: node object corresponding to the node whose selected state is changed, whether the node is selected, whether node's subtree has selected nodes |
-
+| current-change | triggers when current node changes | two parameters: node object corresponding to the current node, `node` property of TreeNode |
 

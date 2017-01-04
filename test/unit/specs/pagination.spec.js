@@ -40,6 +40,32 @@ describe('Pagination', () => {
     expect(elm.querySelector('.el-pagination__total')).to.not.exist;
   });
 
+  it('layout: all in right, need clear float', () => {
+    vm = createTest(Pagination, {
+      layout: '->, prev, pager, next',
+      total: 100
+    }, true);
+    const elm = vm.$el;
+    let right_div = elm.querySelector('.el-pagination__rightwrapper');
+    expect(elm.clientHeight > 0 && right_div.clientHeight > 0).to.equal(true);
+    // elm 将来 padding 可能会变化, 所以使用 >= 来判定
+    expect(elm.clientHeight >= right_div.clientHeight).to.equal(true);
+  });
+
+  it('custom slot', () => {
+    vm = createVue({
+      template: `
+        <el-pagination
+          layout="slot, prev, pager, next"
+          :page-size="25"
+          :total="100">
+          <span class="slot-test">slot test</span>
+        </el-pagination>
+      `
+    });
+    expect(vm.$el.querySelector('.slot-test')).to.exist;
+  });
+
   it('small', () => {
     vm = createTest(Pagination, {
       small: true

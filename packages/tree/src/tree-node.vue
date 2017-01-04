@@ -2,12 +2,16 @@
   <div class="el-tree-node"
     @click.stop="handleClick"
     v-show="node.visible"
-    :class="{ 'is-expanded': childNodeRendered && expanded, 'is-current': tree.currentNode === _self, 'is-hidden': !node.visible }">
+    :class="{
+      'is-expanded': childNodeRendered && expanded,
+      'is-current': tree.store.currentNode === node,
+      'is-hidden': !node.visible
+    }">
     <div class="el-tree-node__content"
-      :style="{ 'padding-left': (node.level - 1) * 16 + 'px' }"
-      @click="handleExpandIconClick">
+      :style="{ 'padding-left': (node.level - 1) * 16 + 'px' }">
       <span
         class="el-tree-node__expand-icon"
+        @click.stop="handleExpandIconClick"
         :class="{ 'is-leaf': node.isLeaf, expanded: !node.isLeaf && expanded }">
       </span>
       <el-checkbox
@@ -124,20 +128,22 @@
       },
 
       handleClick() {
+        const store = this.tree.store;
+        store.setCurrentNode(this.node);
+        this.tree.$emit('current-change', store.currentNode ? store.currentNode.data : null, store.currentNode);
         this.tree.currentNode = this;
+        if (this.tree.expandOnClickNode) {
+          this.handleExpandIconClick();
+        }
+        this.tree.$emit('node-click', this.node.data, this.node, this);
       },
 
-      handleExpandIconClick(event) {
-        let target = event.target;
-        if (target.tagName.toUpperCase() !== 'DIV' &&
-          target.parentNode.nodeName.toUpperCase() !== 'DIV' ||
-          target.nodeName.toUpperCase() === 'LABEL') return;
+      handleExpandIconClick() {
         if (this.expanded) {
           this.node.collapse();
         } else {
           this.node.expand();
         }
-        this.tree.$emit('node-click', this.node.data, this.node, this);
       },
 
       handleUserClick() {

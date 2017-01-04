@@ -4,10 +4,10 @@
       v-show="visible"
       :style="{ width: width + 'px' }"
       class="el-picker-panel el-date-range-picker"
-      :class="{
+      :class="[{
         'has-sidebar': $slots.sidebar || shortcuts,
         'has-time': showTime
-      }">
+      }, popperClass]">
       <div class="el-picker-panel__body-wrapper">
         <slot name="sidebar" class="el-picker-panel__sidebar"></slot>
         <div class="el-picker-panel__sidebar" v-if="shortcuts">
@@ -136,7 +136,7 @@
         <button
           type="button"
           class="el-picker-panel__btn"
-          @click="handleConfirm"
+          @click="handleConfirm()"
           :disabled="btnDisabled">{{ t('el.datepicker.confirm') }}</button>
       </div>
     </div>
@@ -215,6 +215,7 @@
 
     data() {
       return {
+        popperClass: '',
         minPickerWidth: 0,
         maxPickerWidth: 0,
         date: new Date(),
@@ -292,7 +293,7 @@
       handleClear() {
         this.minDate = null;
         this.maxDate = null;
-        this.handleConfirm();
+        this.handleConfirm(false);
       },
 
       handleDateInput(event, type) {
@@ -375,10 +376,8 @@
         this.maxDate = val.maxDate;
         this.minDate = val.minDate;
 
-        if (!close) return;
-        if (!this.showTime) {
-          this.$emit('pick', [this.minDate, this.maxDate]);
-        }
+        if (!close || this.showTime) return;
+        this.handleConfirm();
       },
 
       changeToToday() {
@@ -455,7 +454,7 @@
         this.resetDate();
       },
 
-      handleConfirm(visible) {
+      handleConfirm(visible = false) {
         this.$emit('pick', [this.minDate, this.maxDate], visible);
       },
 

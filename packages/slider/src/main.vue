@@ -37,7 +37,7 @@
 <script type="text/babel">
   import ElInputNumber from 'element-ui/packages/input-number';
   import ElTooltip from 'element-ui/packages/tooltip';
-  import { getStyle } from 'wind-dom/src/style';
+  import { getStyle } from 'element-ui/src/utils/dom';
 
   export default {
     name: 'ElSlider',
@@ -195,9 +195,9 @@
            */
           setTimeout(() => {
             this.dragging = false;
+            this.$refs.tooltip.showPopper = false;
+            this.setPosition(this.newPos);
           }, 0);
-          this.$refs.tooltip.showPopper = false;
-          this.setPosition(this.newPos);
           window.removeEventListener('mousemove', this.onDragging);
           window.removeEventListener('mouseup', this.onDragEnd);
           window.removeEventListener('contextmenu', this.onDragEnd);
