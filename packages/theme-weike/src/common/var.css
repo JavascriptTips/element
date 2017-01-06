@@ -33,7 +33,7 @@
   --border-width-base: 1px;
   --border-style-base: solid;
   --border-color-base: var(--color-grey);
-  --border-color-hover: #8492a6;
+  --border-color-hover: #0097e8; /*#8492a6;*/
   --border-base: var(--border-width-base) var(--border-style-base) var(--border-color-base);
   --border-radius-base: 4px;
   --border-radius-small: 2px;

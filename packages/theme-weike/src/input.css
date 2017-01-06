@@ -25,6 +25,8 @@
       transition: var(--border-transition-base);
       width: 100%;
 
+      box-shadow: inset 0px 1px 5px 1px #f5f5f5;
+
       &::placeholder {
         color: var(--input-placeholder-color);
       }
