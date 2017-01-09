@@ -1,14 +1,17 @@
 <template>
   <label class="el-checkbox">
     <span class="el-checkbox__input"
-      :class="{
+      :class="[
+      {
         'is-disabled': disabled,
         'is-checked': isChecked,
         'is-indeterminate': indeterminate,
         'is-focus': focus
-      }"
+      }]"
     >
-      <span class="el-checkbox__inner"></span>
+      <span class="el-checkbox__inner" :class="[
+        size ? 'el-checkbox__inner--' + size : ''
+      ]"></span>
       <input
         v-if="trueLabel || falseLabel"
         class="el-checkbox__original"
@@ -111,7 +114,8 @@
       checked: Boolean,
       name: String,
       trueLabel: [String, Number],
-      falseLabel: [String, Number]
+      falseLabel: [String, Number],
+      size: String
     },
 
     methods: {

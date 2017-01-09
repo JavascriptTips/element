@@ -15,7 +15,7 @@
     & + .el-radio {
       margin-left: 15px;
     }
-    
+
     @e input {
       white-space: nowrap;
       cursor: pointer;
@@ -95,6 +95,10 @@
         transform: translate(-50%, -50%) scale(0);
         transition: transform .15s cubic-bezier(.71,-.46,.88,.6);
       }
+
+      @m small{
+        circle: var(--radio-input-small-width) var(--radio-input-fill);
+      }
     }
 
     @e original {
@@ -157,7 +161,7 @@
 
       & [class*="el-icon-"] {
         line-height: 0.9;
-        
+
         & + span {
           margin-left: 5px;
         }

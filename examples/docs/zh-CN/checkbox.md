@@ -55,6 +55,29 @@
 ```
 :::
 
+### 尺寸
+
+在原来的基础上，增加small的尺寸
+
+:::demo 在`el-checkbox`元素中定义`v-model`绑定变量，单一的`checkbox`中，默认绑定变量的值会是`Boolean`，选中为`true`。
+
+```html
+<template>
+  <!-- `checked` 为 true 或 false -->
+  <el-checkbox v-model="checked" size="small" checked>备选项</el-checkbox>
+</template>
+<script>
+  export default {
+    data() {
+      return {
+        checked: true
+      };
+    }
+  };
+</script>
+```
+:::
+
 ### 禁用状态
 
 多选框不可用状态。
@@ -118,6 +141,7 @@
 | disabled  | 按钮禁用    | boolean   |  — | false   |
 | checked  | 当前是否勾选    | boolean   |  — | false   |
 | indeterminate  | 设置 indeterminate 状态，只负责样式控制    | boolean   |  — | false   |
+| size | 尺寸，目前仅有 small | String | small | ''  |
 
 ### Checkbox-group Events
 | 事件名称      | 说明    | 回调参数      |

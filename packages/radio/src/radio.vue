@@ -7,7 +7,9 @@
         'is-focus': focus
       }"
     >
-      <span class="el-radio__inner"></span>
+      <span class="el-radio__inner" :class="[
+        size ? `el-radio__inner--${size}` : ''
+      ]"></span>
       <input
         class="el-radio__original"
         :value="label"
@@ -38,7 +40,8 @@
       value: {},
       label: {},
       disabled: Boolean,
-      name: String
+      name: String,
+      size: String
     },
 
     data() {

@@ -96,6 +96,8 @@
           }
         }
       }
+
+
     }
     @e inner {
       display: inline-block;
@@ -126,6 +128,16 @@
         width: 4px;
         transition: transform .15s cubic-bezier(.71,-.46,.88,.6) .05s;
         transform-origin: center;
+      }
+
+      @m small{
+        rect:var(--checkbox-input-small-width) var(--checkbox-input-small-height) var(--checkbox-input-fill);
+
+        &::after{
+          height:6px;
+          width:3px;
+          left:4px;
+        }
       }
     }
 

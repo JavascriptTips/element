@@ -39,6 +39,31 @@
 ```
 :::
 
+### 尺寸
+
+增加尺寸选项,size
+
+:::demo 要使用 Radio 组件，只需要设置`v-model`绑定变量，选中意味着变量的值为相应 Radio `label`属性的值，`label`可以是`String`或者`Number`。
+
+```html
+<template>
+  <el-radio class="radio" v-model="radio" label="1" size="small">备选项</el-radio>
+  <el-radio class="radio" v-model="radio" label="2" size="small">备选项</el-radio>
+</template>
+
+<script>
+  export default {
+    data () {
+      return {
+        radio: '1'
+      };
+    }
+  }
+</script>
+```
+:::
+
+
 ### 禁用状态
 
 单选框不可用的状态。
