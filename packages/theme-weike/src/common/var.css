@@ -115,7 +115,7 @@
   --radio-input-small-width: 14px;
 
   --radio-input-border-radius: var(--border-radius-circle);
-  --radio-input-fill: var(--color-white);
+  --radio-input-fill: var(--border-color-hover);
   --radio-input-border: var(--border-base);
   --radio-input-border-color: var(--border-color-base);
   --radio-icon-color: var(--color-white);
@@ -130,7 +130,7 @@
 
   --radio-checked-input-border-color: var(--color-primary);
   --radio-checked-input-fill: var(--color-white);
-  --radio-checked-icon-color: var(--color-primary);
+  --radio-checked-icon-color: #fff; /*var(--color-primary);*/
 
   --radio-input-shadow-hover: var(--shadow-base);
   --radio-input-border-color-hover: var(--color-primary);

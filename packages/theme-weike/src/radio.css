@@ -76,7 +76,7 @@
     @e inner {
       border: var(--radio-input-border);
       border-radius: var(--radio-input-border-radius);
-      circle: var(--radio-input-width) var(--radio-input-fill);
+      circle: var(--radio-input-width) #fff;/*var(--radio-input-fill);*/
       position: relative;
       cursor: pointer;
       display: inline-block;
@@ -87,7 +87,7 @@
       }
 
       &::after {
-        circle: 6px #fff;
+        circle: 10px var(--radio-input-fill);
         content: "";
         position: absolute;
         left: 50%;
@@ -97,7 +97,11 @@
       }
 
       @m small{
-        circle: var(--radio-input-small-width) var(--radio-input-fill);
+        circle: var(--radio-input-small-width) #fff; /*var(--radio-input-fill);*/
+
+        &:after{
+          circle: 7px var(--radio-input-fill);
+        }
       }
     }
 
