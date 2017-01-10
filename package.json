@@ -121,6 +121,7 @@
     "vue-template-es2015-compiler": "^1.4.2",
     "webpack": "^1.13.2",
     "webpack-dev-server": "^1.15.1",
-    "webpack-node-externals": "^1.5.4"
+    "webpack-node-externals": "^1.5.4",
+    "process-nextick-args":"^1.0.7"
   }
 }
