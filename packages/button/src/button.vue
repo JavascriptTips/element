@@ -6,6 +6,7 @@
     :class="[
       type ? 'el-button--' + type : '',
       size ? 'el-button--' + size : '',
+      active ? 'is-active' : '',
       {
         'is-disabled': disabled,
         'is-loading': loading,
@@ -23,6 +24,7 @@
     name: 'ElButton',
 
     props: {
+      active: Boolean,
       type: {
         type: String,
         default: 'default'
