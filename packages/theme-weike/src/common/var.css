@@ -11,7 +11,7 @@
 
   /* Colors
   -------------------------- */
-  --color-primary: #20a0ff;
+  --color-primary: #0097e8;
   --color-success: #13ce66;
   --color-warning: #f7ba2a;
   --color-danger: #ff4949;
@@ -22,6 +22,7 @@
   --color-white: #fff;
   --color-black: #000;
   --color-grey: #c0ccda;
+  --color-red: #ff4a46;
 
   /* Link
   -------------------------- */
@@ -327,7 +328,7 @@
 
   --button-large-font-size: 16px;
   --button-large-padding-vertical: 11px;
-  --button-large-padding-horizontal: 19px;
+  --button-large-padding-horizontal: 60px;
 
   --button-small-font-size: 12px;
   --button-small-padding-vertical: 7px;
@@ -351,7 +352,7 @@
 
   --button-primary-border: var(--color-primary);
   --button-primary-color: var(--color-white);
-  --button-primary-fill: #0097e8; /*var(--color-primary);*/
+  --button-primary-fill:  var(--color-primary);
 
   --button-success-border: var(--color-success);
   --button-success-color: var(--color-white);
@@ -364,6 +365,10 @@
   --button-danger-border: var(--color-danger);
   --button-danger-color: var(--color-white);
   --button-danger-fill: var(--color-danger);
+
+  --button-red-border: var(--color-red);
+  --button-red-color: var(--color-white);
+  --button-red-fill: var(--color-red);
 
   --button-info-border: var(--color-info);
   --button-info-color: var(--color-white);
