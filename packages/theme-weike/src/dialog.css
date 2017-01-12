@@ -39,7 +39,16 @@
     }
 
     @e header {
-      padding: 20px 20px 0;
+      border-bottom: 1px solid var(--border-color-base);
+
+      height: 40px;
+      line-height: 40px;
+
+      text-align: center;
+
+      color:var(--dialog-title-color);
+
+      position: relative;
     }
 
     @e close {
@@ -65,7 +74,10 @@
     }
 
     @e headerbtn {
-      float: right;
+      position: absolute;
+      top: 50%;
+      right: 10px;
+      transform: translate(0,-50%);
     }
 
     @e footer {

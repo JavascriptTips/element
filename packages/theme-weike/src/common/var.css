@@ -53,7 +53,7 @@
   /* Font
   -------------------------- */
   --font-size-base: 14px;
-  --font-color-base: #1f2d3d;
+  --font-color-base: #333333;
   --font-color-disabled-base: #bbb;
 
   /* Size
@@ -79,7 +79,7 @@
   /* Checkbox
   -------------------------- */
   --checkbox-font-size: 14px;
-  --checkbox-color: #1f2d3d;
+  --checkbox-color: #333333;
   --checkbox-input-height: 18px;
   --checkbox-input-width: 18px;
   --checkbox-input-small-height: 14px;
@@ -110,7 +110,7 @@
   /* Radio
   -------------------------- */
   --radio-font-size: 14px;
-  --radio-color: #1f2d3d;
+  --radio-color: #333333;
   --radio-input-height: 18px;
   --radio-input-width: 18px;
   --radio-input-small-width: 14px;
@@ -227,7 +227,7 @@
   --notification-font-size: var(--font-size-base);
   --notification-color: var(--border-color-hover);
   --notification-title-font-size: 16px;
-  --notification-title-color: #1f2d3d;
+  --notification-title-color: #333333;
 
   --notification-close-color: var(--color-grey);
   --notification-close-hover-color: #99A9BF;
@@ -338,7 +338,7 @@
   --button-mini-padding-vertical: 4px;
   --button-mini-padding-horizontal: 4px;
 
-  --button-default-color: #1F2D3D;
+  --button-default-color: #333333;
   --button-default-fill: var(--color-white);
   --button-default-border: #c4c4c4;
 
@@ -400,18 +400,19 @@
   --dialog-background-color: var(--color-blue);
   --dialog-footer-background: var(--color-blue-lighter);
   --dialog-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  --dialog-title-color:#666;
   --dialog-tiny-width: 30%;
   --dialog-small-width: 50%;
   --dialog-large-width: 90%;
   --dialog-close-color: var(--color-grey);
-  --dialog-close-hover-color: var(--color-primary);
+  --dialog-close-hover-color: var(--dialog-title-color);
   --dialog-title-font-size: 16px;
   --dialog-font-size: 14px;
 
   /* Table
  -------------------------- */
   --table-border-color: #e0e6ed;
-  --table-text-color: #1f2d3d;
+  --table-text-color: #333333;
   --table-header-background: #EFF2F7;
 
   /* Pagination
@@ -436,14 +437,14 @@
   --popover-arrow-size: 6px;
   --popover-padding: 10px;
   --popover-title-font-size: 13px;
-  --popover-title-color: #1f2d3d;
+  --popover-title-color: #333333;
 
   /* Tooltip
   -------------------------- */
-  --tooltip-fill: #1f2d3d;
+  --tooltip-fill: #333333;
   --tooltip-color: var(--color-white);
   --tooltip-font-size: 12px;
-  --tooltip-border-color: #1f2d3d;
+  --tooltip-border-color: #333333;
   --tooltip-arrow-size: 6px;
   --tooltip-padding: 10px;
 
@@ -527,7 +528,7 @@
   --dark-menu-item-color: var(--link-color);
   --dark-menu-item-fill: #324057;
   --dark-menu-item-hover-fill: var(--link-color);
-  --dark-submenu-item-fill: #1f2d3d;
+  --dark-submenu-item-fill: #333333;
 
   /* Rate
   --------------------------*/
@@ -584,5 +585,5 @@
   --collapse-header-size: 13px;
   --collapse-content-fill: #f9fafc;
   --collapse-content-size: 13px;
-  --collapse-content-color: #1f2d3d;
+  --collapse-content-color: #333333;
 }
