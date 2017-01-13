@@ -13,7 +13,7 @@
         :class="['is-' + effect, popperClass]"
         ref="popper"
         v-show="!disabled && showPopper">
-        <slot name="content"><div v-text="content"></div></slot>
+        <slot name="content"><div v-html="content"></div></slot>
       </div>
     </transition>
   </div>
