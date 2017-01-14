@@ -199,7 +199,7 @@ export default {
       render(h) {
         return (
           <span class="el-pagination__jump">
-            { this.t('el.pagination.goto') }
+            跳转到：
             <input
               class="el-pagination__editor"
               type="number"
@@ -210,7 +210,6 @@ export default {
               on-focus={ this.handleFocus }
               style={{ width: '30px' }}
               number/>
-            { this.t('el.pagination.pageClassifier') }
           </span>
         );
       }

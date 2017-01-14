@@ -39,8 +39,6 @@
     }
 
     @e header {
-      border-bottom: 1px solid var(--border-color-base);
-
       height: 40px;
       line-height: 40px;
 
@@ -49,6 +47,10 @@
       color:var(--dialog-title-color);
 
       position: relative;
+
+      @m bottom {
+        border-bottom: 1px solid var(--border-color-base);
+      }
     }
 
     @e close {
@@ -82,7 +84,7 @@
 
     @e footer {
       padding: 10px 20px 15px;
-      text-align: right;
+      text-align: center;
       box-sizing: border-box;
     }
   }

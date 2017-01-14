@@ -6,7 +6,7 @@
         :class="[sizeClass, customClass]"
         ref="dialog"
         :style="style">
-        <div class="el-dialog__header">
+        <div class="el-dialog__header" :class="{'el-dialog__header--bottom': titleBottom}">
           <span class="el-dialog__title">{{title}}</span>
           <div class="el-dialog__headerbtn">
             <i v-if="showClose" class="el-dialog__close el-icon el-icon-close" @click='close()'></i>
@@ -33,6 +33,11 @@
       title: {
         type: String,
         default: ''
+      },
+
+      titleBottom: {
+        type: Boolean,
+        default: true
       },
 
       modal: {
