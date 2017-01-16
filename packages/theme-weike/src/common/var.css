@@ -419,19 +419,19 @@
   --table-text-color: #333333;
   --table-header-background: #EFF2F7;
 
-  /* Pagination
+  /* Pagination lsy edit 20170114
  -------------------------- */
-  --pagination-font-size: 13px;
-  --pagination-fill: var(--color-white);
+  --pagination-font-size: 12px;
+  --pagination-fill: #ebedef;
   --pagination-color: var(--link-color);
   --pagination-border-radius: 2px;
-  --pagination-button-color: #99a9bf;
+  --pagination-button-color: #333;
   --pagination-button-size: 28px;
   --pagination-button-disabled-color: #e4e4e4;
   --pagination-button-disabled-fill: var(--color-white);
-  --pagination-border-color: var(--disabled-border-base);
-  --pagination-hover-fill: var(--color-primary);
-  --pagination-hover-color: var(--color-white);
+  --pagination-border-color: #b0b1b2;
+  --pagination-hover-fill: #fff;
+  --pagination-hover-color: #ed4e34;
 
   /* Popover
  -------------------------- */

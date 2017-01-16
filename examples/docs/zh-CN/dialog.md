@@ -77,7 +77,7 @@ Dialog 弹出一个对话框，适合需要定制性更大的场景。
 ```html
 <el-button type="text" @click="dialogVisible = true">点击打开 Dialog</el-button>
 
-<el-dialog title="提示" v-model="dialogVisible" size="tiny">
+<el-dialog title="提示" v-model="dialogVisible" size="tiny" :title-bottom="false">
   <span>这是一段信息</span>
   <span slot="footer" class="dialog-footer">
     <el-button @click="dialogVisible = false">取 消</el-button>
@@ -180,6 +180,7 @@ Dialog 组件的内容可以是任意的，甚至可以是表格或表单，下�
 | 参数      | 说明          | 类型      | 可选值                           | 默认值  |
 |---------- |-------------- |---------- |--------------------------------  |-------- |
 | title     | Dialog 的标题 | string    | —                               | —      |
+| title-bottom     | Dialog 的标题的border-bottom, true时有线，false没 | boolean    | —                               | true      |
 | size      | Dialog 的大小 | string    | tiny/small/large/full | small |
 | top       | Dialog CSS 中的 top 值（仅在 size 不为 full 时有效） | string    | —                       | 15%     |
 | modal     | 是否需要遮罩层   | boolean   | — | true |
