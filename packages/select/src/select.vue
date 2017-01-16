@@ -67,6 +67,7 @@
         ref="popper"
         v-show="visible && emptyText !== false">
         <el-scrollbar
+          :noresize="noresize"
           tag="ul"
           wrap-class="el-select-dropdown__wrap"
           view-class="el-select-dropdown__list"
@@ -159,6 +160,7 @@
     directives: { Clickoutside },
 
     props: {
+      noresize: Boolean,
       name: String,
       value: {},
       size: String,

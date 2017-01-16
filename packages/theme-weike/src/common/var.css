@@ -26,7 +26,7 @@
 
   /* Link
   -------------------------- */
-  --link-color: #475669;
+  --link-color: #333;
   --link-hover-color: var(--color-primary);
 
   /* Border
@@ -140,10 +140,14 @@
 
   /* Select
   -------------------------- */
+  --select-icon-bg:#eee;
+  --select-border-color:#bebebe;
   --select-border-color-hover: var(--border-color-hover);
   --select-disabled-border: var(--disabled-border-base);
   --select-font-size: var(--font-size-base);
   --select-close-hover-color: #99a9bf;
+  --select-icon-color:#666666;
+  --select-icon-radius:4px;
 
   --select-input-color: var(--color-grey);
   --select-multiple-input-color: #666;

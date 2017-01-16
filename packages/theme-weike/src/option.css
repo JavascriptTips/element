@@ -17,6 +17,22 @@
       box-sizing: border-box;
       cursor: pointer;
 
+      &:after{
+        content:'';
+        background-color: #e5e7ea;
+        height: 1px;
+        position: absolute;
+        bottom: 1px;
+        left: 10px;
+        right: 10px;
+      }
+
+      &:last-child{
+        &:after{
+          display:none;
+        }
+      }
+
       @when disabled {
         color: var(--select-option-disabled-color);
         cursor: not-allowed;
@@ -36,6 +52,9 @@
 
         &.hover {
           background-color: var(--select-option-selected-hover);
+        }
+        &::after{
+          background-color: inherit;
         }
       }
 

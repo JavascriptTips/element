@@ -14,10 +14,6 @@
       <div class="el-input-group__prepend" v-if="$slots.prepend">
         <slot name="prepend"></slot>
       </div>
-      <!-- input 图标 -->
-      <slot name="icon">
-        <i class="el-input__icon" :class="'el-icon-' + icon" v-if="icon" @click="handleIconClick"></i>
-      </slot>
       <input
         v-if="type !== 'textarea'"
         class="el-input__inner"
@@ -39,6 +35,11 @@
         @focus="handleFocus"
         @blur="handleBlur"
       >
+      <!-- input 图标 -->
+      <slot name="icon">
+        <i class="el-input__icon" :class="'el-icon-' + icon" v-if="icon" @click="handleIconClick"></i>
+      </slot>
+
       <i class="el-input__icon el-icon-loading" v-if="validating"></i>
       <!-- 后置元素 -->
       <div class="el-input-group__append" v-if="$slots.append">
