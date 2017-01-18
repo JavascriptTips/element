@@ -29,6 +29,15 @@
       "name": "基础组件",
       "groups": [
         {
+          "groupName":"维客",
+          "list":[
+            {
+              "path": "/switching-tabs",
+              "title": "SwitchingTabs 标签切换器"
+            }
+          ]
+        },
+        {
           "groupName": "Basic",
           "list": [
             {

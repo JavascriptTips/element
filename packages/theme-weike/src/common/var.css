@@ -33,8 +33,8 @@
   -------------------------- */
   --border-width-base: 1px;
   --border-style-base: solid;
-  --border-color-base: var(--color-grey);
-  --border-color-hover: #0097e8; /*#8492a6;*/
+  --border-color-base: #c2c9d9;  /*var(--color-grey); */
+  --border-color-hover: var(--color-primary); /* #8492a6; */
   --border-base: var(--border-width-base) var(--border-style-base) var(--border-color-base);
   --border-radius-base: 4px;
   --border-radius-small: 2px;
@@ -590,4 +590,14 @@
   --collapse-content-fill: #f9fafc;
   --collapse-content-size: 13px;
   --collapse-content-color: #333333;
+
+  /* Switching-tabs
+  --------------------------*/
+
+  --switching-tabs-height:36px;
+  --switching-tabs-bgc:#ecf0f2;
+  --switching-tabs-active-bgc:#fff;
+  --switching-tabs-bdc:var(--border-color-base);
+  --switching-tabs-hover-bdc:var(--color-primary);
+  --switching-tabs-color:#999;
 }

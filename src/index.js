@@ -60,6 +60,7 @@ import Scrollbar from '../packages/scrollbar';
 import CarouselItem from '../packages/carousel-item';
 import Collapse from '../packages/collapse';
 import CollapseItem from '../packages/collapse-item';
+import SwitchingTabs from '../packages/switching-tabs';
 import locale from 'element-ui/src/locale';
 
 const install = function(Vue, opts = {}) {
@@ -123,6 +124,7 @@ const install = function(Vue, opts = {}) {
   Vue.component(CarouselItem.name, CarouselItem);
   Vue.component(Collapse.name, Collapse);
   Vue.component(CollapseItem.name, CollapseItem);
+  Vue.component(SwitchingTabs.name, SwitchingTabs);
 
   Vue.use(Loading.directive);
 
@@ -203,5 +205,6 @@ module.exports = {
   Scrollbar,
   CarouselItem,
   Collapse,
-  CollapseItem
+  CollapseItem,
+  SwitchingTabs
 };
