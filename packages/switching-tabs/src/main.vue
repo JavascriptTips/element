@@ -28,6 +28,7 @@ export default {
   name: 'ElSwitchingTabs',
 
   props: {
+    value: Number, // 索引
     tabs: {
       type: Array,
       required: true
@@ -53,6 +54,8 @@ export default {
       });
 
       this.tabIndex = index;
+
+      this.$emit('input', index);
     },
     changeTab(e) {
       const i = parseInt(e.currentTarget.dataset.index, 10);
