@@ -146,6 +146,22 @@
         border-color: var(--pagination-hover-color);
       };
     }
+
+    @e editorconfirm {
+      background-color: var(--pagination-fill);
+      border: 1px solid var(--pagination-border-color);
+      border-radius: var(--pagination-border-radius);
+      cursor: pointer;
+      margin-left: 10px;
+      padding: 0 10px;
+      color: var(--pagination-button-color);
+
+      &:hover {
+         color: var(--pagination-hover-color);
+         border: 1px solid var(--pagination-hover-color);
+         background-color: #fff;
+       }
+    }
   }
 
   @b pager {

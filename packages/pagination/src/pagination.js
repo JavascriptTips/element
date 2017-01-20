@@ -206,10 +206,11 @@ export default {
               min={ 1 }
               max={ this.internalPageCount }
               domProps-value={ this.$parent.internalCurrentPage }
-              on-change={ this.handleChange }
+              // on-change={ this.handleChange }
               on-focus={ this.handleFocus }
               style={{ width: '30px' }}
               number/>
+              <span class="el-pagination__editorconfirm" on-click={ this.handleChange }>确定</span>
           </span>
         );
       }
