@@ -87,7 +87,7 @@
 
     computed: {
       pagers() {
-        const pagerCount = 7;
+        const pagerCount = 5;
 
         const currentPage = Number(this.currentPage);
         const pageCount = Number(this.pageCount);
