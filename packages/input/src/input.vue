@@ -31,6 +31,7 @@
         :form="form"
         :value="currentValue"
         ref="input"
+        @keyup.enter="handleEnter"
         @input="handleInput"
         @focus="handleFocus"
         @blur="handleBlur"
@@ -64,6 +65,7 @@
       :autofocus="autofocus"
       :maxlength="maxlength"
       :minlength="minlength"
+      @keyup.enter="handleEnter"
       @focus="handleFocus"
       @blur="handleBlur">
     </textarea>
@@ -136,6 +138,9 @@
     },
 
     methods: {
+      handleEnter(event) {
+        this.$emit('keyupenter', event);
+      },
       handleBlur(event) {
         this.$emit('blur', event);
         if (this.validateEvent) {

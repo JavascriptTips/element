@@ -36,6 +36,9 @@
       };
     },
     methods: {
+      handleEnter1(ev) {
+          console.log(ev);
+        },
       loadAll() {
         return [
           { "value": "三全鲜食（北新泾店）", "address": "长宁区新渔路144号" },
@@ -188,13 +191,18 @@
 
 ::: demo
 ```html
-<el-input v-model="input" placeholder="请输入内容"></el-input>
+<el-input ref="" v-model="input" @keyupenter="handleEnter1" placeholder="请输入内容"></el-input>
 
 <script>
 export default {
   data() {
     return {
       input: ''
+    }
+  },
+  methods(){
+    handleEnter1(){
+        console.log('w');
     }
   }
 }
@@ -735,6 +743,7 @@ export default {
 | 事件名称 | 说明 | 回调参数 |
 |---------|--------|---------|
 | click | 点击 Input 内的图标时触发 | (event: Event) |
+| keyupenter | 输入回车键后触发 | (event: Event) |
 | blur | 在 Input 失去焦点时触发 | (event: Event) |
 | focus | 在 Input 或得焦点时触发 | (event: Event) |
 | change | 在 Input 值改变时触发 | (value: string \| number) |
