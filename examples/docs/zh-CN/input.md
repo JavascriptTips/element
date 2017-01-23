@@ -36,6 +36,9 @@
       };
     },
     methods: {
+      handleEnter1(ev) {
+          console.log(ev);
+        },
       loadAll() {
         return [
           { "value": "三全鲜食（北新泾店）", "address": "长宁区新渔路144号" },
@@ -188,13 +191,18 @@
 
 ::: demo
 ```html
-<el-input v-model="input" placeholder="请输入内容"></el-input>
+<el-input ref="" v-model="input" @keyupenter="handleEnter1" placeholder="请输入内容"></el-input>
 
 <script>
 export default {
   data() {
     return {
       input: ''
+    }
+  },
+  methods(){
+    handleEnter1(){
+        console.log('w');
     }
   }
 }
