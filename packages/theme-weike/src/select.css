@@ -20,8 +20,7 @@
         .el-input__icon{
           border-color: var(--select-border-color-hover);
 
-          &:before,
-          &:after{
+          .el-input__icon-text{
             color: var(--select-border-color-hover);
           }
         }
@@ -44,8 +43,7 @@
     & .el-input__inner:focus + .el-input__icon{
         border-color: var(--select-border-color-hover);
 
-        &:before,
-        &:after{
+        .el-input__icon-text{
           color: var(--select-border-color-hover);
         }
     }
@@ -59,26 +57,25 @@
         border-radius: var(--select-icon-radius) 0 0 var(--select-icon-radius);
         color: var(--select-input-color);
         font-size: var(--select-input-font-size);
-        transform: translateY(-50%) rotateZ(180deg);
+        transform: translateY(-50%);
         line-height: 16px;
         top: 50%;
         cursor: pointer;
 
         transition:border-color .2s cubic-bezier(.645,.045,.355,1);
 
-        &:before,
-        &:after{
+        .el-input__icon-text{
+
           transition:border-color .2s cubic-bezier(.645,.045,.355,1);
           color:var(--select-icon-color);
-          transition: transform .3s;
+          transition: transform .2s;
+          transform-origin:  50% 50%;
         }
 
         @when reverse {
 
-          &:after,
-          &:before{
-            transform: rotate(180deg);
-            display: inline-block;
+          .el-input__icon-text{
+            transform: translate(0,0);
           }
         }
 

@@ -38,7 +38,9 @@
       >
       <!-- input 图标 -->
       <slot name="icon">
-        <i class="el-input__icon" :class="'el-icon-' + icon" v-if="icon" @click="handleIconClick"></i>
+        <div class="el-input__icon">
+          <i class="el-input__icon-text" :class="'el-icon-' + icon" v-if="icon" @click="handleIconClick"></i>
+        </div>
       </slot>
 
       <i class="el-input__icon el-icon-loading" v-if="validating"></i>
