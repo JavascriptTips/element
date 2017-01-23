@@ -78,6 +78,7 @@
 
   /* Checkbox
   -------------------------- */
+  --checkbox-font-size-small:12px;
   --checkbox-font-size: 14px;
   --checkbox-color: #333333;
   --checkbox-input-height: 18px;
