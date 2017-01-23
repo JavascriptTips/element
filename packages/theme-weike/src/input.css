@@ -45,6 +45,7 @@
       position: absolute;
       width: 35px;
       height: 100%;
+      line-height: 16px;
       right: 0;
       top: 0;
       text-align: center;
@@ -62,6 +63,13 @@
         padding-right: 35px;
       }
     }
+
+    @e icon-text{
+      color: inherit;
+
+      transform: rotate(180deg);
+    }
+
 
     @when active {
       .el-input__inner {

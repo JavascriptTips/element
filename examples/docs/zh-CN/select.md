@@ -128,7 +128,6 @@
 
 <style>
   .demo-select .el-select {
-    width: 240px;
   }
 </style>
 
@@ -149,6 +148,17 @@
       :value="item.value">
     </el-option>
   </el-select>
+  <hr>
+  <div style="width:130px;">
+    <el-select v-model="value" placeholder="请选择"
+      size="small">
+      <el-option
+        v-for="item in options"
+        :label="item.label"
+        :value="item.value">
+      </el-option>
+    </el-select>
+  </div>
 </template>
 
 <script>
