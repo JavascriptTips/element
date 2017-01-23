@@ -424,6 +424,7 @@
   <el-select v-model="value7" placeholder="请选择">
     <el-option-group
       v-for="group in options3"
+      :value="1"
       :label="group.label">
       <el-option
         v-for="item in group.options"
@@ -439,6 +440,7 @@
     data() {
       return {
         options3: [{
+          value: 'hotcity',
           label: '热门城市',
           options: [{
             value: 'Shanghai',
@@ -448,6 +450,7 @@
             label: '北京'
           }]
         }, {
+          value: 'cityname',
           label: '城市名',
           options: [{
             value: 'Chengdu',
