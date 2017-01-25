@@ -54,7 +54,7 @@
         background-color: var(--select-icon-bg);
         box-sizing: border-box;
         border:1px solid var(--select-border-color);
-        border-radius: var(--select-icon-radius) 0 0 var(--select-icon-radius);
+        border-radius: 0 var(--select-icon-radius) var(--select-icon-radius) 0;
         color: var(--select-input-color);
         font-size: var(--select-input-font-size);
         transform: translateY(-50%);
