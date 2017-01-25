@@ -140,7 +140,7 @@
         }
 
         .el-checkbox__label{
-          font-size: var(--checkbox-font-size-small);          
+          font-size: var(--checkbox-font-size-small);
         }
       }
     }
@@ -159,7 +159,7 @@
     }
 
     & + .el-checkbox {
-      margin-left: 15px;
+      margin-left: 30px;
     }
   }
 }
