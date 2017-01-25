@@ -87,7 +87,7 @@
       }
 
       &::after {
-        circle: 10px var(--radio-input-fill);
+        circle: var(--radio-input__inner-circle-width) var(--radio-input-fill);
         content: "";
         position: absolute;
         left: 50%;
@@ -100,7 +100,7 @@
         circle: var(--radio-input-small-width) #fff; /*var(--radio-input-fill);*/
 
         &:after{
-          circle: 7px var(--radio-input-fill);
+          circle: var(--radio-input-small__inner-circle-width) var(--radio-input-fill);
         }
       }
     }
