@@ -104,7 +104,7 @@
         height: var(--input-small-height);
       }
       & .el-input__icon{
-        width: 25px;/*var(--input-small-height);*/
+        width: var(--input-small-height);
       }
 
     }
