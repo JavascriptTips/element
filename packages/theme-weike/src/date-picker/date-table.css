@@ -24,6 +24,7 @@
       box-sizing: border-box;
       text-align: center;
       cursor: pointer;
+      vertical-align: middle;
 
       &.next-month,
       &.prev-month {

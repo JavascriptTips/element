@@ -78,6 +78,7 @@
 
   /* Checkbox
   -------------------------- */
+  --checkbox-font-size-small:12px;
   --checkbox-font-size: 14px;
   --checkbox-color: #333333;
   --checkbox-input-height: 18px;
@@ -114,6 +115,8 @@
   --radio-input-height: 18px;
   --radio-input-width: 18px;
   --radio-input-small-width: 14px;
+  --radio-input__inner-circle-width:12px;
+  --radio-input-small__inner-circle-width:9px;
 
   --radio-input-border-radius: var(--border-radius-circle);
   --radio-input-fill: var(--border-color-hover);
