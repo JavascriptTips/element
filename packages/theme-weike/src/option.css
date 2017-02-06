@@ -19,7 +19,7 @@
 
       &:after{
         content:'';
-        background-color: #e5e7ea;
+        background-color: #d9dee9;
         height: 1px;
         position: absolute;
         bottom: 1px;
@@ -43,20 +43,21 @@
       }
 
       &.hover {
+        color: var(--select-option-selected-hover);
         background-color: var(--select-option-hover-background);
       }
 
-      &.selected {
-        color: var(--color-white);
-        background-color: var(--select-option-selected);
+      /*&.selected {*/
+        /*color: var(--color-white);*/
+        /*background-color: var(--select-option-selected);*/
 
-        &.hover {
-          background-color: var(--select-option-selected-hover);
-        }
-        &::after{
-          background-color: inherit;
-        }
-      }
+        /*&.hover {*/
+          /*background-color: var(--select-option-selected-hover);*/
+        /*}*/
+        /*&::after{*/
+          /*background-color: inherit;*/
+        /*}*/
+      /*}*/
 
       & span {
         line-height: 1.5 !important;

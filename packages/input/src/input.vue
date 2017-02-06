@@ -65,7 +65,6 @@
       :autofocus="autofocus"
       :maxlength="maxlength"
       :minlength="minlength"
-      @keyup.enter="handleEnter"
       @focus="handleFocus"
       @blur="handleBlur">
     </textarea>

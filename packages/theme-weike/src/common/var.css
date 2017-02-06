@@ -158,14 +158,15 @@
   --select-tag-color: var(--color-white);
   --select-tag-background: var(--color-primary);
 
-  --select-option-color: var(--link-color);
+  --select-option-color: var(--select-group-color);
   --select-option-disabled-color: var(--color-grey);
   --select-option-height: 36px;
-  --select-option-hover-background: #e5e9f2;
+  --select-option-hover-background: #e5f4fd; /*lsy*/
   --select-option-selected: var(--color-primary);
-  --select-option-selected-hover: #1D8CE0;
+  --select-option-selected-hover: #0097e8;
 
-  --select-group-color: #999;
+  /*lsy*/
+  --select-group-color: #333;
   --select-group-height: 30px;
   --select-group-font-size: 12px;
 
@@ -173,7 +174,7 @@
   --select-dropdown-shadow: var(--box-shadow-base);
   --select-dropdown-empty-color: #999;
   --select-dropdown-max-height: 274px;
-  --select-dropdown-padding: 6px 0;
+  --select-dropdown-padding: 0;/*lsy*/
   --select-dropdown-empty-padding: 10px 0;
   --select-dropdown-border: solid 1px var(--disabled-border-base);
 
@@ -334,9 +335,11 @@
   --button-large-padding-vertical: 11px;
   --button-large-padding-horizontal: 60px;
 
+  /*lsy edit*/
   --button-small-font-size: 12px;
-  --button-small-padding-vertical: 7px;
-  --button-small-padding-horizontal: 9px;
+  --button-small-padding-vertical: 6px;
+  --button-small-padding-horizontal: 18px;
+  /*lsy edit*/
 
   --button-mini-font-size: 12px;
   --button-mini-padding-vertical: 4px;
