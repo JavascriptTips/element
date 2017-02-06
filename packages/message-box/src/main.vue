@@ -10,7 +10,7 @@
           <i class="el-message-box__close el-icon-close" @click="handleAction('cancel')" v-if="showClose"></i>
         </div>
         <div class="el-message-box__content" v-if="message !== ''">
-          <div class="el-message-box__message"><p>{{ message }}</p></div>
+          <div class="el-message-box__message"><p v-html="message" ></p></div>
           <div class="el-message-box__input" v-show="showInput">
             <el-input v-model="inputValue" :placeholder="inputPlaceholder" ref="input"></el-input>
             <div class="el-message-box__errormsg" :style="{ visibility: !!editorErrorMessage ? 'visible' : 'hidden' }">{{ editorErrorMessage }}</div>
