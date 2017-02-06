@@ -181,7 +181,8 @@ export default {
 
       data() {
         return {
-          oldValue: null
+          oldValue: null,
+          jumpValue: ''
         };
       },
 
@@ -190,8 +191,11 @@ export default {
           this.oldValue = event.target.value;
         },
 
+        handleJumpInputChange({ target }) {
+          this.jumpValue = target.value;
+        },
         handleChange({ target }) {
-          this.$parent.internalCurrentPage = this.$parent.getValidCurrentPage(target.value);
+          this.$parent.internalCurrentPage = this.$parent.getValidCurrentPage(this.jumpValue);
           this.oldValue = null;
         }
       },
@@ -206,7 +210,7 @@ export default {
               min={ 1 }
               max={ this.internalPageCount }
               domProps-value={ this.$parent.internalCurrentPage }
-              // on-change={ this.handleChange }
+              on-change={ this.handleJumpInputChange }
               on-focus={ this.handleFocus }
               style={{ width: '30px' }}
               number/>
