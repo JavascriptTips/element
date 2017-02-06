@@ -3,12 +3,14 @@
     <div class="el-message-box__wrapper" v-show="value" @click.self="handleWrapperClick">
       <div class="el-message-box" :class="customClass">
         <div class="el-message-box__header" v-if="title !== undefined">
-          <div class="el-message-box__title">{{ title || t('el.messagebox.title') }}</div>
+          <div class="el-message-box__title">
+            <div class="el-message-box__status" :class="[ typeClass ]"></div>
+            {{ title || t('el.messagebox.title') }}
+          </div>
           <i class="el-message-box__close el-icon-close" @click="handleAction('cancel')" v-if="showClose"></i>
         </div>
         <div class="el-message-box__content" v-if="message !== ''">
-          <div class="el-message-box__status" :class="[ typeClass ]"></div>
-          <div class="el-message-box__message" :style="{ 'margin-left': typeClass ? '50px' : '0' }"><p>{{ message }}</p></div>
+          <div class="el-message-box__message"><p>{{ message }}</p></div>
           <div class="el-message-box__input" v-show="showInput">
             <el-input v-model="inputValue" :placeholder="inputPlaceholder" ref="input"></el-input>
             <div class="el-message-box__errormsg" :style="{ visibility: !!editorErrorMessage ? 'visible' : 'hidden' }">{{ editorErrorMessage }}</div>

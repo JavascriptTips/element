@@ -35,21 +35,23 @@
 
     @e header {
       position: relative;
-      padding: 20px 20px 0;
+      padding: 40px 20px 0;
     }
 
     @e content {
-      padding: 30px 20px;
+      border-bottom: 1px solid var(--msgbox-bdbc);
+      padding: 10px 20px 30px;
       color: var(--msgbox-content-color);
       font-size: var(--msgbox-content-font-size);
       position: relative;
+      text-align: center;
     }
 
     @e close {
       display: inline-block;
       position: absolute;
-      top: 19px;
-      right: 20px;
+      top: 10px;
+      right: 10px;
       color: #999;
       cursor: pointer;
       line-height: 20px;
@@ -82,6 +84,7 @@
       margin-bottom: 0;
       font-size: var(--msgbox-font-size);
       font-weight: bold;
+      text-align: center;
       height: 18px;
       color: #333;
     }
@@ -97,7 +100,7 @@
 
     @e btns {
       padding: 10px 20px 15px;
-      text-align: right;
+      text-align: center;
 
       & button:nth-child(2) {
         margin-left: 10px;
@@ -109,10 +112,12 @@
     }
 
     @e status {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 36px !important;
+      display: inline-block;
+      font-size: 14px;
+      /*position: absolute;
+      /*top: 50%;
+      transform: translateY(-50%);*/*/
+      /*font-size: 36px !important;*/
 
       &.el-icon-circle-check {
         color: var(--msgbox-success-color);
