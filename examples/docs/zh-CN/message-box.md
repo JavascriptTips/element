@@ -30,7 +30,7 @@
             this.$message({
               message: '已取消删除',
               type: 'info'
-            });  
+            });
           }, 200);
         });
       },
@@ -140,7 +140,7 @@
           this.$message({
             type: 'info',
             message: '已取消删除'
-          });          
+          });
         });
       }
     }
@@ -178,7 +178,7 @@
           this.$message({
             type: 'info',
             message: '取消输入'
-          });       
+          });
         });
       }
     }
