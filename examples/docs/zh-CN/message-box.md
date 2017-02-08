@@ -25,6 +25,8 @@
               type: 'success'
             });
           }, 200);
+        },()=>{
+          console.log('confirm 取消');
         }).catch(() => {
           setTimeout(() => {
             this.$message({
