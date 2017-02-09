@@ -278,7 +278,7 @@
   --input-large-height: 42px;
 
   --input-small-font-size: 13px;
-  --input-small-height: 30px;
+  --input-small-height: 28px;
 
   --input-mini-font-size: 12px;
   --input-mini-height: 22px;
@@ -335,9 +335,9 @@
   --button-padding-vertical: 10px;
   --button-padding-horizontal: 15px;
 
-  --button-large-font-size: 14px;
-  --button-large-padding-vertical: 11px;
-  --button-large-padding-horizontal: 60px;
+  --button-large-font-size: 16px;
+  --button-large-padding-vertical: 12px;
+  --button-large-padding-horizontal: 22px;
 
   /*lsy edit*/
   --button-small-font-size: 12px;
