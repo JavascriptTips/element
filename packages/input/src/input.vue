@@ -146,6 +146,9 @@
           this.dispatch('ElFormItem', 'el.form.blur', [this.currentValue]);
         }
       },
+      inputFocus() {
+        this.$refs.input.focus();
+      },
       inputSelect() {
         this.$refs.input.select();
       },
