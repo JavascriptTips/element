@@ -189,6 +189,7 @@ Button 组件提供除了默认值以外的三种尺寸，可以在不同场景�
 ### Attributes
 | 参数      | 说明    | 类型      | 可选值       | 默认值   |
 |---------- |-------- |---------- |-------------  |-------- |
+| active |    是否使按钮高亮      |    Boolean       |   true/false    |   -  |
 | size     | 尺寸   | string  |   large,small,mini            |    —     |
 | type     | 类型   | string    |   primary,success,warning,danger,info,text,red |     —    |
 | plain     | 是否朴素按钮   | Boolean    | — | false   |
