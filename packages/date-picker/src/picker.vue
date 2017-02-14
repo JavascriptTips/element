@@ -192,9 +192,10 @@ export default {
       type: Boolean,
       default: true
     },
-    notNull:{  //日期不可以为空字符串
-      type:Boolean,
-      default:true,
+    // 日期不可以为空字符串
+    notNull: {
+      type: Boolean,
+      default: true
     },
     popperClass: String,
     editable: {
@@ -346,8 +347,8 @@ export default {
       if (this.showClose) {
         this.internalValue = '';
 
-        if(!this.notNull){
-          this.$emit('input','');
+        if (!this.notNull) {
+          this.$emit('input', '');
         }
       } else {
         this.pickerVisible = !this.pickerVisible;
