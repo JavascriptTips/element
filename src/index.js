@@ -61,6 +61,7 @@ import CarouselItem from '../packages/carousel-item';
 import Collapse from '../packages/collapse';
 import CollapseItem from '../packages/collapse-item';
 import SwitchingTabs from '../packages/switching-tabs';
+import JdateTimePicker from '../packages/jdate-time-picker';
 import locale from 'element-ui/src/locale';
 
 const install = function(Vue, opts = {}) {
@@ -125,6 +126,7 @@ const install = function(Vue, opts = {}) {
   Vue.component(Collapse.name, Collapse);
   Vue.component(CollapseItem.name, CollapseItem);
   Vue.component(SwitchingTabs.name, SwitchingTabs);
+  Vue.component(JdateTimePicker.name, JdateTimePicker);
 
   Vue.use(Loading.directive);
 
@@ -206,5 +208,6 @@ module.exports = {
   CarouselItem,
   Collapse,
   CollapseItem,
-  SwitchingTabs
+  SwitchingTabs,
+  JdateTimePicker
 };

@@ -1,0 +1,12 @@
+@charset "UTF-8";
+@import "./common/var.css";
+
+@component-namespace el{
+
+
+  @b jdate-time-picker{
+
+
+    display: inline-block;
+  }
+}

@@ -29,11 +29,15 @@
       "name": "基础组件",
       "groups": [
         {
-          "groupName":"维客",
-          "list":[
+          "groupName": "维客",
+          "list": [
             {
               "path": "/switching-tabs",
               "title": "SwitchingTabs 标签切换器"
+            },
+            {
+              "path": "/jdate-time-picker",
+              "title": "JdateTimePicker 时间控件"
             }
           ]
         },
@@ -446,6 +450,10 @@
             {
               "path": "/collapse",
               "title": "Collapse"
+            },
+            {
+              "path": "/jdate-time-picker",
+              "title": "JdateTimePicker"
             }
           ]
         }
