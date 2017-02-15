@@ -5,6 +5,9 @@
 </template>
 
 <script>
+import $ from 'jquery';
+window.$ = $;
+window.jQuery = $;
 require('jquery-date-time-picker');
 require('jquery-date-time-picker/dist/jquery-date-time-picker.css');
 
