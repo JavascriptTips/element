@@ -18,6 +18,13 @@ export default {
   },
   mounted() {
 
+    var minDate = this.minDate ? new Date(this.minDate) : new Date();
+
+    if (minDate.getSeconds() === 0) {
+      var cs = new Date().getSeconds();
+      minDate.setSeconds(cs);
+    }
+
     this.$nextTick(()=>{
       const $ = window.$;
 
@@ -34,7 +41,7 @@ export default {
           showOtherMonths: true,
           selectOtherMonths: true,
           timeFormat: this.timePicker ? 'HH:mm:ss' : undefined,
-          minDateTime: this.minDate,
+          minDateTime: minDate,
           onSelect: (e)=>{
 
             $input.datetimepicker('setDate', e);
