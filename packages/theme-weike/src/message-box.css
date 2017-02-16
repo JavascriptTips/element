@@ -82,7 +82,7 @@
     @e title {
       padding-left: 0;
       margin-bottom: 0;
-      font-size: var(--msgbox-font-size);
+      font-size: 22px;
       font-weight: bold;
       text-align: center;
       height: 18px;
@@ -90,7 +90,7 @@
     }
 
     @e message {
-      margin: 0;
+      margin-top: 10px;
 
       & p {
         margin: 0;
