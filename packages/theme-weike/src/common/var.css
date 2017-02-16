@@ -361,29 +361,34 @@
   --button-disabled-fill: #EFF2F7;
   --button-disabled-border: var(--disabled-border-base);
 
-  --button-primary-border: var(--color-primary);
+  --button-primary-border: #0087cf;
   --button-primary-color: var(--color-white);
   --button-primary-fill:  var(--color-primary);
+  --button-primary-shadow: #37adec;
 
-  --button-success-border: var(--color-success);
+  --button-success-border: #04c158;
   --button-success-color: var(--color-white);
   --button-success-fill: var(--color-success);
+  --button-success-shadow: #38da80;
 
-  --button-warning-border: var(--color-warning);
+  --button-warning-border: #d68806;
   --button-warning-color: var(--color-white);
   --button-warning-fill: var(--color-warning);
+  --button-warning-shadow: #efb049;
 
-  --button-danger-border: var(--color-danger);
+  --button-danger-border: #da231f;
   --button-danger-color: var(--color-white);
   --button-danger-fill: var(--color-danger);
+  --button-danger-shadow: #e66d6a;
 
   --button-red-border: var(--color-red);
   --button-red-color: var(--color-white);
   --button-red-fill: var(--color-red);
 
-  --button-info-border: var(--color-info);
+  --button-info-border: #35a5e6;
   --button-info-color: var(--color-white);
   --button-info-fill: var(--color-info);
+  --button-info-shadow: #96d1f3;
 
   --button-hover-tint-percent: 20%;
   --button-active-shade-percent: 10%;
