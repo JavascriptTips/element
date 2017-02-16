@@ -1,0 +1,20 @@
+{
+  "name": "element-jdate-time-picker",
+  "version": "0.0.0",
+  "description": "A jdate-time-picker component for Vue.js.",
+  "keywords": [
+    "element",
+    "vue",
+    "component"
+  ],
+  "main": "./lib/index.js",
+  "repository": "https://github.com/ElemeFE/element/tree/master/packages/jdate-time-picker",
+  "author": "elemefe",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {
+    "jquery-date-time-picker": "^1.0.6",
+    "zepto": "^1.2.0",
+    "zeptojs": "^1.1.4"
+  }
+}

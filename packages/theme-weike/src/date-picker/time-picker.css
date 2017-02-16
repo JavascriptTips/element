@@ -24,21 +24,22 @@
         color: var(--color-white);
         position: absolute;
         font-size: 14px;
-        margin-top: -15px;
-        line-height: 16px;
+        margin-top: 6px;
+        line-height: 32px;
         background-color: var(--datepicker-active-color);
         height: 32px;
         z-index: -1;
         left: 0;
         right: 0;
         box-sizing: border-box;
-        padding-top: 6px;
+        padding: 0px;
         text-align: left;
+        transform: translate(0,-50%);
       }
 
       &::after {
         left: 50%;
-        margin-left: -2px;
+        /*margin-left: -2px;*/
       }
 
       &::before {

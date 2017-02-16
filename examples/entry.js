@@ -10,6 +10,13 @@ import MainHeader from './components/header.vue';
 import SideNav from './components/side-nav';
 import FooterNav from './components/footer-nav';
 import title from './i18n/title.json';
+import $ from 'jquery';
+
+window.$ = $;
+window.jQuery = $;
+
+require('jquery-date-time-picker');
+require('jquery-date-time-picker/dist/jquery-date-time-picker.css');
 
 Vue.use(Element);
 Vue.use(VueRouter);
