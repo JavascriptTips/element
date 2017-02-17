@@ -116,23 +116,27 @@
       font-size: 14px;
       /*position: absolute;
       /*top: 50%;
-      transform: translateY(-50%);*/*/
+      transform: translateY(-50%);*/
       /*font-size: 36px !important;*/
 
       &.el-icon-circle-check {
         color: var(--msgbox-success-color);
+        font-size: inherit;
       }
 
       &.el-icon-information {
         color: var(--msgbox-info-color);
+        font-size: inherit;
       }
 
       &.el-icon-warning {
         color: var(--msgbox-warning-color);
+        font-size: inherit;
       }
 
       &.el-icon-circle-cross {
         color: var(--msgbox-danger-color);
+        font-size: inherit;
       }
     }
   }
