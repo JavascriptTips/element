@@ -40,7 +40,7 @@
       @m active{
         background-color: var(--switching-tabs-active-bgc);
         border-color: var(--switching-tabs-hover-bdc);
-
+        color:var(--switching-tabs-hover-bdc);
         top: 0;
         z-index: 1;
 
