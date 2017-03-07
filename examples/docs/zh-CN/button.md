@@ -79,6 +79,8 @@
 
 ```html
 <el-button>默认按钮</el-button>
+<el-button :plain="true">plain按钮</el-button>
+<el-button :plain-light="true">亮边按钮</el-button>
 <el-button type="primary">主要按钮</el-button>
 <el-button type="text">文字按钮</el-button>
 ```
@@ -92,6 +94,7 @@
 
 ```html
 <el-button :plain="true" :disabled="true">主要按钮</el-button>
+<el-button :plain-light="true" :disabled="true">亮边按钮</el-button>
 <el-button type="primary" :disabled="true">主要按钮</el-button>
 <el-button type="text" :disabled="true">文字按钮</el-button>
 ```

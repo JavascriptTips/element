@@ -151,6 +151,25 @@ Popover 的属性与 Tooltip 很类似，它们都是基于`Vue-popper`开发的
 ```
 :::
 
+### 关闭渐变
+
+
+:::demo 设置closeTransition
+```html
+<el-popover
+  ref="popoverx"
+  placement="top-start"
+  :close-transition="true"
+  title="标题"
+  width="200"
+  trigger="hover"
+  content="这是一段内容,这是一段内容,这是一段内容,这是一段内容。">
+</el-popover>
+
+<el-button v-popover:popoverx>hover 激活.close</el-button>
+```
+:::
+
 ### 嵌套信息
 
 可以在 Popover 中嵌套多种类型信息，以下为嵌套表格的例子。
@@ -245,6 +264,8 @@ Popover 的属性与 Tooltip 很类似，它们都是基于`Vue-popper`开发的
 |  visible-arrow   |  是否显示 Tooltip 箭头，更多参数可见[Vue-popper](https://github.com/element-component/vue-popper) | Boolean | — | true |
 |  options        | [popper.js](https://popper.js.org/documentation.html) 的参数 | Object            | 参考 [popper.js](https://popper.js.org/documentation.html) 文档 | `{ boundariesElement: 'body', gpuAcceleration: false }` |
 | popper-class | 为 popper 添加类名 | String | — | — |
+| closeTransition | 关闭transition | Boolean | — | — |
+
 
 ### Slot
 | 参数               | 说明                                                     |

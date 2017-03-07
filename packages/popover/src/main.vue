@@ -1,6 +1,6 @@
 <template>
   <span>
-    <transition :name="transition" @after-leave="doDestroy">
+    <transition v-if="!closeTransition" :name="transition" @after-leave="doDestroy">
       <div
         class="el-popover"
         :class="[popperClass]"
@@ -11,6 +11,15 @@
         <slot><span v-html="content"></span></slot>
       </div>
     </transition>
+    <div v-else
+        class="el-popover"
+        :class="[popperClass]"
+        ref="popper"
+        v-show="showPopper"
+        :style="{ width: width + 'px' }">
+        <div class="el-popover__title" v-if="title" v-text="title"></div>
+        <slot><span v-html="content"></span></slot>
+    </div>
     <slot name="reference"></slot>
   </span>
 </template>
@@ -38,6 +47,7 @@ export default {
     visibleArrow: {
       default: true
     },
+    closeTransition: Boolean,
     transition: {
       type: String,
       default: 'fade-in-linear'

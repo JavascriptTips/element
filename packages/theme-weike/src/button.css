@@ -64,6 +64,26 @@
         outline: none;
       }
     }
+    @when plain-light {
+      box-shadow: none;
+      background: #fff;
+      border-color: var(--color-primary);
+      color: var(--color-primary);
+
+      &:hover,
+      &:focus {
+        background: var(--color-primary);
+        border-color: var(--color-primary);
+        color: #fff;
+        box-shadow: none;
+      }
+
+      &:active {
+        border-color: shade(var(--color-primary), var(--button-active-shade-percent));
+        color: shade(var(--color-primary), var(--button-active-shade-percent));
+        outline: none;
+      }
+    }
 
     @when active {
       color: shade(var(--color-primary), var(--button-active-shade-percent));
@@ -87,7 +107,8 @@
         background-color: transparent;
       }
 
-      &.is-plain {
+      &.is-plain ,
+      &.is-plain-light{
         &,
         &:hover,
         &:focus {

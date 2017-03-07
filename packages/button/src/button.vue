@@ -10,7 +10,8 @@
       {
         'is-disabled': disabled,
         'is-loading': loading,
-        'is-plain': plain
+        'is-plain': plain,
+        'is-plain-light': plainLight
       }
     ]"
   >
@@ -41,6 +42,7 @@
       loading: Boolean,
       disabled: Boolean,
       plain: Boolean,
+      plainLight: Boolean,
       autofocus: Boolean
     },
 
