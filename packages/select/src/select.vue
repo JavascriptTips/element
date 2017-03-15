@@ -190,7 +190,8 @@
           return t('el.select.placeholder');
         }
       },
-      fixIcon: Boolean // 图标不旋转
+      fixIcon: Boolean, // 图标不旋转
+      myIconClass: String // 自定义icon
     },
 
     data() {
