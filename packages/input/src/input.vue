@@ -39,7 +39,7 @@
       <!-- input 图标 -->
       <slot name="icon">
         <div class="el-input__icon" @click="handleIconClick">
-          <i class="el-input__icon-text" :class="'el-icon-' + icon" v-if="icon"></i>
+          <i class="el-input__icon-text" :class="['el-icon-' + icon, icon]" v-if="icon"></i>
         </div>
       </slot>
 

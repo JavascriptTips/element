@@ -159,6 +159,35 @@
       </el-option>
     </el-select>
   </div>
+  <hr>
+  <div style="width:130px;">
+    <el-select
+      v-model="value"
+      placeholder="请选择"
+      size="small"
+      fix-icon>
+      <el-option
+        v-for="item in options"
+        :label="item.label"
+        :value="item.value">
+      </el-option>
+    </el-select>
+  </div>
+  <hr>
+  <div style="width:130px;">
+    <el-select
+      v-model="value"
+      placeholder="请选择"
+      size="small"
+      fix-icon>
+      <el-option
+        v-for="item in options"
+        :label="item.label"
+        :value="item.value">
+      </el-option>
+      <span slot="icon">icon</span>
+    </el-select>
+  </div>
 </template>
 
 <script>

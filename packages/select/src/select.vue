@@ -114,6 +114,9 @@
 
     computed: {
       iconClass() {
+        if (this.myIconClass) {
+          return this.myIconClass;
+        }
         let criteria = this.clearable &&
           !this.disabled &&
           this.inputHovering &&
@@ -186,7 +189,8 @@
         default() {
           return t('el.select.placeholder');
         }
-      }
+      },
+      fixIcon: Boolean // 图标不旋转
     },
 
     data() {
@@ -329,7 +333,7 @@
 
       handleIconShow() {
         let icon = this.$el.querySelector('.el-input__icon');
-        if (icon && !hasClass(icon, 'el-icon-circle-close')) {
+        if (icon && !hasClass(icon, 'el-icon-circle-close') && !this.fixIcon) {
           addClass(icon, 'is-reverse');
         }
       },
