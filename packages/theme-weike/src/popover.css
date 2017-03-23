@@ -5,7 +5,7 @@
   @b popover {
     position: absolute;
     background: var(--popover-fill);
-    min-width: 150px;
+    min-width: 100px;
     border-radius: 2px;
     border: 1px solid var(--popover-border-color);
     padding: var(--popover-padding);
