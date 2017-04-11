@@ -163,7 +163,7 @@ export default {
         this.$emit('input', true);
       }
 
-      const props = merge({}, this, options);
+      const props = merge({}, this, this.$props, options);
 
       if (this._closeTimer) {
         clearTimeout(this._closeTimer);
@@ -195,7 +195,6 @@ export default {
       this.$emit('input', true);
 
       const dom = getDOM(this.$el);
-
       const modal = props.modal;
 
       const zIndex = props.zIndex;
