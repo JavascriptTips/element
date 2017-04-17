@@ -10,6 +10,9 @@ export default {
   props: {
     value: String,
     minDate: Date,
+    maxDate: Date,
+    minDateTime: Date,
+    maxDateTime: Date,
     timePicker: Boolean
   },
   data() {
@@ -17,13 +20,6 @@ export default {
     };
   },
   mounted() {
-
-    var minDate = this.minDate ? new Date(this.minDate) : new Date();
-
-    if (minDate.getSeconds() === 0) {
-      var cs = new Date().getSeconds();
-      minDate.setSeconds(cs);
-    }
 
     this.$nextTick(()=>{
       const $ = window.$;
@@ -37,11 +33,10 @@ export default {
 
         $input.val(this.value);
 
-        const option = {
+        var option = {
           showOtherMonths: true,
           selectOtherMonths: true,
           timeFormat: this.timePicker ? 'HH:mm:ss' : undefined,
-          minDateTime: minDate,
           onSelect: (e)=>{
 
             $input.datetimepicker('setDate', e);
@@ -49,8 +44,17 @@ export default {
             this.$emit('input', $input.val());
           }
         };
+        option = Object.assign(
+          option,
+          {
+            minDate: this.minDate,
+            maxDate: this.maxDate,
+            minDateTime: this.minDateTime,
+            maxDateTime: this.maxDateTime
+          }
+        );
 
-        $input.on('focus', ()=>{
+        $input.on('click', ()=>{
 
           if (this.timePicker) {
             $input.datetimepicker(option);

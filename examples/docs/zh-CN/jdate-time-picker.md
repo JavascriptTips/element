@@ -6,6 +6,7 @@
       return {
         date:'',
         date2:'',
+        maxDate: new Date()
       };
     },
     methods: {
@@ -23,8 +24,8 @@
 ### el-input选取
 :::demo input
 ```html
-<el-jdate-time-picker v-model="date">
-  <el-input v-model="date"></el-input>
+<el-jdate-time-picker v-model="date" :max-date="maxDate">
+  <el-input v-model="date" ></el-input>
 </el-jdate-time-picker>
 ```
 :::
