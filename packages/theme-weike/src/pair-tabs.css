@@ -1,0 +1,66 @@
+@charset "UTF-8";
+@import "./input.css";
+@import "./common/var.css";
+
+@component-namespace el {
+  @b pair-tabs {
+    border: 1px solid #cdd6de;
+    border-radius: 2px;
+
+    @e tabs{
+      background-color: #eeeff2;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      font-size: 18px;
+      color: #333;
+      line-height: 40px;
+      height: 40px;
+
+      position: relative;
+
+      > li {
+        padding: 0 2em;
+
+        display: inline-block;
+        position: relative;
+
+        transform: translate(100%, 0);
+        cursor: pointer;
+
+        &.active{
+          background-color: #fff;
+          position: absolute;
+          left: 0;
+          transform: none;
+
+          &:after{
+            content:'';
+            border-style: solid;
+            border-width: 20px 10px 20px 10px;
+            border-color: transparent transparent #fff #fff;
+            width: 0;
+            height: 0;
+            position: absolute;
+            left: 100%;
+            top: 0;
+          }
+        }
+      }
+
+      @m small {
+        line-height: 32px;
+        height: 32px;
+        font-size: 14px;
+      }
+      @m normal{
+        font-size: 18px;
+      }
+    }
+
+    @e box{
+
+
+    }
+  }
+}

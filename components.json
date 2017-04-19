@@ -60,5 +60,6 @@
   "collapse": "./packages/collapse/index.js",
   "collapse-item": "./packages/collapse-item/index.js",
   "switching-tabs": "./packages/switching-tabs/index.js",
-  "jdate-time-picker": "./packages/jdate-time-picker/index.js"
+  "jdate-time-picker": "./packages/jdate-time-picker/index.js",
+  "pair-tabs": "./packages/pair-tabs/index.js"
 }

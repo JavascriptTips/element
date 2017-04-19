@@ -38,6 +38,10 @@
             {
               "path": "/jdate-time-picker",
               "title": "JdateTimePicker 时间控件"
+            },
+            {
+              "path": "/pair-tabs",
+              "title": "PairTabs 双标签切换"
             }
           ]
         },
@@ -228,6 +232,10 @@
             {
               "path": "/collapse",
               "title": "Collapse 折叠面板"
+            },
+            {
+              "path": "/pair-tabs",
+              "title": "PairTabs 双标签切换"
             }
           ]
         }

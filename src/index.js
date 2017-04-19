@@ -62,6 +62,7 @@ import Collapse from '../packages/collapse';
 import CollapseItem from '../packages/collapse-item';
 import SwitchingTabs from '../packages/switching-tabs';
 import JdateTimePicker from '../packages/jdate-time-picker';
+import PairTabs from '../packages/pair-tabs';
 import locale from 'element-ui/src/locale';
 
 const install = function(Vue, opts = {}) {
@@ -127,6 +128,7 @@ const install = function(Vue, opts = {}) {
   Vue.component(CollapseItem.name, CollapseItem);
   Vue.component(SwitchingTabs.name, SwitchingTabs);
   Vue.component(JdateTimePicker.name, JdateTimePicker);
+  Vue.component(PairTabs.name, PairTabs);
 
   Vue.use(Loading.directive);
 
@@ -145,7 +147,7 @@ if (typeof window !== 'undefined' && window.Vue) {
 };
 
 module.exports = {
-  version: '1.1.28',
+  version: '1.2.1',
   locale: locale.use,
   install,
   Loading,
@@ -209,5 +211,6 @@ module.exports = {
   Collapse,
   CollapseItem,
   SwitchingTabs,
-  JdateTimePicker
+  JdateTimePicker,
+  PairTabs
 };
