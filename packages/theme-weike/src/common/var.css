@@ -427,10 +427,12 @@
 
   /* Table
  -------------------------- */
-  --table-border-color: #e0e6ed;
+  --table-outer-border-color:#c9d0df;
+  --table-border-color: #eeeff2;
   --table-text-color: #333333;
-  --table-header-background: #EFF2F7;
-
+  /*--table-header-background: #EFF2F7;*/
+  --table-header-background: #fff;
+  --table-td-color: #666;
   /* Pagination lsy edit 20170114
  -------------------------- */
   --pagination-font-size: 12px;
