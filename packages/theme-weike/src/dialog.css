@@ -18,7 +18,8 @@
     }
 
     @modifier small {
-      width: var(--dialog-small-width);
+      /*width: var(--dialog-small-width);*/
+      max-width: var(--dialog-small-width);
     }
 
     @modifier large {
