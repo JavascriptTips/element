@@ -47,6 +47,7 @@ export default {
   },
   mounted() {
     this.$nextTick(() => {
+      this.showIndex(this.curIndex);
     });
   },
   methods: {
