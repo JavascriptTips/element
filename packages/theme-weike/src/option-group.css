@@ -23,6 +23,11 @@
 
     & .el-select-dropdown__item {
       padding-left: 20px;
+      padding-top: 4px;
+      padding-bottom: 4px;
+      height: 28px;
+      line-height: 20px;
+      font-size: 12px;
     }
   }
 }
