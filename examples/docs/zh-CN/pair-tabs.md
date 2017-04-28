@@ -4,7 +4,7 @@ export default {
   data(){
     return {
 
-      tabs:['国内XX这里','国际XX这里']
+      tabs:['国内XX这里','国际这里']
     }
   }
 }

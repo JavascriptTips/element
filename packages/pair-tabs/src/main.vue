@@ -8,7 +8,7 @@
           :class="{
             active: tab.active,
           }"
-          @click="switchTab(index)" >
+          @click="switchTab(tab.i)" >
           {{tab.name}}
         </li>
       </ul>
@@ -37,10 +37,13 @@ export default {
   },
   computed: {
     activeTabs() {
-      return this.tabs.map((name, i) => {
+      return [this.tabs[this.curIndex]].concat(this.tabs.filter((name, i) => {
+        return i !== this.curIndex;
+      })).map((name, i) => {
         return {
           name,
-          active: this.curIndex === i
+          active: i === 0,
+          i: this.tabs.indexOf(name)
         };
       });
     }

@@ -24,13 +24,13 @@
 
         display: inline-block;
         position: relative;
-
-        transform: translate(100%, 0);
+        user-select: none;
+        /*transform: translate(100%, 0);*/
         cursor: pointer;
 
         &.active{
           background-color: #fff;
-          position: absolute;
+          position: relative;
           left: 0;
           transform: none;
 
