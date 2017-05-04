@@ -52,6 +52,11 @@ export default {
     this.$nextTick(() => {
       this.showIndex(this.curIndex);
     });
+    this.$watch('tabs', () => {
+      this.$nextTick(() => {
+        this.showIndex(this.curIndex);
+      });
+    });
   },
   methods: {
     switchTab(index) {
