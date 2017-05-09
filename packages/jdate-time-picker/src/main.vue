@@ -67,11 +67,12 @@ export default {
         const $input = this.$input;
 
         $input.on('click', ()=>{
-          $input.datetimepicker(this.option);
 
           if (this.timePicker) {
+            $input.datetimepicker(this.option);
             $input.datetimepicker('show');
           } else {
+            $input.datepicker(this.option);
             $input.datepicker('show');
           }
         });
