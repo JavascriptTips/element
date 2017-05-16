@@ -6,8 +6,16 @@
       return {
         date:'',
         date2:'',
-        maxDate: new Date()
+        maxDate: new Date(),
+
+        date3Str:null,
+        date4Str:null,
       };
+    },
+    computed:{
+      date3(){
+        return new Date(this.date3Str);
+      }
     },
     methods: {
     },
@@ -35,10 +43,28 @@
 :::demo input
 ```html
 <el-jdate-time-picker v-model="date2" :time-picker="true">
-  <input  ></el-input>
+  <input></input>
 </el-jdate-time-picker>
 ```
 :::
+
+### 区间的选取
+:::demo input
+```html
+<el-jdate-time-picker v-model="date3Str" :time-picker="true">
+  <el-input  ></el-input>
+</el-jdate-time-picker>
+<el-jdate-time-picker
+  v-model="date4Str"
+  :time-picker="true"
+  :min-date-time="date3"
+  :max-date-time="maxDate">
+  <el-input  ></el-input>
+</el-jdate-time-picker>
+
+```
+:::
+
 
 
 ### Row Attributes

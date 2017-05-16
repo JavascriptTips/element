@@ -9,17 +9,17 @@ var mixinsList = fs.readdirSync(path.resolve(__dirname, '../src/mixins'));
 var externals = {};
 
 Object.keys(Components).forEach(function(key) {
-  externals[`element-ui/packages/${key}`] = `element-ui/lib/${key}`;
+  externals[`element-ui/packages/${key}`] = `@qp/qp-element-ui/lib/${key}`;
 });
 
-externals['element-ui/src/locale'] = 'element-ui/lib/locale';
+externals['element-ui/src/locale'] = '@qp/qp-element-ui/lib/locale';
 utilsList.forEach(function(file) {
   file = path.basename(file, '.js');
-  externals[`element-ui/src/utils/${file}`] = `element-ui/lib/utils/${file}`;
+  externals[`element-ui/src/utils/${file}`] = `@qp/qp-element-ui/lib/utils/${file}`;
 });
 mixinsList.forEach(function(file) {
   file = path.basename(file, '.js');
-  externals[`element-ui/src/mixins/${file}`] = `element-ui/lib/mixins/${file}`;
+  externals[`element-ui/src/mixins/${file}`] = `@qp/qp-element-ui/lib/mixins/${file}`;
 });
 
 externals = [Object.assign({
