@@ -49,8 +49,8 @@ export default {
       option = Object.assign(
         option,
         {
-          minDate: this.minDate,
-          maxDate: this.maxDate,
+          minDate: this.minDate || this.minDateTime,
+          maxDate: this.maxDate || this.maxDateTime,
           minDateTime: this.minDateTime,
           maxDateTime: this.maxDateTime
         }
@@ -67,14 +67,25 @@ export default {
         const $input = this.$input;
 
         $input.on('click', ()=>{
+          const pickerInst = $input.data('datepicker');
 
-          if (this.timePicker) {
-            $input.datetimepicker(this.option);
-            $input.datetimepicker('show');
+          if (pickerInst && pickerInst.settings) {
+            Object.assign(pickerInst.settings, this.option);
           } else {
-            $input.datepicker(this.option);
-            $input.datepicker('show');
+            if (this.timePicker) {
+              $input.datetimepicker(Object.assign({}, this.option));
+            } else {
+              $input.datepicker(Object.assign({}, this.option));
+            }
           }
+          requestAnimationFrame(() => {
+            $input.datepicker('refresh');
+            if (this.timePicker) {
+              $input.datetimepicker('show');
+            } else {
+              $input.datepicker('show');
+            }
+          });
         });
       }
     });
