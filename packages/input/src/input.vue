@@ -39,11 +39,12 @@
       <!-- input 图标 -->
       <slot name="icon">
         <div class="el-input__icon" @click="handleIconClick">
-          <i class="el-input__icon-text" :class="['el-icon-' + icon, icon]" v-if="icon"></i>
+          <i class="el-input__icon-text" :class="['el-icon-' + icon, icon]" v-if="icon && !hasClear && !validating"></i>
         </div>
       </slot>
 
       <i class="el-input__icon el-icon-loading" v-if="validating"></i>
+      <i @click="handleClearClick" class="el-input__icon el-icon-close" v-if="hasClear && !validating"></i>
       <!-- 后置元素 -->
       <div class="el-input-group__append" v-if="$slots.append">
         <slot name="append"></slot>
@@ -113,6 +114,10 @@
         type: String,
         default: 'off'
       },
+      autoClear: {
+        type: Boolean,
+        default: false
+      },
       form: String,
       maxlength: Number,
       minlength: Number,
@@ -127,6 +132,9 @@
     computed: {
       validating() {
         return this.$parent.validateState === 'validating';
+      },
+      hasClear() {
+        return this.autoClear && this.currentValue.length > 0;
       }
     },
 
@@ -169,6 +177,10 @@
       },
       handleIconClick(event) {
         this.$emit('click', event);
+      },
+      handleClearClick() {
+        this.setCurrentValue('');
+        this.$emit('clear');
       },
       setCurrentValue(value) {
         if (value === this.currentValue) return;
