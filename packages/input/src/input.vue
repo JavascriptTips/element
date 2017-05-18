@@ -44,7 +44,7 @@
       </slot>
 
       <i class="el-input__icon el-icon-loading" v-if="validating"></i>
-      <i @click="handleClearClick" class="el-input__icon el-icon-close" v-if="hasClear && !validating"></i>
+      <i @click="handleClearClick" class="el-input__icon el-icon-circle-cross" v-if="hasClear && !validating"></i>
       <!-- 后置元素 -->
       <div class="el-input-group__append" v-if="$slots.append">
         <slot name="append"></slot>

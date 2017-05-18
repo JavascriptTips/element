@@ -288,6 +288,31 @@ export default {
 ```
 :::
 
+### 文本域添加删除
+
+可一键删除
+
+::: demo 通过将 `hasClear` 属性的值添加。
+```html
+<el-input
+  type="input"
+  placeholder="请输入内容"
+  :auto-clear="true"
+  v-model="input">
+</el-input>
+
+<script>
+export default {
+  data() {
+    return {
+      input: ''
+    }
+  }
+}
+</script>
+```
+:::
+
 ### 复合型输入框
 
 可前置或后置元素，一般为标签或按钮
