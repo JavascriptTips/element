@@ -1,6 +1,6 @@
 {
   "name": "@qp/qp-element-ui",
-  "version": "1.2.24",
+  "version": "1.2.26",
   "description": "A Component Library for Vue.js.",
   "main": "lib/element-ui.common.js",
   "files": [
