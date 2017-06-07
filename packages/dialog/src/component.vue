@@ -8,6 +8,7 @@
         :style="style">
         <div class="el-dialog__header" :class="{'el-dialog__header--bottom': titleBottom}">
           <span class="el-dialog__title">{{title}}</span>
+          <span class="el-dialog__title--small">{{subtitle}}</span>
           <div class="el-dialog__headerbtn">
             <i v-if="showClose" class="el-dialog__close el-icon el-icon-close" @click='close()'></i>
           </div>
@@ -31,6 +32,11 @@
 
     props: {
       title: {
+        type: String,
+        default: ''
+      },
+
+      subtitle: {
         type: String,
         default: ''
       },

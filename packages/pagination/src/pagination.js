@@ -100,7 +100,7 @@ export default {
             type="button"
             class={['btn-prev', { disabled: this.$parent.internalCurrentPage <= 1 }]}
             on-click={ this.$parent.prev }>
-            <i class="el-icon el-icon-arrow-left"></i>
+            <i class="el-icon el-icon-caret-left"></i>
           </button>
         );
       }
@@ -116,7 +116,7 @@ export default {
               { disabled: this.$parent.internalCurrentPage === this.$parent.internalPageCount || this.$parent.internalPageCount === 0 }
             ]}
             on-click={ this.$parent.next }>
-            <i class="el-icon el-icon-arrow-right"></i>
+            <i class="el-icon el-icon-caret-right"></i>
           </button>
         );
       }
@@ -203,7 +203,6 @@ export default {
       render(h) {
         return (
           <span class="el-pagination__jump">
-            跳转到：
             <input
               class="el-pagination__editor"
               type="number"
@@ -212,9 +211,9 @@ export default {
               domProps-value={ this.$parent.internalCurrentPage }
               on-change={ this.handleJumpInputChange }
               on-focus={ this.handleFocus }
-              style={{ width: '30px' }}
+              style={{ minWidth: '78px' }}
               number/>
-              <span class="el-pagination__editorconfirm" on-click={ this.handleChange }>确定</span>
+              <span class="el-pagination__editorconfirm" on-click={ this.handleChange }>跳转</span>
           </span>
         );
       }

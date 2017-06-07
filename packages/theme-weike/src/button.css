@@ -9,7 +9,7 @@
     white-space: nowrap;
     cursor: pointer;
     background: var(--button-default-fill);
-    border: var(--border-base);
+    border-width: 0;
     color: var(--button-default-color);
     -webkit-appearance: none;
     text-align: center;
@@ -48,7 +48,7 @@
 
     @when plain {
       box-shadow: none;
-
+      border: var(--border-base);
       &:hover,
       &:focus {
         background: #fff;
@@ -65,6 +65,7 @@
       }
     }
     @when plain-light {
+      border: var(--border-base);
       box-shadow: none;
       background: #fff;
       border-color: var(--color-primary);
@@ -86,19 +87,21 @@
     }
 
     @when active {
-      color: shade(var(--color-primary), var(--button-active-shade-percent));
+      /*color: shade(var(--color-primary), var(--button-active-shade-percent));*/
       border-color: @color;
       box-shadow: none;
+      color: #000;
     }
 
     @when disabled {
       &,
       &:hover,
       &:focus {
-        color: var(--button-disabled-color);
+        color: #fff;
         cursor: not-allowed;
         background-image: none;
-        background-color: var(--button-disabled-fill);
+        /*background-color: var(--button-disabled-fill);*/
+        opacity: .6;
         border-color: var(--button-disabled-border);
         box-shadow: none;
       }
@@ -137,26 +140,26 @@
     }
     @m primary {
       @mixin button-variant var(--button-primary-color), var(--button-primary-fill), var(--button-primary-border);
-      box-shadow: inset 1px 1px 0px 0px var(--button-primary-shadow);
+      /*box-shadow: inset 1px 1px 0px 0px var(--button-primary-shadow);*/
     }
     @m success {
       @mixin button-variant var(--button-success-color), var(--button-success-fill), var(--button-success-border);
-      box-shadow: inset 1px 1px 0px 0px var(--button-success-shadow);
+      /*box-shadow: inset 1px 1px 0px 0px var(--button-success-shadow);*/
     }
     @m warning {
       @mixin button-variant var(--button-warning-color), var(--button-warning-fill), var(--button-warning-border);
-      box-shadow: inset 1px 1px 0px 0px var(--button-warning-shadow);
+      /*box-shadow: inset 1px 1px 0px 0px var(--button-warning-shadow);*/
     }
     @m danger {
       @mixin button-variant var(--button-danger-color), var(--button-danger-fill), var(--button-danger-border);
-      box-shadow: inset 1px 1px 0px 0px var(--button-danger-shadow);
+      /*box-shadow: inset 1px 1px 0px 0px var(--button-danger-shadow);*/
     }
     @m red {
         @mixin button-variant var(--button-red-color), var(--button-red-fill), var(--button-red-border);
     }
     @m info {
       @mixin button-variant var(--button-info-color), var(--button-info-fill), var(--button-info-border);
-      box-shadow: inset 1px 1px 0px 0px var(--button-info-shadow);
+      /*box-shadow: inset 1px 1px 0px 0px var(--button-info-shadow);*/
     }
     @m large {
       @mixin button-size var(--button-large-padding-vertical), var(--button-large-padding-horizontal), var(--button-large-font-size), var(--button-border-radius);

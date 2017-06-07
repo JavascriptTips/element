@@ -39,15 +39,16 @@
       }
 
       &:hover {
-        color: var(--pagination-hover-color);
+        /*color: var(--pagination-hover-color);*/
         border: 1px solid var(--pagination-hover-color);
-        background-color: #fff;
+        background-color: var(--pagination-hover-fill);
       }
 
       &.disabled {
         color: var(--pagination-button-disabled-color);
         background-color: var(--pagination-button-disabled-fill);
         cursor: not-allowed;
+        display: none;
       }
     }
 
@@ -65,6 +66,7 @@
       .el-icon {
         display: block;
         font-size: 12px;
+        color: #919191
       }
     }
 
@@ -83,11 +85,11 @@
       .btn-next,
       .el-pager li,
       .el-pager li:last-child {
-        border-color: transparent;
+        /*border-color: transparent;*/
         font-size: 12px;
         line-height: 22px;
         height: 22px;
-        min-width: 22px;
+        /*min-width: 22px;*/
       }
 
       .arrow.disabled {
@@ -153,13 +155,12 @@
       border-radius: var(--pagination-border-radius);
       cursor: pointer;
       margin-left: 10px;
-      padding: 0 10px;
+      padding: 0 20px;
       color: var(--pagination-button-color);
 
       &:hover {
-         color: var(--pagination-hover-color);
-         border: 1px solid var(--pagination-hover-color);
-         background-color: #fff;
+         /*color: var(--pagination-hover-color);*/
+         background-color: var(--pagination-hover-fill);
        }
     }
   }
@@ -170,26 +171,30 @@
     display: inline-block;
     vertical-align: top;
     font-size: 0;
-    padding: 0;
+    padding: 0 6px;
 
     li {
-      margin: 0 1px;
-      padding: 0 4px;
-      border: 1px solid var(--pagination-border-color);
-      border-radius: var(--pagination-border-radius);
-      background: var(--pagination-fill);
+      /*margin: 0 1px;*/
+      /*padding: 0 2px;*/
+      /*border: 1px solid var(--pagination-border-color);*/
+      /*border-radius: var(--pagination-border-radius);*/
+      /*background: var(--pagination-fill);*/
       vertical-align: top;
       display: inline-block;
       font-size: var(--pagination-font-size);
-      min-width: var(--pagination-button-size);
+      /*min-width: var(--pagination-button-size);*/
       height: var(--pagination-button-size);
       line-height: var(--pagination-button-size);
-      cursor: pointer;
+      /*cursor: pointer;*/
       box-sizing: border-box;
       text-align: center;
 
+      &.slash {
+
+      }
+
       &:last-child {
-        border-right: 1px solid var(--pagination-border-color);
+        /*border-right: 1px solid var(--pagination-border-color);*/
       }
 
       &.btn-quicknext,
@@ -212,14 +217,14 @@
       /*}*/
 
       &:hover {
-        color: var(--pagination-hover-color);
-        border: 1px solid var(--pagination-hover-color);
-        background-color: #fff;
+        /*color: var(--pagination-hover-color);*/
+        /*border: 1px solid var(--pagination-hover-color);*/
+        /*background-color: #fff;*/
       }
 
       &.active {
-        border-color: var(--pagination-hover-color);
-        background-color: #fff;
+        /*border-color: var(--pagination-hover-color);*/
+        /*background-color: #fff;*/
         color: var(--pagination-hover-color);
         cursor: default;
       }

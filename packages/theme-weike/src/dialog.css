@@ -9,10 +9,9 @@
     left: 50%;
     transform: translateX(-50%);
     background: #fff;
-    border-radius: var(--border-radius-small);
+    border-radius: var(--border-radius-base);
     box-shadow: var(--dialog-box-shadow);
     box-sizing: border-box;
-
     @modifier tiny {
       width: var(--dialog-tiny-width);
     }
@@ -40,17 +39,17 @@
     }
 
     @e header {
-      height: 40px;
-      line-height: 40px;
+      height: 47px;
+      line-height: 47px;
 
-      text-align: center;
+      text-align: left;
 
       color:var(--dialog-title-color);
 
       position: relative;
 
       @m bottom {
-        border-bottom: 1px solid var(--border-color-base);
+        border-bottom: 1px solid #e9e9e9;
       }
     }
 
@@ -66,9 +65,14 @@
     /*lsy edit*/
     @e title {
       line-height: 1;
-      font-size: 18px;
+      font-size: 14px;
       /*font-weight: bold;*/
-      color: #666;
+      color: #212121;
+      padding-left: 16px;
+      @m small {
+        font-size: 12px;
+        margin-left: 8px;
+      }
     }
 
     @e body {
@@ -82,6 +86,7 @@
       top: 50%;
       right: 10px;
       transform: translate(0,-50%);
+      font-size: 12px;
     }
 
     @e footer {

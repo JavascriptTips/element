@@ -12,7 +12,7 @@
   /* Colors
   -------------------------- */
   --color-primary: #0097e8;
-  --color-success: #4fd07d;
+  --color-success: #58b957;
   --color-warning: #f39800;
   --color-danger: #ff4a46;
   --color-info: #50bfff;
@@ -215,10 +215,10 @@
 
   /* Message
   -------------------------- */
-  --message-shadow: var(--box-shadow-base);
+  --message-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.2);
   --message-min-width: 300px;
-  --message-padding: 10px 12px;
-  --message-content-color: var(--border-color-hover);
+  --message-padding: 7px 16px;
+  --message-content-color: rgba(0, 0, 0, 0.65);
   --message-close-color: var(--color-grey);
   --message-close-hover-color: #99A9BF;
 
@@ -330,10 +330,10 @@
   /* Button
   -------------------------- */
   --button-font-size: 14px;
-  --button-border-radius: var(--border-radius-base);
+  --button-border-radius: 2px;
   --button-paddding: 5px 20px;
-  --button-padding-vertical: 10px;
-  --button-padding-horizontal: 15px;
+  --button-padding-vertical: 9px;
+  --button-padding-horizontal: 16px;
 
   --button-large-font-size: 16px;
   --button-large-padding-vertical: 12px;
@@ -363,7 +363,7 @@
 
   --button-primary-border: #0087cf;
   --button-primary-color: var(--color-white);
-  --button-primary-fill:  var(--color-primary);
+  --button-primary-fill:  #3589ff;
   --button-primary-shadow: #37adec;
 
   --button-success-border: #04c158;
@@ -415,7 +415,7 @@
  -------------------------- */
   --dialog-background-color: var(--color-blue);
   --dialog-footer-background: var(--color-blue-lighter);
-  --dialog-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  --dialog-box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.2);
   --dialog-title-color:#666;
   --dialog-tiny-width: 30%;
   --dialog-small-width: 50%;
@@ -428,24 +428,24 @@
   /* Table
  -------------------------- */
   --table-outer-border-color:#c9d0df;
-  --table-border-color: #eeeff2;
-  --table-text-color: #333333;
+  --table-border-color: #dfdfdf;
+  --table-text-color: #212121;
   /*--table-header-background: #EFF2F7;*/
-  --table-header-background: #fff;
-  --table-td-color: #666;
+  --table-header-background: #f4f5f9;
+  --table-td-color: #424e68;
   /* Pagination lsy edit 20170114
  -------------------------- */
   --pagination-font-size: 12px;
-  --pagination-fill: #ebedef;
+  --pagination-fill: #fff;
   --pagination-color: var(--link-color);
   --pagination-border-radius: 2px;
-  --pagination-button-color: #333;
+  --pagination-button-color: #535353;
   --pagination-button-size: 28px;
   --pagination-button-disabled-color: #e4e4e4;
   --pagination-button-disabled-fill: var(--color-white);
-  --pagination-border-color: #b0b1b2;
-  --pagination-hover-fill: #fff;
-  --pagination-hover-color: #ed4e34;
+  --pagination-border-color: #dadbe0;
+  --pagination-hover-fill: #e6e7ec;
+  --pagination-hover-color: #dadbe0;
 
   /* Popover
  -------------------------- */

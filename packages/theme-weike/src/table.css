@@ -125,7 +125,7 @@
       text-overflow: ellipsis;
       vertical-align: middle;
       position: relative;
-      font-size: 12px;
+      /*font-size: 12px;*/
 
       @when center {
         text-align: center;
@@ -144,7 +144,7 @@
     }
 
     & th.is-leaf, td {
-      border-bottom: 1px solid var(--table-border-color);
+      border-top: 1px solid var(--table-border-color);
     }
 
     @modifier border {
@@ -152,19 +152,20 @@
         border-right: 1px solid var(--table-border-color);
       }
 
-      & th {
+      /*& th {
         border-bottom: 1px solid var(--table-border-color);
-      }
+      }*/
     }
 
     & th {
       background-color: var(--table-header-background);
       text-align: left;
+      border-top: none !important;
     }
 
     & th > div {
       display: inline-block;
-      padding-left: 18px;
+      padding-left: 30px;
       padding-right: 18px;
       line-height: 30px;
       box-sizing: border-box;
@@ -201,7 +202,7 @@
       top: -1px;
       right: 0;
       background-color: var(--table-header-background);
-      border-bottom: 1px solid var(--table-border-color);
+      border-top: 1px solid var(--table-border-color);
     }
 
     @e fixed-right {
@@ -279,7 +280,7 @@
       vertical-align: middle;
       width: 100%;
       box-sizing: border-box;
-
+      font-weight: normal;
       &.highlight {
         color: #20a0ff;
       }
@@ -311,7 +312,7 @@
         top: 11px;
         border-top: none;
         border-right: 5px solid transparent;
-        border-bottom: 5px solid #99a9bf;
+        border-top: 5px solid #99a9bf;
         border-left: 5px solid transparent;
       }
 
@@ -355,8 +356,8 @@
       text-overflow: ellipsis;
       white-space: normal;
       word-break: break-all;
-      line-height: 24px;
-      padding-left: 18px;
+      padding: 10px 0;
+      padding-left: 30px;
       padding-right: 18px;
     }
 
@@ -427,7 +428,11 @@
 
     @modifier enable-row-hover {
       tr:hover > td {
-        background-color: #eff2f7;
+        background-color: #f6faff;
+        border-color: #d9ebff;
+      }
+      tr:hover + tr > td {
+        border-color: #d9ebff;
       }
     }
 
