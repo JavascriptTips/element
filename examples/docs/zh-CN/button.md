@@ -66,10 +66,44 @@
     float: right;
     margin-right: 20px;
   }
+  .block {
+    margin-bottom: 10px;
+  }
 </style>
 
 ## Button 按钮
 常用的操作按钮。
+
+### 全局按钮
+
+全局的按钮基本用法。
+
+:::demo Button 组件4种状态：Normal，Hover，Pressed，Disabled 。
+
+```html
+<div class="block">
+  <el-button type="primary">默认按钮</el-button>
+  <el-button type="primary" :disabled="true">禁用按钮</el-button>
+</div>
+<div class="block">
+  <el-button type="success">成功按钮</el-button>
+  <el-button type="success" :disabled="true">禁用按钮</el-button>
+</div>
+<div class="block">
+  <el-button type="warning">警告按钮</el-button>
+  <el-button type="warning" :disabled="true">禁用按钮</el-button>
+</div>
+<div class="block">
+  <el-button type="danger">危险按钮</el-button>
+  <el-button type="danger" :disabled="true">禁用按钮</el-button>
+</div>
+<div class="block">
+  <el-button type="info">信息按钮</el-button>
+  <el-button type="info" :disabled="true">禁用按钮</el-button>
+</div>
+
+```
+:::
 
 ### 基础用法
 

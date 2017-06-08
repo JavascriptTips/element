@@ -20,7 +20,7 @@
       },
 
       open4() {
-        this.$message.error('错了哦，这是一条错误消息');
+        this.$message.error('文件格式错误，请重新从淘宝导出后不要打开，直接上传！');
       },
 
       open5() {

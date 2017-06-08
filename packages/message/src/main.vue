@@ -6,7 +6,9 @@
       v-show="visible"
       @mouseenter="clearTimer"
       @mouseleave="startTimer">
-      <img class="el-message__img" :src="typeImg" alt="" v-if="!iconClass">
+      <div class="el-message__circle">
+        <img class="el-message__img" :src="typeImg" alt="" v-if="!iconClass">
+      </div>
       <div class="el-message__group" :class="{ 'is-with-icon': iconClass }">
         <i class="el-message__icon" :class="iconClass" v-if="iconClass"></i>
         <p>{{ message }}</p>

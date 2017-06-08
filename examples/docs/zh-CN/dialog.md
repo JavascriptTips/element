@@ -106,7 +106,7 @@ Dialog 组件的内容可以是任意的，甚至可以是表格或表单，下�
 <!-- Table -->
 <el-button type="text" @click="dialogTableVisible = true">打开嵌套表格的 Dialog</el-button>
 
-<el-dialog title="收货地址" v-model="dialogTableVisible">
+<el-dialog title="收货地址" subtitle="这是一个小标题" v-model="dialogTableVisible">
   <el-table :data="gridData">
     <el-table-column property="date" label="日期" width="150"></el-table-column>
     <el-table-column property="name" label="姓名" width="200"></el-table-column>
@@ -180,6 +180,7 @@ Dialog 组件的内容可以是任意的，甚至可以是表格或表单，下�
 | 参数      | 说明          | 类型      | 可选值                           | 默认值  |
 |---------- |-------------- |---------- |--------------------------------  |-------- |
 | title     | Dialog 的标题 | string    | —                               | —      |
+| subtitle     | Dialog 的小标题 | string    | —                               | —      |
 | title-bottom     | Dialog 的标题的border-bottom, true时有线，false没 | boolean    | —                               | true      |
 | size      | Dialog 的大小 | string    | tiny/small/large/full | small |
 | top       | Dialog CSS 中的 top 值（仅在 size 不为 full 时有效） | string    | —                       | 15%     |
