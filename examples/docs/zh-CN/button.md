@@ -82,7 +82,11 @@
 
 ```html
 <div class="block">
-  <el-button type="primary">默认按钮</el-button>
+  <el-button>默认按钮</el-button>
+  <el-button :disabled="true">禁用按钮</el-button>
+</div>
+<div class="block">
+  <el-button type="primary">主要按钮</el-button>
   <el-button type="primary" :disabled="true">禁用按钮</el-button>
 </div>
 <div class="block">
