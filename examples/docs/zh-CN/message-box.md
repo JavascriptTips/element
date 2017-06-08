@@ -27,7 +27,14 @@
             });
           }, 200);
         },()=>{
-          console.log('confirm 取消');
+
+          setTimeout(() => {
+            this.$message({
+              message: '已取消删除! reject',
+              type: 'success'
+            });
+          }, 200);
+
         }).catch(() => {
           setTimeout(() => {
             this.$message({
@@ -139,6 +146,15 @@
             type: 'success',
             message: '删除成功!'
           });
+        },()=>{
+
+          setTimeout(() => {
+            this.$message({
+              message: '已取消删除! reject',
+              type: 'success'
+            });
+          }, 200);
+
         }).catch(() => {
           this.$message({
             type: 'info',

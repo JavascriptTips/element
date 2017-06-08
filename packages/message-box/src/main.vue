@@ -107,6 +107,7 @@
       handleWrapperClick() {
         if (this.closeOnClickModal) {
           this.close();
+          this.handleAction('cancel');
         }
       },
 
