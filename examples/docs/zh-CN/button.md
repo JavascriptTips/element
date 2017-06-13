@@ -83,26 +83,62 @@
 ```html
 <div class="block">
   <el-button>默认按钮</el-button>
+  <el-button icon="information">默认按钮</el-button>
+  <el-button plain="true">默认按钮</el-button>
+  <el-button loading="true">默认按钮</el-button>
+  <el-button size="large">默认大按钮</el-button>
+  <el-button size="small">默认小按钮</el-button>
+  <el-button size="mini">默认迷你按钮</el-button>
+  <el-button active="true">默认按钮选中</el-button>
   <el-button :disabled="true">禁用按钮</el-button>
 </div>
 <div class="block">
   <el-button type="primary">主要按钮</el-button>
+  <el-button type="primary" plain="true">主要按钮</el-button>
+  <el-button type="primary" plain-light="true">主要按钮</el-button>
+  <el-button type="primary" loading="true">主要按钮</el-button>
+  <el-button type="primary" icon="information">主要按钮</el-button>
+  <el-button type="primary" size="large">主要大按钮</el-button>
+  <el-button type="primary" size="small">主要小按钮</el-button>
+  <el-button type="primary" size="mini">主要迷你按钮</el-button>
+  <el-button type="primary" active="true">主要按钮选中</el-button>
   <el-button type="primary" :disabled="true">禁用按钮</el-button>
 </div>
 <div class="block">
   <el-button type="success">成功按钮</el-button>
+  <el-button type="success" plain="true">成功按钮</el-button>
+  <el-button type="success" icon="information">成功按钮</el-button>
+  <el-button type="success" size="large">成功大按钮</el-button>
+  <el-button type="success" size="small">成功小按钮</el-button>
+  <el-button type="success" size="mini">成功迷你按钮</el-button>
+  <el-button type="success" active="true">成功按钮选中</el-button>
   <el-button type="success" :disabled="true">禁用按钮</el-button>
 </div>
 <div class="block">
   <el-button type="warning">警告按钮</el-button>
+  <el-button type="warning" icon="information">警告按钮</el-button>
+  <el-button type="warning" size="large">警告大按钮</el-button>
+  <el-button type="warning" size="small">警告小按钮</el-button>
+  <el-button type="warning" size="mini">警告迷你按钮</el-button>
+  <el-button type="warning" active="true">警告按钮选中</el-button>
   <el-button type="warning" :disabled="true">禁用按钮</el-button>
 </div>
 <div class="block">
   <el-button type="danger">危险按钮</el-button>
+  <el-button type="danger" icon="information">危险按钮</el-button>
+  <el-button type="danger" size="large">危险大按钮</el-button>
+  <el-button type="danger" size="small">危险小按钮</el-button>
+  <el-button type="danger" size="mini">危险迷你按钮</el-button>
+  <el-button type="danger" active="true">危险按钮选中</el-button>
   <el-button type="danger" :disabled="true">禁用按钮</el-button>
 </div>
 <div class="block">
   <el-button type="info">信息按钮</el-button>
+  <el-button type="info" icon="information">信息按钮</el-button>
+  <el-button type="info" size="large">信息大按钮</el-button>
+  <el-button type="info" size="small">信息小按钮</el-button>
+  <el-button type="info" size="mini">信息迷你按钮</el-button>
+  <el-button type="info" active="true">信息按钮选中</el-button>
   <el-button type="info" :disabled="true">禁用按钮</el-button>
 </div>
 
