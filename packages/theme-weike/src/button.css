@@ -87,10 +87,10 @@
     }
 
     @when active {
-      /*color: shade(var(--color-primary), var(--button-active-shade-percent));*/
+      color: shade(var(--color-primary), var(--button-active-shade-percent));
       border-color: @color;
       box-shadow: none;
-      color: #000;
+      /*color: #000;*/
     }
 
     @when disabled {
