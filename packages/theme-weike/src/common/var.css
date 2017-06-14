@@ -11,9 +11,13 @@
 
   /* Colors
   -------------------------- */
-  --color-primary: #0097e8;
+  /*--color-primary: #0097e8;
   --color-success: #58b957;
   --color-warning: #f39800;
+  --color-danger: #ff4a46;*/
+  --color-primary: #01a6ff;
+  --color-success: #58b957;
+  --color-warning: #f6b400;
   --color-danger: #ff4a46;
   --color-info: #50bfff;
   --color-blue: #2e90fe;
@@ -363,7 +367,7 @@
 
   --button-primary-border: #0087cf;
   --button-primary-color: var(--color-white);
-  --button-primary-fill:  #01a6ff;
+  --button-primary-fill:  var(--color-primary);
   --button-primary-shadow: #37adec;
 
   --button-success-border: #04c158;
