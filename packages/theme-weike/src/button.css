@@ -87,7 +87,7 @@
     }
 
     @when active {
-      color: shade(var(--color-primary), var(--button-active-shade-percent));
+      color: var(--color-primary);
       border-color: @color;
       box-shadow: none;
       /*color: #000;*/
