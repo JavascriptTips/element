@@ -113,8 +113,13 @@
     @e title {
       color: var(--popover-title-color);
       font-size: var(--popover-title-font-size);
-      line-height: 1;
-      margin-bottom: 9px;
+      line-height: 2;
+      margin-bottom: 4px;
+      padding-left: 15px;
+      border-bottom: var(--popover-title-border);
+    }
+    @e content {
+      padding: 4px 15px;
     }
   }
 }

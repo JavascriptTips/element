@@ -116,6 +116,9 @@
     & th {
       white-space: nowrap;
       overflow: hidden;
+      &.clear-overflow {
+        overflow: visible;
+      }
     }
 
     & th, td {
@@ -248,7 +251,9 @@
 
     @e header-wrapper {
       overflow: hidden;
-
+      &.clear-overflow {
+        overflow: visible;
+      }
       & thead div {
         /*background-color: var(--table-header-background);*/
         color: var(--table-text-color);
@@ -359,6 +364,9 @@
       padding: 10px 0;
       padding-left: 30px;
       padding-right: 18px;
+      &.clear-overflow {
+        overflow: visible;
+      }
     }
 
     & tr input[type="checkbox"] {
@@ -411,7 +419,7 @@
 
     @e column-filter-trigger {
       display: inline-block;
-      line-height: 34px;
+      /*line-height: 34px;*/
       margin-left: 5px;
       cursor: pointer;
 

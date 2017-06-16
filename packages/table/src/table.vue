@@ -10,7 +10,7 @@
     }"
     @mouseleave="handleMouseLeave($event)">
     <div class="hidden-columns" ref="hiddenColumns"><slot></slot></div>
-    <div class="el-table__header-wrapper" ref="headerWrapper" v-if="showHeader">
+    <div :class="['el-table__header-wrapper', clearOverflow ? 'clear-overflow' : '']" ref="headerWrapper" v-if="showHeader">
       <table-header
         :store="store"
         :layout="layout"
@@ -166,7 +166,11 @@
 
       expandRowKeys: Array,
 
-      defaultExpandAll: Boolean
+      defaultExpandAll: Boolean,
+      clearOverflow: {
+        type: Boolean,
+        default: false
+      }
     },
 
     components: {

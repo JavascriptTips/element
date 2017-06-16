@@ -20,7 +20,10 @@ const defaults = {
   confirmButtonText: '',
   cancelButtonText: '',
   confirmButtonClass: '',
-  cancelButtonClass: ''
+  cancelButtonClass: '',
+  isDate: false,
+  maxDate: '',
+  minDate: ''
 };
 
 import Vue from 'vue';

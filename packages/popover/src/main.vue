@@ -8,7 +8,7 @@
         v-show="showPopper"
         :style="{ width: width + 'px' }">
         <div class="el-popover__title" v-if="title" v-text="title"></div>
-        <slot><span v-html="content"></span></slot>
+        <div class="el-popover__content"><slot><span v-html="content"></span></slot></div>
       </div>
     </transition>
     <div v-else
@@ -18,7 +18,7 @@
         v-show="showPopper"
         :style="{ width: width + 'px' }">
         <div class="el-popover__title" v-if="title" v-text="title"></div>
-        <slot><span v-html="content"></span></slot>
+        <div class="el-popover__content"><slot><span v-html="content"></span></slot></div>
     </div>
     <slot name="reference"></slot>
   </span>

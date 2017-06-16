@@ -147,7 +147,9 @@ export default {
     filterMultiple: {
       type: Boolean,
       default: true
-    }
+    },
+    screens: Array,
+    screenMethod: Function
   },
 
   data() {
@@ -235,7 +237,11 @@ export default {
       filterable: this.filters || this.filterMethod,
       filterMultiple: this.filterMultiple,
       filterOpened: false,
-      filteredValue: []
+      filteredValue: [],
+      screens: this.screens,
+      screenOpened: false,
+      screenedValue: [],
+      screenMethod: this.screenMethod
     });
 
     objectAssign(column, forced[type] || {});
@@ -329,6 +335,12 @@ export default {
     filterMultiple(newVal) {
       if (this.columnConfig) {
         this.columnConfig.filterMultiple = newVal;
+      }
+    },
+
+    screens(newVal) {
+      if (this.columnConfig) {
+        this.columnConfig.screens = newVal;
       }
     },
 

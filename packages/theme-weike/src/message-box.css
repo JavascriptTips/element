@@ -17,6 +17,8 @@
     -webkit-user-select: none;
     overflow: hidden;
     backface-visibility: hidden;
+    padding: 40px;
+    padding-bottom: 0;
     @e wrapper {
       position: fixed;
       top: 0;
@@ -35,12 +37,11 @@
 
     @e header {
       position: relative;
-      padding: 40px 20px 0;
     }
 
     @e content {
-      border-bottom: 1px solid var(--msgbox-bdbc);
-      padding: 10px 20px 30px;
+      /*border-bottom: 1px solid var(--msgbox-bdbc);*/
+      padding-left: 40px;
       color: var(--msgbox-content-color);
       font-size: var(--msgbox-content-font-size);
       position: relative;
@@ -63,13 +64,27 @@
     }
 
     @e input {
-      padding-top: 15px;
       & input.invalid {
         border-color: var(--color-danger);
         &:focus {
           border-color: var(--color-danger);
         }
       }
+    }
+
+    @e input-date {
+      span {
+        display: inline-block;
+        float: left;
+        width: 100px;
+        box-sizing: border-box;
+        padding: 6px 12px 11px 0;
+      }
+    }
+
+    @e el-input {
+      margin-left: 100px;
+      width: 148px;
     }
 
     @e errormsg {
@@ -82,28 +97,35 @@
     @e title {
       padding-left: 0;
       margin-bottom: 0;
-      font-size: 22px;
+      font-size: 14px;
+      font-weight: 500;
       /*font-weight: bold;*/
-      text-align: center;
-      height: 18px;
-      color: #333;
+      /*text-align: center;*/
+      /*height: 18px;*/
+      color: var(--msgbox-title-color);
+      span {
+        vertical-align: text-bottom;
+        padding-left: 16px;
+      }
     }
 
     @e message {
-      margin-top: 10px;
-
+      margin-top: 4px;
+      text-align: left;
+      font-size: var(--msgbox-error-font-size);
       & p {
         margin: 0;
-        line-height: 1.4;
+        line-height: 1.7;
+        color: var(--msgbox-content-message);
       }
     }
 
     @e btns {
-      padding: 10px 20px 15px;
-      text-align: center;
+      padding: 24px 0px 30px;
+      text-align: right;
 
       & button:nth-child(2) {
-        margin-left: 10px;
+        margin-left: 8px;
       }
     }
 
@@ -113,7 +135,8 @@
 
     @e status {
       display: inline-block;
-      font-size: 14px;
+      font-size: 24px;
+      vertical-align: middle;
       /*position: absolute;
       /*top: 50%;
       transform: translateY(-50%);*/
@@ -121,22 +144,22 @@
 
       &.el-icon-circle-check {
         color: var(--msgbox-success-color);
-        font-size: inherit;
+        /*font-size: inherit;*/
       }
 
       &.el-icon-information {
         color: var(--msgbox-info-color);
-        font-size: inherit;
+        /*font-size: inherit;*/
       }
 
       &.el-icon-warning {
         color: var(--msgbox-warning-color);
-        font-size: inherit;
+        /*font-size: inherit;*/
       }
 
       &.el-icon-circle-cross {
         color: var(--msgbox-danger-color);
-        font-size: inherit;
+        /*font-size: inherit;*/
       }
     }
   }

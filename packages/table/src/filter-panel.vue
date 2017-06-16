@@ -17,9 +17,9 @@
     </div>
     <div class="el-table-filter" v-else v-show="showPopper">
       <ul class="el-table-filter__list">
-        <li class="el-table-filter__list-item"
+        <!-- <li class="el-table-filter__list-item"
             :class="{ 'is-active': !filterValue }"
-            @click="handleSelect(null)">{{ t('el.table.clearFilter') }}</li>
+            @click="handleSelect(null)">{{ t('el.table.clearFilter') }}</li> -->
         <li class="el-table-filter__list-item"
             v-for="filter in filters"
             :label="filter.value"

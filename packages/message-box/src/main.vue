@@ -2,18 +2,26 @@
   <transition name="msgbox-fade">
     <div class="el-message-box__wrapper" v-show="value" @click.self="handleWrapperClick">
       <div class="el-message-box" :class="customClass">
-        <div class="el-message-box__header" v-if="title !== undefined">
+        <div class="el-message-box__header" v-if="title !== undefined && !isDate">
           <div class="el-message-box__title">
             <div class="el-message-box__status" :class="[ typeClass ]"></div>
-            {{ title || t('el.messagebox.title') }}
+            <span>{{ title }}</span>
           </div>
-          <i class="el-message-box__close el-icon-close" @click="handleAction('cancel')" v-if="showClose"></i>
+          <!-- <i class="el-message-box__close el-icon-close" @click="handleAction('cancel')" v-if="showClose"></i> -->
         </div>
         <div class="el-message-box__content" v-if="message !== ''">
-          <div class="el-message-box__message"><p v-html="message" ></p></div>
-          <div class="el-message-box__input" v-show="showInput">
+          <div class="el-message-box__message" v-show="!isDate"><p v-html="message" ></p></div>
+          <div class="el-message-box__input" v-show="showInput && !isDate">
             <el-input v-model="inputValue" :placeholder="inputPlaceholder" ref="input"></el-input>
             <div class="el-message-box__errormsg" :style="{ visibility: !!editorErrorMessage ? 'visible' : 'hidden' }">{{ editorErrorMessage }}</div>
+          </div>
+          <div class="el-message-box__input" v-show="showInput && isDate">
+            <el-jdate-time-picker  v-model="inputValue" :max-date="maxDate" :min-date="minDate" :placeholder="inputPlaceholder" ref="input">
+              <div class="el-message-box__input-date">
+                <span>{{message}}</span>
+                <div class="el-message-box__el-input"><el-input v-model="inputValue" icon="date" ></el-input></div>
+              </div>
+            </el-jdate-time-picker>
           </div>
         </div>
         <div class="el-message-box__btns">
@@ -30,6 +38,7 @@
   import Locale from 'element-ui/src/mixins/locale';
   import ElInput from 'element-ui/packages/input';
   import ElButton from 'element-ui/packages/button';
+  import ElJdateTimePicker from 'element-ui/packages/jdate-time-picker';
   import { addClass, removeClass } from 'element-ui/src/utils/dom';
   import { t } from 'element-ui/src/locale';
 
@@ -64,7 +73,8 @@
 
     components: {
       ElInput,
-      ElButton
+      ElButton,
+      ElJdateTimePicker
     },
 
     computed: {
@@ -195,7 +205,10 @@
         confirmButtonDisabled: false,
         cancelButtonClass: '',
         editorErrorMessage: null,
-        callback: null
+        callback: null,
+        isDate: false,
+        maxDate: new Date(),
+        minDate: ''
       };
     }
   };

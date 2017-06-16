@@ -46,11 +46,11 @@
       },
 
       open3() {
-        this.$prompt('请输入邮箱', '提示', {
+        this.$prompt('修改发送时间:', '', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
-          inputPattern: /[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?/,
-          inputErrorMessage: '邮箱格式不正确'
+          isDate: true,
+          minDate: new Date()
         }).then(({ value }) => {
           setTimeout(() => {
             this.$message({
@@ -71,6 +71,7 @@
 
       open4() {
         this.$msgbox({
+          type: 'info',
           title: '消息',
           message: '这是一段内容, 这是一段内容, 这是一段内容, 这是一段内容, 这是一段内容, 这是一段内容, 这是一段内容',
           showCancelButton: true,
@@ -107,6 +108,7 @@
     methods: {
       open() {
         this.$alert('这是一段内容', '标题名称', {
+          type: 'success',
           confirmButtonText: '确定',
           callback: action => {
             this.$message({
@@ -183,7 +185,7 @@
   export default {
     methods: {
       open3() {
-        this.$prompt('请输入邮箱', '提示', {
+        this.$prompt('请输入邮箱', '', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           inputPattern: /[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?/,
@@ -222,6 +224,7 @@
     methods: {
       open4() {
         this.$msgbox({
+          type: 'info',
           title: '消息',
           message: '这是一段内容, 这是一段内容, 这是一段内容, 这是一段内容, 这是一段内容, 这是一段内容, 这是一段内容',
           showCancelButton: true,

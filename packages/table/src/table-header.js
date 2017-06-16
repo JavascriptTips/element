@@ -2,6 +2,7 @@ import ElCheckbox from 'element-ui/packages/checkbox';
 import ElTag from 'element-ui/packages/tag';
 import Vue from 'vue';
 import FilterPanel from './filter-panel.vue';
+import ScreenPanel from './screen-panel.vue';
 
 const getAllColumns = (columns) => {
   const result = [];
@@ -103,8 +104,8 @@ export default {
                       on-mouseout={ this.handleMouseOut }
                       on-mousedown={ ($event) => this.handleMouseDown($event, column) }
                       on-click={ ($event) => this.handleClick($event, column) }
-                      class={ [column.id, column.order, column.headerAlign, column.className || '', rowIndex === 0 && this.isCellHidden(cellIndex) ? 'is-hidden' : '', !column.children ? 'is-leaf' : ''] }>
-                      <div class={ ['cell', column.filteredValue && column.filteredValue.length > 0 ? 'highlight' : ''] }>
+                      class={ [column.id, column.order, column.headerAlign, column.className || '', rowIndex === 0 && this.isCellHidden(cellIndex) ? 'is-hidden' : '', !column.children ? 'is-leaf' : '', column.screens ? 'clear-overflow' : ''] }>
+                      <div class={ ['cell', column.filteredValue && column.filteredValue.length > 0 ? 'highlight' : '', column.screens ? 'clear-overflow' : '' ] }>
                       {
                         column.renderHeader
                           ? column.renderHeader.call(this._renderProxy, h, { column, $index: cellIndex, store: this.store, _self: this.$parent.$vnode.context })
@@ -122,6 +123,16 @@ export default {
                          column.filterable
                            ? <span class="el-table__column-filter-trigger" on-click={ ($event) => this.handleFilterClick($event, column) }><i class={ ['el-icon-arrow-down', column.filterOpened ? 'el-icon-arrow-up' : ''] }></i></span>
                            : ''
+                        }
+                        {
+                          column.screens
+                            ? <span class="el-table__column-filter-trigger" on-click={ ($event) => this.handleScreenClick($event, column) }><i class={ ['el-icon-caret-bottom', column.screenOpened ? 'el-icon-caret-top' : ''] }></i></span>
+                            : ''
+                        }
+                        {
+                          column.screens
+                            ? <div class="el-table__column-screen"></div>
+                            : ''
                         }
                        </div>
                       </th>
@@ -231,6 +242,35 @@ export default {
 
       setTimeout(() => {
         filterPanel.showPopper = true;
+      }, 16);
+    },
+
+    handleScreenClick(event, column) {
+      event.stopPropagation();
+      const target = event.target;
+      const cell = target.parentNode;
+      const screen = cell.parentNode.lastChild;
+      const table = this.$parent;
+
+      let screenPanel = this.filterPanels[column.id];
+
+      if (screenPanel && column.screenOpened) {
+        screenPanel.showPopper = false;
+        return;
+      }
+
+      if (!screenPanel) {
+        screenPanel = new Vue(ScreenPanel);
+        this.filterPanels[column.id] = screenPanel;
+
+        screenPanel.table = table;
+        screenPanel.cell = cell;
+        screenPanel.column = column;
+        !this.$isServer && screenPanel.$mount(screen);
+      }
+
+      setTimeout(() => {
+        screenPanel.showPopper = true;
       }, 16);
     },
 

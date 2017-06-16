@@ -2,6 +2,12 @@
   export default {
     data() {
       return {
+        label: {
+          '0': '全部状态',
+          '1': '已取消',
+          '2': '审核不通过'
+        },
+        labelKey: '0',
         tableData: [{
           date: '2016-05-03',
           name: '王小虎',
@@ -162,7 +168,8 @@
           zip: 200333
         }],
         currentRow: null,
-        multipleSelection: []
+        multipleSelection: [],
+        screens: [{ text: '全部状态', value: '0' }, { text: '已取消', value: '1' }, { text: '审核不通过', value: '2' }]
       };
     },
 
@@ -193,6 +200,13 @@
 
       filterTag(value, row) {
         return row.tag === value;
+      },
+
+      screenTag(value, row) {
+        this.labelKey = value;
+        this.screens.sort((pre, next) => {
+          return next.value === value;
+        });
       },
 
       tableRowClassName(row, index) {
@@ -244,7 +258,8 @@
   <template>
     <el-table
       :data="tableData"
-      style="width: 100%">
+      style="width: 100%"
+      :clear-overflow="true">
       <el-table-column
         prop="date"
         label="日期"
@@ -252,8 +267,10 @@
       </el-table-column>
       <el-table-column
         prop="name"
-        label="姓名"
-        width="180">
+        :label="label[labelKey]"
+        width="180"
+        :screens="screens"
+        :screen-method="screenTag">
       </el-table-column>
       <el-table-column
         prop="address"
@@ -266,6 +283,12 @@
     export default {
       data() {
         return {
+          label: {
+            '0': '全部状态',
+            '1': '已取消',
+            '2': '审核不通过'
+          },
+          labelKey: '0',
           tableData: [{
             date: '2016-05-02',
             name: '王小虎',
@@ -284,6 +307,11 @@
             address: '上海市普陀区金沙江路 1516 弄'
           }]
         }
+      },
+      methods: {
+        screenTag(value, row) {
+          this.labelKey = value;
+        },
       }
     }
   </script>
@@ -1229,7 +1257,8 @@
       prop="tag"
       label="标签"
       width="100"
-      :filters="[{ text: '家', value: '家' }, { text: '公司', value: '公司' }]"
+      :filter-multiple="false"
+      :filters="[{ text: '全部状态', value: '0' }, { text: '已取消', value: '1' }, { text: '审核不通过', value: '2' }]"
       :filter-method="filterTag">
       <template scope="scope">
         <el-tag
@@ -1273,7 +1302,7 @@
       },
       filterTag(value, row) {
         return row.tag === value;
-      }
+      },
     }
   }
 </script>
