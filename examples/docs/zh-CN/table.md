@@ -169,7 +169,8 @@
         }],
         currentRow: null,
         multipleSelection: [],
-        screens: [{ text: '全部状态', value: '0' }, { text: '已取消', value: '1' }, { text: '审核不通过', value: '2' }]
+        screens: [{ text: '全部状态', value: '0' }, { text: '已取消', value: '1' }, { text: '审核不通过', value: '2' }],
+        screens1: [{ text: '全部状态1', value: '0' }, { text: '已取消1', value: '1' }, { text: '审核不通过1', value: '2' }]
       };
     },
 
@@ -207,6 +208,10 @@
         this.screens.sort((pre, next) => {
           return next.value === value;
         });
+      },
+
+      screen1Tag(value, row) {
+        console.log(value);
       },
 
       tableRowClassName(row, index) {
@@ -274,7 +279,9 @@
       </el-table-column>
       <el-table-column
         prop="address"
-        label="地址">
+        label="地址"
+        :screens="screens1"
+        :screen-method="screen1Tag">
       </el-table-column>
     </el-table>
   </template>

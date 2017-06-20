@@ -79,4 +79,3 @@ var template = render(MAIN_TEMPLATE, {
 
 fs.writeFileSync(OUTPUT_PATH, template);
 console.log('[build entry] DONE:', OUTPUT_PATH);
-

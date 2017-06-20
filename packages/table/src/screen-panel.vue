@@ -114,6 +114,7 @@
       // });
 
       this.$watch('showPopper', (value) => {
+        console.log(value);
         if (this.column) this.column.screenOpened = value;
         if (value) {
           Dropdown.open(this);

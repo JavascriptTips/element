@@ -110,7 +110,7 @@
       line-height: 32px;
       cursor: pointer;
       font-size: var(--font-size-base);
-      padding-left: 10px;
+      padding-left: 30px;
       i {
         color: #999;
       }

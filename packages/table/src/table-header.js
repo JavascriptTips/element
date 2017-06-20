@@ -246,7 +246,7 @@ export default {
     },
 
     handleScreenClick(event, column) {
-      event.stopPropagation();
+      // event.stopPropagation();
       const target = event.target;
       const cell = target.parentNode;
       const screen = cell.parentNode.lastChild;
