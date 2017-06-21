@@ -4,6 +4,7 @@ var gulp = require('gulp');
 var postcss = require('gulp-postcss');
 var cssmin = require('gulp-cssmin');
 var salad = require('postcss-salad')(require('./salad.config.json'));
+var rimraf = require('rimraf');
 
 gulp.task('compile', function() {
   return gulp.src('./src/*.css')
@@ -17,5 +18,8 @@ gulp.task('copyfont', function() {
     .pipe(cssmin())
     .pipe(gulp.dest('./lib/fonts'));
 });
-console.log(8);
-gulp.task('build', ['compile', 'copyfont']);
+gulp.task('build', ['compile', 'copyfont'], function() {
+  rimraf('../../*.css', function() {
+    console.log('已清除根目录中的多余css文件（用于不正常打包根目录出现冗余的css文件）');
+  });
+});
