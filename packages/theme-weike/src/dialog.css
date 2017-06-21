@@ -65,12 +65,12 @@
     /*lsy edit*/
     @e title {
       line-height: 1;
-      font-size: 14px;
+      font-size: 16px;
       /*font-weight: bold;*/
       color: #212121;
       padding-left: 16px;
       @m small {
-        font-size: 12px;
+        font-size: 14px;
         margin-left: 8px;
       }
     }
