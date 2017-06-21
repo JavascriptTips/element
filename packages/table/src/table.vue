@@ -32,7 +32,7 @@
         :style="{ width: layout.bodyWidth ? layout.bodyWidth - (layout.scrollY ? layout.gutterWidth : 0 ) + 'px' : '' }">
       </table-body>
       <div class="el-table__empty-block" v-if="!data || data.length === 0">
-        <span class="el-table__empty-text"><slot name="empty">{{ emptyText || t('el.table.emptyText') }}</slot></span>
+        <slot name="empty"><span class="el-table__empty-text">{{ emptyText || t('el.table.emptyText') }}</span></slot>
       </div>
     </div>
     <div class="el-table__fixed" ref="fixedWrapper"

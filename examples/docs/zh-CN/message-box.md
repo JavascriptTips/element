@@ -50,7 +50,8 @@
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           isDate: true,
-          minDate: new Date()
+          isTime: true,
+          minDate: new Date(),
         }).then(({ value }) => {
           setTimeout(() => {
             this.$message({

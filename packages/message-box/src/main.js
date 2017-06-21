@@ -23,7 +23,9 @@ const defaults = {
   cancelButtonClass: '',
   isDate: false,
   maxDate: '',
-  minDate: ''
+  minDate: '',
+  minDateTime: '',
+  maxDateTime: ''
 };
 
 import Vue from 'vue';

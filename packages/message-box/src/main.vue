@@ -16,7 +16,7 @@
             <div class="el-message-box__errormsg" :style="{ visibility: !!editorErrorMessage ? 'visible' : 'hidden' }">{{ editorErrorMessage }}</div>
           </div>
           <div class="el-message-box__input" v-show="showInput && isDate">
-            <el-jdate-time-picker  v-model="inputValue" :max-date="maxDate" :min-date="minDate" :placeholder="inputPlaceholder" ref="input">
+            <el-jdate-time-picker  v-model="inputValue" :max-date="maxDate" :min-date-time="minDateTime" :max-date-time="maxDateTime" :time-picker="isTime" :min-date="minDate" :placeholder="inputPlaceholder" ref="input">
               <div class="el-message-box__input-date">
                 <span>{{message}}</span>
                 <div class="el-message-box__el-input"><el-input v-model="inputValue" icon="date" ></el-input></div>
@@ -207,8 +207,11 @@
         editorErrorMessage: null,
         callback: null,
         isDate: false,
-        maxDate: new Date(),
-        minDate: ''
+        maxDate: '',
+        minDate: '',
+        minDateTime: '',
+        maxDateTime: '',
+        isTime: false
       };
     }
   };

@@ -17,5 +17,5 @@ gulp.task('copyfont', function() {
     .pipe(cssmin())
     .pipe(gulp.dest('./lib/fonts'));
 });
-
+console.log(8);
 gulp.task('build', ['compile', 'copyfont']);

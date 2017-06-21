@@ -21,6 +21,7 @@
       margin-left: 24px;
       position: relative;
       height: 20px;
+      line-height: 20px;
 
       @when with-icon {
         margin-left: 0;
