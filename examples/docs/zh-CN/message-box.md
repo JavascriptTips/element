@@ -2,7 +2,7 @@
   export default {
     methods: {
       open() {
-        this.$alert('这是一段内容', '标题名称', {
+        this.$alert('这是一段内容', '', {
           confirmButtonText: '确定',
           type:'success',
           callback: action => {

@@ -5,7 +5,7 @@
         <div class="el-message-box__header" v-if="title !== undefined && !isDate">
           <div class="el-message-box__title">
             <div class="el-message-box__status" :class="[ typeClass ]"></div>
-            <span>{{ title }}</span>
+            <span>{{ title || t('el.messagebox.title') }}</span>
           </div>
           <!-- <i class="el-message-box__close el-icon-close" @click="handleAction('cancel')" v-if="showClose"></i> -->
         </div>

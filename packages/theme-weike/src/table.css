@@ -118,6 +118,10 @@
       overflow: hidden;
       &.clear-overflow {
         overflow: visible;
+        cursor: pointer;
+        &:hover {
+          background-color: #e6e7ed;
+        }
       }
     }
 
@@ -168,8 +172,6 @@
 
     & th > div {
       display: inline-block;
-      padding-left: 30px;
-      padding-right: 18px;
       line-height: 30px;
       box-sizing: border-box;
       overflow: hidden;
@@ -257,6 +259,9 @@
       & thead div {
         /*background-color: var(--table-header-background);*/
         color: var(--table-text-color);
+        &.el-table-screen {
+          font-weight: normal;
+        }
       }
     }
 
@@ -286,6 +291,8 @@
       width: 100%;
       box-sizing: border-box;
       font-weight: normal;
+      padding-left: 30px;
+      padding-right: 18px;
       &.highlight {
         color: #20a0ff;
       }

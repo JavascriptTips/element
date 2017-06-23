@@ -105,7 +105,7 @@ export default {
                       on-mousedown={ ($event) => this.handleMouseDown($event, column) }
                       on-click={ ($event) => this.handleClick($event, column) }
                       class={ [column.id, column.order, column.headerAlign, column.className || '', rowIndex === 0 && this.isCellHidden(cellIndex) ? 'is-hidden' : '', !column.children ? 'is-leaf' : '', column.screens ? 'clear-overflow' : ''] }>
-                      <div class={ ['cell', column.filteredValue && column.filteredValue.length > 0 ? 'highlight' : '', column.screens ? 'clear-overflow' : '' ] }>
+                      <div on-click={ ($event) => this.handleScreenClick($event, column) } class={ ['cell', column.filteredValue && column.filteredValue.length > 0 ? 'highlight' : '', column.screens ? 'clear-overflow' : '' ] }>
                       {
                         column.renderHeader
                           ? column.renderHeader.call(this._renderProxy, h, { column, $index: cellIndex, store: this.store, _self: this.$parent.$vnode.context })
@@ -126,15 +126,15 @@ export default {
                         }
                         {
                           column.screens
-                            ? <span class="el-table__column-filter-trigger" on-click={ ($event) => this.handleScreenClick($event, column) }><i class={ ['el-icon-caret-bottom', column.screenOpened ? 'el-icon-caret-top' : ''] }></i></span>
-                            : ''
-                        }
-                        {
-                          column.screens
-                            ? <div class="el-table__column-screen"></div>
+                            ? <span class="el-table__column-filter-trigger"><i class={ ['el-icon-caret-bottom', column.screenOpened ? 'el-icon-caret-top' : ''] }></i></span>
                             : ''
                         }
                        </div>
+                       {
+                         column.screens
+                           ? <div class="el-table__column-screen"></div>
+                           : ''
+                       }
                       </th>
                     )
                   }
@@ -247,8 +247,11 @@ export default {
 
     handleScreenClick(event, column) {
       // event.stopPropagation();
-      const target = event.target;
-      const cell = target.parentNode;
+      if (!column.screens) {
+        return;
+      }
+      // const target = event.target;
+      const cell = event.currentTarget;
       const screen = cell.parentNode.lastChild;
       const table = this.$parent;
 
