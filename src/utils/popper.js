@@ -430,11 +430,11 @@
                 popperOffsets.top = referenceOffsets.bottom;
             }
         }
-
         // Add width and height to our offsets object
         popperOffsets.width   = popperRect.width;
         popperOffsets.height  = popperRect.height;
 
+        console.log(popperOffsets);
 
         return {
             popper: popperOffsets,
@@ -633,6 +633,13 @@
         // Be aware, modifiers could override the properties defined in the previous
         // lines of this modifier!
         Object.assign(styles, data.styles);
+
+        // 箭头和边的最小间隔 15
+        if(data.offsets.arrow.left <= 15){
+          styles.left -= 15;
+          data.offsets.arrow.left = 15;
+        }
+        console.log(styles.left, data.offsets.arrow.left);
 
         setStyle(this._popper, styles);
 
