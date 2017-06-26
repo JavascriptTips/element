@@ -5,7 +5,7 @@
         <li class="el-table-screen__list-item"
             v-for="(screen, index) in screens"
             :label="screen.value"
-            :class="{ 'is-active': isActive(screen) }"
+            :class="{ 'is-active': screen.value === screenValue }"
             @click="handleSelect(screen.value)" >
             {{ screen.text }}
             <i v-if="index === 0" :class="['el-icon-caret-bottom', column.screenOpened ? 'el-icon-caret-top' : '']"></i>
@@ -73,7 +73,15 @@
 
     computed: {
       screens() {
-        return this.column && this.column.screens;
+        if (this.column && this.column.screens) {
+          const list = this.column.screens.sort((pre, next) => {
+            if (next.value === this.screenValue) {
+              return true;
+            }
+          });
+          return list;
+        }
+        return [];
       },
 
       screenValue: {
