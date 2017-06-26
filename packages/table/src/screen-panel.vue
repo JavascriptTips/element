@@ -48,17 +48,13 @@
 
       handleSelect(screenValue) {
         this.screenValue = screenValue;
-        if (screenValue) {
-          this.confirmScreen(this.screenValue);
-        } else {
-          this.confirmscreen([]);
-        }
+        this.confirmScreen(this.screenValue);
 
         this.handleOutsideClick();
       },
 
-      confirmScreen(screenedValue) {
-        this.column.screenMethod.call(null, screenedValue, this.column);
+      confirmScreen(screenValue) {
+        this.column.screenMethod.call(null, screenValue, this.column);
       }
     },
 
@@ -67,7 +63,8 @@
         table: null,
         cell: null,
         column: null,
-        showPopper: false
+        showPopper: false,
+        screenValue: ''
       };
     },
 
@@ -82,35 +79,6 @@
         //   return list;
         // }
         return this.column && this.column.screens;
-      },
-
-      screenValue: {
-        get() {
-          return (this.column.screenedValue || [])[0];
-        },
-        set(value) {
-          if (this.screenedValue) {
-            if (value) {
-              this.screenedValue.splice(0, 1, value);
-            } else {
-              this.screenedValue.splice(0, 1);
-            }
-          }
-        }
-      },
-
-      screenedValue: {
-        get() {
-          if (this.column) {
-            return this.column.screenedValue || [];
-          }
-          return [];
-        },
-        set(value) {
-          if (this.column) {
-            this.column.screenedValue = value;
-          }
-        }
       }
     },
 
