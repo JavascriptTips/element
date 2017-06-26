@@ -84,7 +84,7 @@
     @e headerbtn {
       position: absolute;
       top: 50%;
-      right: 10px;
+      right: 18px;
       transform: translate(0,-50%);
       font-size: 12px;
     }
