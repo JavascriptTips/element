@@ -49,7 +49,7 @@
       handleSelect(screenValue) {
         this.screenValue = screenValue;
         if (screenValue) {
-          this.confirmScreen(this.screenedValue);
+          this.confirmScreen(this.screenValue);
         } else {
           this.confirmscreen([]);
         }
@@ -73,15 +73,15 @@
 
     computed: {
       screens() {
-        if (this.column && this.column.screens) {
-          const list = this.column.screens.sort((pre, next) => {
-            if (next.value === this.screenValue) {
-              return true;
-            }
-          });
-          return list;
-        }
-        return [];
+        // if (this.column && this.column.screens) {
+        //   const list = this.column.screens.sort((pre, next) => {
+        //     if (next.value === this.screenValue) {
+        //       return true;
+        //     }
+        //   });
+        //   return list;
+        // }
+        return this.column && this.column.screens;
       },
 
       screenValue: {
@@ -122,7 +122,6 @@
       // });
 
       this.$watch('showPopper', (value) => {
-        console.log(value);
         if (this.column) this.column.screenOpened = value;
         if (value) {
           Dropdown.open(this);
