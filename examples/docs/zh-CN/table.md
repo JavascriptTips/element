@@ -208,6 +208,7 @@
         this.screens.sort((pre, next) => {
           return next.value === value;
         });
+        console.log(this.screens);
       },
 
       screen1Tag(value, row) {
@@ -318,6 +319,9 @@
       methods: {
         screenTag(value, row) {
           this.labelKey = value;
+          this.screens.sort((pre, next) => {
+            return next.value === value;
+          });
         },
       }
     }
