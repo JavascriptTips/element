@@ -9,10 +9,10 @@ export default {
   name: 'ElJdateTimePicker',
   props: {
     value: String,
-    minDate: [Date, String],
-    maxDate: [Date, String],
-    minDateTime: [Date, String],
-    maxDateTime: [Date, String],
+    minDate: [Date],
+    maxDate: [Date],
+    minDateTime: [Date],
+    maxDateTime: [Date],
     timePicker: Boolean
   },
   data() {
@@ -46,16 +46,12 @@ export default {
           this.$emit('input', this.$input.val());
         }
       };
-      let dateScope = {};
-      ['minDate', 'maxDate', 'minDateTime', 'maxDateTime'].map((item) => {
-        if (typeof this[item] === 'object') {
-          dateScope[item] = this[item] || this[item + 'Time'];
-        };
+      option = Object.assign(option, {
+        minDate: this.minDate || this.minDateTime,
+        maxDate: this.maxDate || this.maxDateTime,
+        minDateTime: this.minDateTime,
+        maxDateTime: this.maxDateTime
       });
-      option = Object.assign(
-        option,
-        dateScope
-      );
 
       return option;
     }
@@ -80,6 +76,7 @@ export default {
             }
           }
           requestAnimationFrame(() => {
+            console.log(1);
             $input.datepicker('refresh');
             if (this.timePicker) {
               $input.datetimepicker('show');

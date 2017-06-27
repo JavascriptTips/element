@@ -207,10 +207,10 @@
         editorErrorMessage: null,
         callback: null,
         isDate: false,
-        maxDate: '',
-        minDate: '',
-        minDateTime: '',
-        maxDateTime: '',
+        maxDate: null,
+        minDate: null,
+        minDateTime: null,
+        maxDateTime: null,
         isTime: false
       };
     }

@@ -22,10 +22,10 @@ const defaults = {
   confirmButtonClass: '',
   cancelButtonClass: '',
   isDate: false,
-  maxDate: '',
-  minDate: '',
-  minDateTime: '',
-  maxDateTime: ''
+  maxDate: null,
+  minDate: null,
+  minDateTime: null,
+  maxDateTime: null
 };
 
 import Vue from 'vue';
