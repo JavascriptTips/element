@@ -434,8 +434,6 @@
         popperOffsets.width   = popperRect.width;
         popperOffsets.height  = popperRect.height;
 
-        console.log(popperOffsets);
-
         return {
             popper: popperOffsets,
             reference: referenceOffsets
