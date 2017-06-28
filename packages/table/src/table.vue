@@ -4,6 +4,7 @@
       'el-table--fit': fit,
       'el-table--striped': stripe,
       'el-table--border': border,
+      'el-table--header-border': headerBorder,
       'el-table--fluid-height': maxHeight,
       'el-table--enable-row-hover': !store.states.isComplex,
       'el-table--enable-row-transition': true || (store.states.data || []).length !== 0 && (store.states.data || []).length < 100
@@ -15,6 +16,7 @@
         :store="store"
         :layout="layout"
         :border="border"
+        :header-border="headerBorder"
         :style="{ width: layout.bodyWidth ? layout.bodyWidth + 'px' : '' }">
       </table-header>
     </div>
@@ -45,6 +47,7 @@
         <table-header
           fixed="left"
           :border="border"
+          :header-border="headerBorder"
           :store="store"
           :layout="layout"
           :style="{ width: layout.fixedWidth ? layout.fixedWidth + 'px' : '' }"></table-header>
@@ -76,6 +79,7 @@
         <table-header
           fixed="right"
           :border="border"
+          :header-border="headerBorder"
           :store="store"
           :layout="layout"
           :style="{ width: layout.rightFixedWidth ? layout.rightFixedWidth + 'px' : '' }"></table-header>
@@ -144,6 +148,7 @@
       stripe: Boolean,
 
       border: Boolean,
+      headerBorder: Boolean,
 
       rowKey: [String, Function],
 

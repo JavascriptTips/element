@@ -159,7 +159,8 @@ export default {
     layout: {
       required: true
     },
-    border: Boolean
+    border: Boolean,
+    headerBorder: Boolean
   },
 
   components: {
