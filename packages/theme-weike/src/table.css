@@ -164,6 +164,12 @@
       }*/
     }
 
+    @modifier header-border {
+      & th {
+        border-right: 1px solid var(--table-border-color);
+      }
+    }
+
     & th {
       background-color: var(--table-header-background);
       text-align: left;

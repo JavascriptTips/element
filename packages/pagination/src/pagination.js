@@ -197,6 +197,11 @@ export default {
         handleChange({ target }) {
           this.$parent.internalCurrentPage = this.$parent.getValidCurrentPage(this.jumpValue);
           this.oldValue = null;
+        },
+        handleJumpEnter(event) {
+          if (event.keyCode === 13) {
+            this.handleChange(event);
+          }
         }
       },
 
@@ -211,6 +216,7 @@ export default {
               domProps-value={ this.$parent.internalCurrentPage }
               on-change={ this.handleJumpInputChange }
               on-focus={ this.handleFocus }
+              on-keyup={ this.handleJumpEnter }
               style={{ minWidth: '78px' }}
               number/>
               <span class="el-pagination__editorconfirm" on-click={ this.handleChange }>跳转</span>

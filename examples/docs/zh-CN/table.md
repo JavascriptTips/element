@@ -265,7 +265,8 @@
     <el-table
       :data="tableData"
       style="width: 100%"
-      :clear-overflow="true">
+      :clear-overflow="true"
+      header-border>
       <el-table-column
         prop="date"
         label="日期"
