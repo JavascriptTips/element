@@ -101,7 +101,9 @@
         if (val) {
           this.$emit('open');
           this.$nextTick(() => {
+            const dialogWidth = parseInt(getComputedStyle(this.$refs.dialog).width, 10);
             this.$refs.dialog.scrollTop = 0;
+            this.$refs.dialog.style.marginLeft = `-${dialogWidth / 2}px`;
           });
         } else {
           this.$emit('close');

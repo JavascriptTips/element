@@ -7,7 +7,7 @@
   @b dialog {
     position: absolute;
     left: 50%;
-    transform: translateX(-50%);
+    /*transform: translateX(-50%);*/
     background: #fff;
     border-radius: var(--border-radius-base);
     box-shadow: var(--dialog-box-shadow);
