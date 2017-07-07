@@ -2,6 +2,7 @@
   module.exports = {
     data() {
       return {
+        dialog2: false,
         gridData: [{
           date: '2016-05-02',
           name: '王小虎',
@@ -78,11 +79,18 @@ Dialog 弹出一个对话框，适合需要定制性更大的场景。
 <el-button type="text" @click="dialogVisible = true">点击打开 Dialog</el-button>
 
 <el-dialog title="提示" v-model="dialogVisible" size="tiny" :title-bottom="false">
-  <span>这是一段信息</span>
+  <span @click="dialog2 = true">这是一段信息</span>
   <span slot="footer" class="dialog-footer">
     <el-button @click="dialogVisible = false">取 消</el-button>
     <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
   </span>
+
+
+  <el-dialog title="提示" v-model="dialog2" size="tiny" :title-bottom="false">
+    <span>这是2段信息</span>
+  </el-dialog>
+
+
 </el-dialog>
 
 <script>
