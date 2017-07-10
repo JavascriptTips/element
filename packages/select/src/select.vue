@@ -376,8 +376,10 @@
       },
 
       setSelected() {
+        console.log(this.multiple);
         if (!this.multiple) {
           let option = this.getOption(this.value);
+          console.log(option);
           this.selectedLabel = option.currentLabel;
           this.selected = option;
           return;

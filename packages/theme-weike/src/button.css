@@ -100,7 +100,7 @@
         color: #fff;
         cursor: not-allowed;
         background-image: none;
-        /*background-color: var(--button-disabled-fill);*/
+        background-color: var(--button-primary-color);
         opacity: .6;
         border-color: var(--button-disabled-border);
         box-shadow: none;
