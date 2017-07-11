@@ -71,7 +71,6 @@
       selectOptionClick() {
         if (this.disabled !== true && this.groupDisabled !== true) {
           this.dispatch('ElSelect', 'handleOptionClick', this);
-          console.log('option-group select', this.value, this.label);
         }
       }
     },

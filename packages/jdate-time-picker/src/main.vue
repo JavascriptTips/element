@@ -76,7 +76,6 @@ export default {
             }
           }
           requestAnimationFrame(() => {
-            console.log(1);
             $input.datepicker('refresh');
             if (this.timePicker) {
               $input.datetimepicker('show');
