@@ -21,7 +21,7 @@
         :true-value="trueLabel"
         :false-value="falseLabel"
         v-model="model"
-        @change="$emit('change', $event)"
+        @change="handleChange"
         @focus="focus = true"
         @blur="focus = false">
       <input
@@ -32,7 +32,7 @@
         :value="label"
         :name="name"
         v-model="model"
-        @change="$emit('change', $event)"
+        @change="handleChange"
         @focus="focus = true"
         @blur="focus = false">
     </span>
@@ -69,10 +69,19 @@
 
         set(val) {
           if (this.isGroup) {
+            let isLimitExceeded = false;
+            (this._checkboxGroup.min !== undefined &&
+              val.length < this._checkboxGroup.min &&
+              (isLimitExceeded = true));
+
+            (this._checkboxGroup.max !== undefined &&
+              val.length > this._checkboxGroup.max &&
+              (isLimitExceeded = true));
+
+            isLimitExceeded === false &&
             this.dispatch('ElCheckboxGroup', 'input', [val]);
-          } else if (this.value !== undefined) {
-            this.$emit('input', val);
           } else {
+            this.$emit('input', val);
             this.selfModel = val;
           }
         }
@@ -127,6 +136,14 @@
           this.model.push(this.label);
         } else {
           this.model = this.trueLabel || true;
+        }
+      },
+      handleChange(ev) {
+        this.$emit('change', ev);
+        if (this.isGroup) {
+          this.$nextTick(_ => {
+            this.dispatch('ElCheckboxGroup', 'change', [this._checkboxGroup.value]);
+          });
         }
       }
     },

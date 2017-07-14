@@ -51,18 +51,8 @@
           user: '',
           region: ''
         },
-        formStacked: {
-          name: '',
-          region: '',
-          type: '',
-          remark: ''
-        },
-        formAlignRight: {
-          name: '',
-          region: '',
-          type: ''
-        },
-        formAlignLeft: {
+        labelPosition: 'right',
+        formLabelAlign: {
           name: '',
           region: '',
           type: ''
@@ -214,18 +204,13 @@
       width: 480px;
     }
     .demo-form-inline {
+      width: auto;
+
       .el-input {
         width: 150px;
       }
       > * {
         margin-right: 10px;
-      }
-    }
-    .demo-form-stacked {
-      width: 270px;
-
-      .el-select .el-input {
-        width: 100%;
       }
     }
     .demo-ruleForm {
@@ -337,9 +322,10 @@ When the vertical space is limited and the form is relatively simple, you can pu
 
 ```html
 <el-form :inline="true" :model="formInline" class="demo-form-inline">
-  <el-form-item>
+  <el-form-item label="Approved by">
     <el-input v-model="formInline.user" placeholder="Approved by"></el-input>
-  </el-form-item><el-form-item>
+  </el-form-item>
+  <el-form-item label="Activity zone">
     <el-select v-model="formInline.region" placeholder="Activity zone">
       <el-option label="Zone one" value="shanghai"></el-option>
       <el-option label="Zone two" value="beijing"></el-option>
@@ -372,27 +358,32 @@ When the vertical space is limited and the form is relatively simple, you can pu
 
 Depending on your design, there are several different ways to align your label element.
 
-#### Top
-
 :::demo The `label-position` attribute decides how labels align, it can be `top` or `left`. When set to `top`, labels will be placed at the top of the form field.
 
 ```html
-<el-form label-position="top" :model="formStacked" class="demo-form-stacked">
+<el-radio-group v-model="labelPosition" size="small">
+  <el-radio-button label="left">Left</el-radio-button>
+  <el-radio-button label="right">Right</el-radio-button>
+  <el-radio-button label="top">Top</el-radio-button>
+</el-radio-group>
+<div style="margin: 20px;"></div>
+<el-form :label-position="labelPosition" label-width="100px" :model="formLabelAlign">
   <el-form-item label="Name">
-    <el-input v-model="formStacked.name"></el-input>
+    <el-input v-model="formLabelAlign.name"></el-input>
   </el-form-item>
   <el-form-item label="Activity zone">
-    <el-input v-model="formStacked.region"></el-input>
+    <el-input v-model="formLabelAlign.region"></el-input>
   </el-form-item>
   <el-form-item label="Activity form">
-    <el-input v-model="formStacked.type"></el-input>
+    <el-input v-model="formLabelAlign.type"></el-input>
   </el-form-item>
 </el-form>
 <script>
   export default {
     data() {
       return {
-        formStacked: {
+        labelPosition: 'right',
+        formLabelAlign: {
           name: '',
           region: '',
           type: ''
@@ -402,71 +393,6 @@ Depending on your design, there are several different ways to align your label e
   }
 </script>
 ```
-:::
-
-#### Right
-
-:::demo When `label-position` is omitted, labels will align to the right
-
-```html
-<el-form :model="formAlignRight" label-width="120px">
-  <el-form-item label="Activity name">
-    <el-input v-model="formAlignRight.name"></el-input>
-  </el-form-item>
-  <el-form-item label="Promote area">
-    <el-input v-model="formAlignRight.region"></el-input>
-  </el-form-item>
-  <el-form-item label="Form of activity">
-    <el-input v-model="formAlignRight.type"></el-input>
-  </el-form-item>
-</el-form>
-<script>
-  export default {
-    data() {
-      return {
-        formAlignRight: {
-          name: '',
-          region: '',
-          type: ''
-        }
-      };
-    }
-  }
-</script>
-```
-:::
-
-#### Left
-
-:::demo When `label-position` is set to `top`, labels will align to the left.
-
-```html
-<el-form :model="formAlignLeft" label-position="left" label-width="120px">
-  <el-form-item label="Activity name">
-    <el-input v-model="formAlignLeft.name"></el-input>
-  </el-form-item>
-  <el-form-item label="Promotion area">
-    <el-input v-model="formAlignLeft.region"></el-input>
-  </el-form-item>
-  <el-form-item label="Activity form">
-    <el-input v-model="formAlignLeft.type"></el-input>
-  </el-form-item>
-</el-form>
-<script>
-  export default {
-    data() {
-      return {
-        formAlignLeft: {
-          name: '',
-          region: '',
-          type: ''
-        }
-      };
-    }
-  }
-</script>
-```
-
 :::
 
 ### Validation
@@ -818,6 +744,7 @@ Form component allows you to verify your data, helping you find and correct erro
 | label-position | position of label | string | left/right/top | right |
 | label-width | width of label, and all form items will inherit from `Form` | string | — | — |
 | label-suffix | suffix of the label | string | — | — |
+| show-message  | whether to show the error message | boolean | — | true |
 
 ### Form Methods
 
@@ -831,9 +758,17 @@ Form component allows you to verify your data, helping you find and correct erro
 
 | Attribute      | Description          | Type      | Accepted Values       | Default  |
 | ---- | ----| ---- | ---- | ---- |
-| prop | a key of `model` | string | keys of model that passed to `form` |
+| prop | a key of `model`. In the use of validate and resetFields method, the attribute is required | string | keys of model that passed to `form` |
 | label | label | string | — | — |
 | label-width | width of label, e.g. '50px' | string | — | — |
 | required | whether the field is required or not, will be determined by validation rules if omitted | string |  — | false |
 | rules | validation rules of form | object | — | — |
 | error | field error message, set its value and the field will validate error and show this message immediately | string | — | — |
+| show-message  | whether to show the error message | boolean | — | true |
+
+
+### Form-Item Slot
+| name | Description |
+|------|--------|
+| — | content of Form Item |
+| label | content of label |

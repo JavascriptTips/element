@@ -1,5 +1,5 @@
 <script>
-  var Vue = require('vue');
+  import Vue from 'vue';
   Vue.component('my-item-en', {
     functional: true,
     render: function (h, ctx) {
@@ -28,6 +28,8 @@
         input8: '',
         input9: '',
         textarea: '',
+        textarea2: '',
+        textarea3: '',
         select: '',
         state1: '',
         state2: '',
@@ -118,7 +120,7 @@
       }
     }
   }
-  .el-autocomplete__suggestions.my-autocomplete {
+  .el-autocomplete-suggestion.my-autocomplete {
     li {
       line-height: normal;
       padding: 7px *;
@@ -131,7 +133,6 @@
         font-size: 12px;
         color: #b4b4b4;
       }
-
       .highlighted .addr {
         color: #ddd;
       }
@@ -189,14 +190,14 @@ export default {
 
 Add an icon to indicate input type.
 
-::: demo You can add an icon at the end of Input by setting the `icon` attribute.
+::: demo You can add an icon at the end of Input by setting the `icon` attribute and use `on-icon-click` hook to complete some work after clicking the icon.
 
 ```html
 <el-input
   placeholder="Pick a date"
-  icon="time"
+  icon="search"
   v-model="input2"
-  @click="handleIconClick">
+  :on-icon-click="handleIconClick">
 </el-input>
 
 <script>
@@ -218,14 +219,14 @@ export default {
 
 ### Textarea
 
-Resizable for entering multiple lines of text information.
+Resizable for entering multiple lines of text information. Add attribute `type="textarea"` to change `input` into native `textarea`.
 
-::: demo Add attribute `type="textarea"` to change `input` into native `textarea`.
+::: demo Control the height by setting the `rows` prop.
 
 ```html
 <el-input
   type="textarea"
-  :autosize="{ minRows: 2, maxRows: 4}"
+  :rows="2"
   placeholder="Please input"
   v-model="textarea">
 </el-input>
@@ -242,6 +243,40 @@ export default {
 ```
 :::
 
+### Autosize Textarea
+
+Setting the `autosize` prop for a textarea type of Input makes the height to automatically adjust based on the content. An options object can be provided to `autosize` to specify the minimum and maximum number of lines the textarea can automatically adjust.
+
+::: demo
+
+```html
+<el-input
+  type="textarea"
+  autosize
+  placeholder="Please input"
+  v-model="textarea2">
+</el-input>
+<div style="margin: 20px 0;"></div>
+<el-input
+  type="textarea"
+  :autosize="{ minRows: 2, maxRows: 4}"
+  placeholder="Please input"
+  v-model="textarea3">
+</el-input>
+
+<script>
+export default {
+  data() {
+    return {
+      textarea2: '',
+      textarea3: ''
+    }
+  }
+}
+</script>
+```
+:::
+
 ### Mixed input
 
 Prepend or append an element, generally a label or a button.
@@ -250,26 +285,31 @@ Prepend or append an element, generally a label or a button.
 
 ```html
 <div>
-  <el-input placeholder="请输入内容" v-model="input3">
+  <el-input placeholder="Please input" v-model="input3">
     <template slot="prepend">Http://</template>
   </el-input>
 </div>
 <div style="margin-top: 15px;">
-  <el-input placeholder="请输入内容" v-model="input4">
+  <el-input placeholder="Please input" v-model="input4">
     <template slot="append">.com</template>
   </el-input>
 </div>
 <div style="margin-top: 15px;">
-  <el-input placeholder="请输入内容" v-model="input5">
-    <el-select v-model="select" slot="prepend" placeholder="请选择">
-      <el-option label="餐厅名" value="1"></el-option>
-      <el-option label="订单号" value="2"></el-option>
-      <el-option label="用户电话" value="3"></el-option>
+  <el-input placeholder="Please input" v-model="input5">
+    <el-select v-model="select" slot="prepend" placeholder="Select">
+      <el-option label="Restaurant" value="1"></el-option>
+      <el-option label="Order No." value="2"></el-option>
+      <el-option label="Tel" value="3"></el-option>
     </el-select>
     <el-button slot="append" icon="search"></el-button>
   </el-input>
 </div>
 
+<style>
+  .el-select .el-input {
+    width: 110px;
+  }
+</style>
 <script>
 export default {
   data() {
@@ -292,21 +332,21 @@ export default {
 <div class="demo-input-size">
   <el-input
     size="large"
-    placeholder="请输入内容"
+    placeholder="Please Input"
     v-model="input6">
   </el-input>
   <el-input
-    placeholder="请输入内容"
+    placeholder="Please Input"
     v-model="input7">
   </el-input>
   <el-input
     size="small"
-    placeholder="请输入内容"
+    placeholder="Please Input"
     v-model="input8">
   </el-input>
   <el-input
     size="mini"
-    placeholder="请输入内容"
+    placeholder="Please Input"
     v-model="input9">
   </el-input>
 </div>
@@ -334,22 +374,22 @@ You can get some recommended tips based on the current input.
 ```html
 <el-row class="demo-autocomplete">
   <el-col :span="12">
-    <div class="sub-title">激活即列出输入建议</div>
+    <div class="sub-title">list suggestions when activated</div>
     <el-autocomplete
       class="inline-input"
       v-model="state1"
       :fetch-suggestions="querySearch"
-      placeholder="请输入内容"
+      placeholder="Please Input"
       @select="handleSelect"
     ></el-autocomplete>
   </el-col>
   <el-col :span="12">
-    <div class="sub-title">输入后匹配输入建议</div>
+    <div class="sub-title">list suggestions on input</div>
     <el-autocomplete
       class="inline-input"
       v-model="state2"
       :fetch-suggestions="querySearch"
-      placeholder="请输入内容"
+      placeholder="Please Input"
       :trigger-on-focus="false"
       @select="handleSelect"
     ></el-autocomplete>
@@ -412,6 +452,8 @@ Customize how suggestions are displayed.
   custom-item="my-item-en"
   placeholder="Please input"
   @select="handleSelect"
+  icon="edit"
+  :on-icon-click="handleIconClick"
 ></el-autocomplete>
 
 <style>
@@ -478,6 +520,9 @@ Customize how suggestions are displayed.
       },
       handleSelect(item) {
         console.log(item);
+      },
+      handleIconClick(ev) {
+        console.log(ev);
       }
     },
     mounted() {
@@ -563,11 +608,14 @@ Search data from server-side.
 |autosize | whether textarea has an adaptive height, only works when `type` is 'textarea'. Can accept an object, e.g. { minRows: 2, maxRows: 6 }  | boolean/object | — | false |
 |auto-complete | same as `auto-complete` in native input | string | on/off | off |
 |name | same as `name` in native input | string | — | — |
-|max | same as `max` in native input | * | — | — |
-|min | same as `min` in native input | * | — | — |
+| readonly | same as `readonly` in native input | boolean | — | false |
+|max | same as `max` in native input | — | — | — |
+|min | same as `min` in native input | — | — | — |
+|step| same as `step` in native input | — | — | — |
+|resize| control the resizability | string | none, both, horizontal, vertical | — |
 |autofocus | same as `autofocus` in native input | boolean | — | false |
 |form | same as `form` in native input | string | — | — |
-
+| on-icon-click | hook function when clicking on the input icon | function | — | — |
 
 ### Input Events
 
@@ -584,10 +632,20 @@ Attribute | Description | Type | Options | Default
 |----| ----| ----| ---- | -----|
 |placeholder| the placeholder of Autocomplete| string | — | — |
 |disabled | whether Autocomplete is disabled  | boolean | — | false|
+| props | configuration options, see the following table | object | — | — |
+|icon | icon name | string | — | — |
 |value | binding value | string | — | — |
 |custom-item | component name of your customized suggestion list item | string | — | — |
 |fetch-suggestions | a method to fetch input suggestions. When suggestions are ready, invoke `callback(data:[])` to return them to Autocomplete | Function(queryString, callback) | — | — |
 | popper-class | custom class name for autocomplete's dropdown | string | — | — |
+| trigger-on-focus | whether show suggestions when input focus | boolean | — | true |
+| on-icon-click | hook function when clicking on the input icon | function | — | — |
+
+### props
+| Attribute | Description | Type | Accepted Values | Default |
+| --------- | ----------------- | ------ | ------ | ------ |
+| label     | specify which key of option object is used as the option's label | string | — | value |
+| value     | specify which key of option object is used as the option's value | string | — | value |
 
 ### Autocomplete Events
 

@@ -34,14 +34,14 @@
     <ul
       class="el-carousel__indicators"
       v-if="indicatorPosition !== 'none'"
-      :class="{ 'el-carousel__indicators--outside': indicatorPosition === 'outside' || type === 'card' }">
+      :class="{ 'el-carousel__indicators--labels': hasLabel, 'el-carousel__indicators--outside': indicatorPosition === 'outside' || type === 'card' }">
       <li
         v-for="(item, index) in items"
         class="el-carousel__indicator"
         :class="{ 'is-active': index === activeIndex }"
         @mouseenter="throttledIndicatorHover(index)"
         @click.stop="handleIndicatorClick(index)">
-        <button class="el-carousel__button"></button>
+        <button class="el-carousel__button"><span v-if="hasLabel">{{ item.label }}</span></button>
       </li>
     </ul>
   </div>
@@ -49,7 +49,6 @@
 
 <script>
 import throttle from 'throttle-debounce/throttle';
-import debounce from 'throttle-debounce/debounce';
 import { addResizeListener, removeResizeListener } from 'element-ui/src/utils/resize-event';
 
 export default {
@@ -65,7 +64,7 @@ export default {
       type: String,
       default: 'hover'
     },
-    autoPlay: {
+    autoplay: {
       type: Boolean,
       default: true
     },
@@ -95,10 +94,24 @@ export default {
     };
   },
 
+  computed: {
+    hasLabel() {
+      return this.items.some(item => item.label.toString().length > 0);
+    }
+  },
+
   watch: {
+    items(val) {
+      if (val.length > 0) this.setActiveItem(this.initialIndex);
+    },
+
     activeIndex(val, oldVal) {
       this.resetItemPosition();
       this.$emit('change', val, oldVal);
+    },
+
+    autoplay(val) {
+      val ? this.startTimer() : this.pauseTimer();
     }
   },
 
@@ -139,12 +152,6 @@ export default {
       });
     },
 
-    handleItemChange() {
-      debounce(100, () => {
-        this.updateItems();
-      });
-    },
-
     updateItems() {
       this.items = this.$children.filter(child => child.$options.name === 'ElCarouselItem');
     },
@@ -168,7 +175,7 @@ export default {
     },
 
     startTimer() {
-      if (this.interval <= 0 || !this.autoPlay) return;
+      if (this.interval <= 0 || !this.autoplay) return;
       this.timer = setInterval(this.playSlides, this.interval);
     },
 

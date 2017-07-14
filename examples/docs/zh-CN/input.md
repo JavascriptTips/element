@@ -1,5 +1,5 @@
 <script>
-  var Vue = require('vue');
+  import Vue from 'vue';
   Vue.component('my-item-zh', {
     functional: true,
     render: function (h, ctx) {
@@ -28,6 +28,8 @@
         input8: '',
         input9: '',
         textarea: '',
+        textarea2: '',
+        textarea3: '',
         select: '',
         state1: '',
         state2: '',
@@ -36,9 +38,6 @@
       };
     },
     methods: {
-      handleEnter1(ev) {
-          console.log(ev);
-        },
       loadAll() {
         return [
           { "value": "三全鲜食（北新泾店）", "address": "长宁区新渔路144号" },
@@ -162,7 +161,7 @@
       }
     }
   }
-  .el-autocomplete__suggestions.my-autocomplete {
+  .el-autocomplete-suggestion.my-autocomplete {
     li {
       line-height: normal;
       padding: 7px *;
@@ -175,7 +174,6 @@
         font-size: 12px;
         color: #b4b4b4;
       }
-
       .highlighted .addr {
         color: #ddd;
       }
@@ -191,18 +189,13 @@
 
 ::: demo
 ```html
-<el-input ref="" v-model="input" @keyupenter="handleEnter1" placeholder="请输入内容"></el-input>
+<el-input v-model="input" placeholder="请输入内容"></el-input>
 
 <script>
 export default {
   data() {
     return {
       input: ''
-    }
-  },
-  methods(){
-    handleEnter1(){
-        console.log('w');
     }
   }
 }
@@ -237,13 +230,13 @@ export default {
 
 带有图标标记输入类型
 
-::: demo 可以通过 `icon` 属性在 input 组件尾部增加显示图标。
+::: demo 可以通过 `icon` 属性在 input 组件尾部增加显示图标，可以通过 `on-icon-click` 钩子函数来在点击图标后执行需要的逻辑。
 ```html
 <el-input
   placeholder="请选择日期"
-  icon="time"
+  icon="search"
   v-model="input2"
-  @click="handleIconClick">
+  :on-icon-click="handleIconClick">
 </el-input>
 
 <script>
@@ -265,13 +258,13 @@ export default {
 
 ### 文本域
 
-可调整大小，用于输入多行文本信息
+用于输入多行文本信息，通过将 `type` 属性的值指定为 textarea。
 
-::: demo 通过将 `type` 属性的值指定为 textarea。
+::: demo 文本域高度可通过 `rows` 属性控制
 ```html
 <el-input
   type="textarea"
-  :autosize="{ minRows: 2, maxRows: 4}"
+  :rows="2"
   placeholder="请输入内容"
   v-model="textarea">
 </el-input>
@@ -288,24 +281,32 @@ export default {
 ```
 :::
 
-### 文本域添加删除
+### 可自适应文本高度的文本域
 
-可一键删除
+通过设置 `autosize` 属性可以使得文本域的高度能够根据文本内容自动进行调整，并且 `autosize` 还可以设定为一个对象，指定最小行数和最大行数。
 
-::: demo 通过将 `hasClear` 属性的值添加。
+::: demo
 ```html
 <el-input
-  type="input"
+  type="textarea"
+  autosize
   placeholder="请输入内容"
-  :auto-clear="true"
-  v-model="input">
+  v-model="textarea2">
+</el-input>
+<div style="margin: 20px 0;"></div>
+<el-input
+  type="textarea"
+  :autosize="{ minRows: 2, maxRows: 4}"
+  placeholder="请输入内容"
+  v-model="textarea3">
 </el-input>
 
 <script>
 export default {
   data() {
     return {
-      input: ''
+      textarea2: '',
+      textarea3: ''
     }
   }
 }
@@ -339,6 +340,11 @@ export default {
     <el-button slot="append" icon="search"></el-button>
   </el-input>
 </div>
+<style>
+  .el-select .el-input {
+    width: 110px;
+  }
+</style>
 <script>
 export default {
   data() {
@@ -522,6 +528,8 @@ export default {
   custom-item="my-item-zh"
   placeholder="请输入内容"
   @select="handleSelect"
+  icon="edit"
+  :on-icon-click="handleIconClick"
 ></el-autocomplete>
 
 <style>
@@ -633,6 +641,9 @@ export default {
       },
       handleSelect(item) {
         console.log(item);
+      },
+      handleIconClick(ev) {
+        console.log(ev);
       }
     },
     mounted() {
@@ -759,18 +770,21 @@ export default {
 | autosize      | 自适应内容高度，只对 `type="textarea"` 有效，可传入对象，如，{ minRows: 2, maxRows: 6 }  |  boolean/object | — |  false   |
 | auto-complete | 原生属性，自动补全 | string | on, off | off |
 | name | 原生属性 | string | — | — |
-| max | 原生属性，设置最大值 | * | — | — |
-| min | 原生属性，设置最小值 | * | — | — |
+| readonly | 原生属性，是否只读 | boolean | — | false |
+| max | 原生属性，设置最大值 | — | — | — |
+| min | 原生属性，设置最小值 | — | — | — |
+| step | 原生属性，设置输入字段的合法数字间隔 | — | — | — |
+| resize | 控制是否能被用户缩放 | string | none, both, horizontal, vertical | — |
 | autofocus | 原生属性，自动获取焦点 | boolean | true, false | false |
 | form | 原生属性 | string | — | — |
+| on-icon-click | 点击 Input 内的图标的钩子函数 | function | — | — |
 
 ### Input Events
 | 事件名称 | 说明 | 回调参数 |
 |---------|--------|---------|
 | click | 点击 Input 内的图标时触发 | (event: Event) |
-| keyupenter | 输入回车键后触发 | (event: Event) |
 | blur | 在 Input 失去焦点时触发 | (event: Event) |
-| focus | 在 Input 或得焦点时触发 | (event: Event) |
+| focus | 在 Input 获得焦点时触发 | (event: Event) |
 | change | 在 Input 值改变时触发 | (value: string \| number) |
 
 ### Autocomplete Attributes
@@ -779,10 +793,20 @@ export default {
 |-------------  |---------------- |---------------- |---------------------- |-------- |
 | placeholder   | 输入框占位文本   | string          | — | — |
 | disabled      | 禁用            | boolean         | — | false   |
+| props | 配置选项，具体见下表 | object | — | — |
 | value         | 必填值输入绑定值   | string  | — | — |
 | custom-item  | 通过该参数指定自定义的输入建议列表项的组件名 | string  | — | — |
 | fetch-suggestions | 返回输入建议的方法，仅当你的输入建议数据 resolve 时，通过调用 callback(data:[]) 来返回它  | Function(queryString, callback)  | — | — |
 | popper-class | Autocomplete 下拉列表的类名 | string | — | — |
+| trigger-on-focus | 是否在输入框 focus 时显示建议列表 | boolean | — | true |
+| on-icon-click | 点击图标的回调函数 | function | — | — |
+| icon          | 输入框尾部图标    | string          | — | — |
+
+### props
+| 参数     | 说明              | 类型   | 可选值 | 默认值 |
+| -------- | ----------------- | ------ | ------ | ------ |
+| value    | 指定选项的值为选项对象的某个属性值 | string | — | value |
+| label    | 指定选项标签为选项对象的某个属性值 | string | — | value |
 
 ### Autocomplete Events
 | 事件名称 | 说明 | 回调参数 |

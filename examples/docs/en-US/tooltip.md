@@ -113,12 +113,12 @@ Tooltip has 9 placements.
     .item {
       margin: 4px;
     }
-    
+
     .left .el-tooltip__popper,
     .right .el-tooltip__popper {
       padding: 8px 10px;
     }
-    
+
     .el-button {
       width: 110px;
     }
@@ -145,7 +145,7 @@ Tooltip has two themes: `dark` and `light`。
 
 ### More Content
 
-Display multiple lines of text and set their format. 
+Display multiple lines of text and set their format.
 
 :::demo Override attribute `content` of `el-tooltip` by adding a slot named `content`.
 ```html
@@ -160,7 +160,7 @@ Display multiple lines of text and set their format.
 
 In addition to basic usages, there are some attributes that allow you to customize your own:
 
-`transition` attribute allows you to customize the animation in which the tooltip shows or hides, and the default value is `fade-in-linear`.
+`transition` attribute allows you to customize the animation in which the tooltip shows or hides, and the default value is el-fade-in-linear.
 
 `disabled` attribute allows you to disable `tooltip`. You just need set it to `true`.
 
@@ -170,7 +170,7 @@ In fact, Tooltip is an extension based on [Vue-popper](https://github.com/elemen
 ```html
 <template>
   <el-tooltip :disabled="disabled" content="click to close tooltip function" placement="bottom" effect="light">
-    <el-button @click="disabled=true">click to close tooltip function</el-button>
+    <el-button @click="disabled = !disabled">click to {{disabled ? 'active' : 'close'}} tooltip function</el-button>
   </el-tooltip>
 </template>
 
@@ -190,6 +190,12 @@ In fact, Tooltip is an extension based on [Vue-popper](https://github.com/elemen
 :::
 
 
+:::tip
+The `router-link` component is not supported in tooltip, please use `vm.$router.push`.
+
+Disabled form elements are not supported in tooltip, see more information at [MDN](https://developer.mozilla.org/en-US/docs/Web/Events/mouseenter), please wrap disabled form elements.
+:::
+
 
 ### Attributes
 | Attribute      | Description          | Type      | Accepted Values       | Default  |
@@ -200,9 +206,10 @@ In fact, Tooltip is an extension based on [Vue-popper](https://github.com/elemen
 |  value(v-model) | visibility of Tooltip | boolean           | — |  false |
 |  disabled       |  whether Tooltip is disabled  | boolean    | — |  false |
 |  offset        |  offset of the Tooltip   | number    | — |  0 |
-|  transition     |  animation name | string             | — | `fade-in-linear` |
+|  transition     |  animation name | string             | — | el-fade-in-linear |
 |  visible-arrow   |  whether an arrow is displayed. For more information, check [Vue-popper](https://github.com/element-component/vue-popper) page | boolean | — | true |
-|  options        | [popper.js](https://popper.js.org/documentation.html) parameters | Object            | refer to [popper.js](https://popper.js.org/documentation.html) doc | `{ boundariesElement: 'body', gpuAcceleration: false }` |
-| openDelay | delay of appearance, in millisecond | number | — | 0 |
-| manual | whether to control Tooltip manually. `mouseenter` and `mouseleave` won't have effects if set to `true`事件将不会生效 | boolean | — | false |
+|  popper-options        | [popper.js](https://popper.js.org/documentation.html) parameters | Object            | refer to [popper.js](https://popper.js.org/documentation.html) doc | `{ boundariesElement: 'body', gpuAcceleration: false }` |
+| open-delay | delay of appearance, in millisecond | number | — | 0 |
+| manual | whether to control Tooltip manually. `mouseenter` and `mouseleave` won't have effects if set to `true` | boolean | — | false |
 |  popper-class  |  custom class name for Tooltip's popper | string | — | — |
+| enterable | whether the mouse can enter the tooltip | Boolean | — | true |

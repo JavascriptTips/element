@@ -5,7 +5,9 @@
         radio: '1',
         radio1: 'selected and disabled',
         radio2: 3,
-        radio3: ''
+        radio3: 'New York',
+        radio4: 'New York',
+        radio5: 'New York'
       };
     }
   };
@@ -63,7 +65,7 @@ Radio should not have too many options. Otherwise, use the Select component inst
 
 ### Radio button group
 
-Suitable for choosing from some mutually exclusive options. 
+Suitable for choosing from some mutually exclusive options.
 
 :::demo Combine `<el-radio-group>` with `<el-radio>` to display a radio group. Bind a variable with `v-model` of `<el-radio-group>` element and set label value in `<el-radio>`. It also provides `change` event with the current value as its parameter.
 
@@ -95,7 +97,21 @@ Radio with button styles.
 <el-radio-group v-model="radio3">
   <el-radio-button label="New York"></el-radio-button>
   <el-radio-button label="Washington"></el-radio-button>
-  <el-radio-button label="Los Angeles" :disabled="true"></el-radio-button>
+  <el-radio-button label="Los Angeles"></el-radio-button>
+  <el-radio-button label="Chicago"></el-radio-button>
+</el-radio-group>
+<div style="margin: 15px 0;"></div>
+<el-radio-group v-model="radio4">
+  <el-radio-button label="New York"></el-radio-button>
+  <el-radio-button label="Washington" :disabled="true"></el-radio-button>
+  <el-radio-button label="Los Angeles"></el-radio-button>
+  <el-radio-button label="Chicago"></el-radio-button>
+</el-radio-group>
+<div style="margin: 15px 0;"></div>
+<el-radio-group v-model="radio5" :disabled="true">
+  <el-radio-button label="New York"></el-radio-button>
+  <el-radio-button label="Washington"></el-radio-button>
+  <el-radio-button label="Los Angeles"></el-radio-button>
   <el-radio-button label="Chicago"></el-radio-button>
 </el-radio-group>
 
@@ -103,7 +119,9 @@ Radio with button styles.
   export default {
     data () {
       return {
-        radio3: ''
+        radio3: 'New York',
+        radio4: 'New York',
+        radio5: 'New York'
       };
     }
   }
@@ -113,15 +131,15 @@ Radio with button styles.
 
 ### Radio Attributes
 
- Attribute      | Description          | Type      | Accepted Values       | Default  
+ Attribute      | Description          | Type      | Accepted Values       | Default
 ---- | ---- | ---- | ---- | ----
-label | the value of radio | string/number | — | —
+label | the value of radio | string/number/boolean | — | —
 disabled | whether radio is disabled | boolean | — | false
-name | native 'name' attribute | string    |      —         |     —   
+name | native 'name' attribute | string    |      —         |     —
 
 ### Radio-group Attributes
 
- Attribute      | Description          | Type      | Accepted Values       | Default  
+ Attribute      | Description          | Type      | Accepted Values       | Default
 ---- | ---- | ---- | ---- | ----
 size | the size of radio buttons | string | large/small | —
 fill  | border and background color when button is active | string   | — | #20a0ff   |
@@ -135,7 +153,7 @@ change | triggers when the bound value changes | the label value of the chosen r
 
 ### Radio-button Attributes
 
- Attribute      | Description          | Type      | Accepted Values       | Default  
+ Attribute      | Description          | Type      | Accepted Values       | Default
 ---- | ---- | ---- | ---- | ----
 label | the value of radio | string/number | — | —
 disabled | whether radio is disabled | boolean | — | false

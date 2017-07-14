@@ -4,7 +4,10 @@
       return {
         num1: 1,
         num2: 1,
-        num3: 5
+        num3: 5,
+        num4: 1,
+        num5: 1,
+        num6: 1
       }
     },
     methods: {
@@ -14,6 +17,14 @@
     }
   };
 </script>
+
+<style>
+  .demo-box.demo-input-number {
+    .el-input-number + .el-input-number {
+      margin-left: 10px;
+    }
+  }
+</style>
 
 ## InputNumber
 
@@ -86,6 +97,32 @@ Allows you to define incremental steps.
 ```
 :::
 
+### Size
+
+Additional `large` and `small` sizes of the input box are available
+
+:::demo
+
+```html
+<template>
+  <el-input-number size="large" v-model="num4"></el-input-number>
+  <el-input-number v-model="num5"></el-input-number>
+  <el-input-number size="small" v-model="num6"></el-input-number>
+</template>
+<script>
+  export default {
+    data() {
+      return {
+        num4: 1,
+        num5: 1,
+        num6: 1
+      }
+    }
+  };
+</script>
+```
+:::
+
 ### Attributes
 
 | Attribute      | Description          | Type      | Accepted Values       | Default  |
@@ -97,6 +134,7 @@ Allows you to define incremental steps.
 |size | size of the component | string | large/small| — |
 |disabled| whether the component is disabled | boolean | — | false |
 |controls| whether to enable the control buttons | boolean | — | true |
+|debounce| debounce delay when typing, in millisecond | number | — | 300 |
 
 ### Events
 

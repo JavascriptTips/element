@@ -69,17 +69,19 @@
 
       p {
         margin: 0 0 12px;
+        line-height: 1.8;
       }
 
       code {
         color: #5e6d82;
         background-color: #e6effb;
         margin: 0 4px;
-        transform: translateY(-2px);
         display: inline-block;
         padding: 1px 5px;
         font-size: 12px;
         border-radius: 3px;
+        height: 18px;
+        line-height: 18px;
       }
     }
 
@@ -151,6 +153,7 @@
 
 <script type="text/babel">
   import compoLang from '../i18n/component.json';
+  import { version } from 'main/index.js';
 
   export default {
     data() {
@@ -171,10 +174,10 @@
       goJsfiddle() {
         const { script, html, style } = this.jsfiddle;
         const resourcesTpl = '<scr' + 'ipt src="//unpkg.com/vue/dist/vue.js"></scr' + 'ipt>' +
-        '\n<scr' + 'ipt src="//unpkg.com/element-ui/lib/index.js"></scr' + 'ipt>';
+        '\n<scr' + `ipt src="//unpkg.com/element-ui@${ version }/lib/index.js"></scr` + 'ipt>';
         let jsTpl = (script || '').replace(/export default/, 'var Main =').trim();
         let htmlTpl = `${resourcesTpl}\n<div id="app">\n${html.trim()}\n</div>`;
-        let cssTpl = `@import url("//unpkg.com/element-ui/lib/theme-default/index.css");\n${(style || '').trim()}\n`;
+        let cssTpl = `@import url("//unpkg.com/element-ui@${ version }/lib/theme-default/index.css");\n${(style || '').trim()}\n`;
         jsTpl = jsTpl
           ? jsTpl + '\nvar Ctor = Vue.extend(Main)\nnew Ctor().$mount(\'#app\')'
           : 'new Vue().$mount(\'#app\')';
@@ -185,11 +188,12 @@
           panel_js: 3,
           panel_css: 1
         };
-        const form = document.createElement('form');
+        const form = document.getElementById('fiddle-form') || document.createElement('form');
+        form.innerHTML = '';
         const node = document.createElement('textarea');
 
         form.method = 'post';
-        form.action = 'http://jsfiddle.net/api/post/library/pure/';
+        form.action = 'https://jsfiddle.net/api/post/library/pure/';
         form.target = '_blank';
 
         for (let name in data) {
@@ -197,6 +201,9 @@
           node.value = data[name].toString();
           form.appendChild(node.cloneNode());
         }
+        form.setAttribute('id', 'fiddle-form');
+        form.style.display = 'none';
+        document.body.appendChild(form);
 
         form.submit();
       }

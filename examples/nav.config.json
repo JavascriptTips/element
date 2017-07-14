@@ -18,12 +18,20 @@
         {
           "path": "/custom-theme",
           "name": "自定义主题"
+        },
+        {
+          "path": "/transition",
+          "name": "内置过渡动画"
         }
       ]
     },
     {
       "name": "更新日志",
       "path": "/changelog"
+    },
+    {
+      "name": "Element React",
+      "href": "https://eleme.github.io/element-react/"
     },
     {
       "name": "基础组件",
@@ -94,6 +102,10 @@
               "title": "Select 选择器"
             },
             {
+              "path": "/cascader",
+              "title": "Cascader 级联选择器"
+            },
+            {
               "path": "/switch",
               "title": "Switch 开关"
             },
@@ -120,6 +132,14 @@
             {
               "path": "/rate",
               "title": "Rate 评分"
+            },
+            {
+              "path": "/color-picker",
+              "title": "ColorPicker 颜色选择器"
+            },
+            {
+              "path": "/transfer",
+              "title": "Transfer 穿梭框"
             },
             {
               "path": "/form",
@@ -261,12 +281,20 @@
         {
           "path": "/custom-theme",
           "name": "Custom Theme"
+        },
+        {
+          "path": "/transition",
+          "name": "Built-in transition"
         }
       ]
     },
     {
       "name": "Changelog",
       "path": "/changelog"
+    },
+    {
+      "name": "Element React",
+      "href": "https://eleme.github.io/element-react/"
     },
     {
       "name": "Components",
@@ -320,6 +348,10 @@
               "title": "Select"
             },
             {
+              "path": "/cascader",
+              "title": "Cascader"
+            },
+            {
               "path": "/switch",
               "title": "Switch"
             },
@@ -346,6 +378,14 @@
             {
               "path": "/rate",
               "title": "Rate"
+            },
+            {
+              "path": "/color-picker",
+              "title": "ColorPicker"
+            },
+            {
+              "path": "/transfer",
+              "title": "Transfer"
             },
             {
               "path": "/form",

@@ -4,7 +4,10 @@
       return {
         num1: 1,
         num2: 1,
-        num3: 5
+        num3: 5,
+        num4: 1,
+        num5: 1,
+        num6: 1
       }
     },
     methods: {
@@ -92,6 +95,32 @@
 ```
 :::
 
+### 尺寸
+
+额外提供了 `large`、`small` 两种尺寸的数字输入框
+
+:::demo
+
+```html
+<template>
+  <el-input-number size="large" v-model="num4"></el-input-number>
+  <el-input-number v-model="num5"></el-input-number>
+  <el-input-number size="small" v-model="num6"></el-input-number>
+</template>
+<script>
+  export default {
+    data() {
+      return {
+        num4: 1,
+        num5: 1,
+        num6: 1
+      }
+    }
+  };
+</script>
+```
+:::
+
 ### Attributes
 | 参数      | 说明          | 类型      | 可选值                           | 默认值  |
 |----------|-------------- |----------|--------------------------------  |-------- |
@@ -102,6 +131,7 @@
 | size     | 计数器尺寸           | string   | large, small | — |
 | disabled | 是否禁用计数器        | boolean | — | false |
 | controls | 是否使用控制按钮        | boolean | — | true |
+| debounce | 输入时的去抖延迟，毫秒 | number | — | 300 |
 
 ### Events
 | 事件名称 | 说明 | 回调参数 |

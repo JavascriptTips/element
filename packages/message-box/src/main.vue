@@ -1,18 +1,17 @@
 <template>
   <transition name="msgbox-fade">
-    <div class="el-message-box__wrapper" v-show="value" @click.self="handleWrapperClick">
+    <div class="el-message-box__wrapper" tabindex="-1" v-show="visible" @click.self="handleWrapperClick">
       <div class="el-message-box" :class="customClass">
         <div class="el-message-box__header" v-if="title !== undefined && !isDate">
           <div class="el-message-box__title">
             <div class="el-message-box__status" :class="[ typeClass ]"></div>
             <span>{{ title || t('el.messagebox.title') }}</span>
           </div>
-          <!-- <i class="el-message-box__close el-icon-close" @click="handleAction('cancel')" v-if="showClose"></i> -->
         </div>
         <div class="el-message-box__content" v-if="message !== ''">
           <div class="el-message-box__message" v-show="!isDate"><p v-html="message" ></p></div>
           <div class="el-message-box__input" v-show="showInput && !isDate">
-            <el-input v-model="inputValue" :placeholder="inputPlaceholder" ref="input"></el-input>
+            <el-input v-model="inputValue" :placeholder="inputPlaceholder" ref="input" @keyup.enter.native="handleAction('confirm')"></el-input>
             <div class="el-message-box__errormsg" :style="{ visibility: !!editorErrorMessage ? 'visible' : 'hidden' }">{{ editorErrorMessage }}</div>
           </div>
           <div class="el-message-box__input" v-show="showInput && isDate">
@@ -25,8 +24,21 @@
           </div>
         </div>
         <div class="el-message-box__btns">
-          <el-button :class="[ cancelButtonClasses ]" v-show="showCancelButton" @click.native="handleAction('cancel')">{{ cancelButtonText || t('el.messagebox.cancel') }}</el-button>
-          <el-button ref="confirm" :class="[ confirmButtonClasses ]" v-show="showConfirmButton" @click.native="handleAction('confirm')">{{ confirmButtonText || t('el.messagebox.confirm') }}</el-button>
+          <el-button
+            :loading="cancelButtonLoading"
+            :class="[ cancelButtonClasses ]"
+            v-show="showCancelButton"
+            @click.native="handleAction('cancel')">
+            {{ cancelButtonText || t('el.messagebox.cancel') }}
+          </el-button>
+          <el-button
+            :loading="confirmButtonLoading"
+            ref="confirm"
+            :class="[ confirmButtonClasses ]"
+            v-show="showConfirmButton"
+            @click.native="handleAction('confirm')">
+            {{ confirmButtonText || t('el.messagebox.confirm') }}
+          </el-button>
         </div>
       </div>
     </div>
@@ -91,8 +103,17 @@
     },
 
     methods: {
+      getSafeClose() {
+        const currentId = this.uid;
+        return () => {
+          this.$nextTick(() => {
+            if (currentId === this.uid) this.doClose();
+          });
+        };
+      },
       doClose() {
-        this.value = false;
+        if (!this.visible) return;
+        this.visible = false;
         this._closing = true;
 
         this.onClose && this.onClose();
@@ -112,11 +133,11 @@
         if (!this.transition) {
           this.doAfterClose();
         }
+        if (this.action) this.callback(this.action, this);
       },
 
       handleWrapperClick() {
         if (this.closeOnClickModal) {
-          this.close();
           this.handleAction('cancel');
         }
       },
@@ -125,9 +146,13 @@
         if (this.$type === 'prompt' && action === 'confirm' && !this.validate()) {
           return;
         }
-        var callback = this.callback;
-        this.value = false;
-        callback(action);
+        this.action = action;
+        if (typeof this.beforeClose === 'function') {
+          this.close = this.getSafeClose();
+          this.beforeClose(action, this, this.close);
+        } else {
+          this.doClose();
+        }
       },
 
       validate() {
@@ -159,13 +184,19 @@
     },
 
     watch: {
-      inputValue(val) {
-        if (this.$type === 'prompt' && val !== null) {
-          this.validate();
+      inputValue: {
+        immediate: true,
+        handler(val) {
+          this.$nextTick(_ => {
+            if (this.$type === 'prompt' && val !== null) {
+              this.validate();
+            }
+          });
         }
       },
 
-      value(val) {
+      visible(val) {
+        if (val) this.uid++;
         if (this.$type === 'alert' || this.$type === 'confirm') {
           this.$nextTick(() => {
             this.$refs.confirm.$el.focus();
@@ -187,6 +218,7 @@
 
     data() {
       return {
+        uid: 1,
         title: undefined,
         message: '',
         type: '',
@@ -199,8 +231,11 @@
         inputErrorMessage: '',
         showConfirmButton: true,
         showCancelButton: false,
+        action: '',
         confirmButtonText: '',
         cancelButtonText: '',
+        confirmButtonLoading: false,
+        cancelButtonLoading: false,
         confirmButtonClass: '',
         confirmButtonDisabled: false,
         cancelButtonClass: '',

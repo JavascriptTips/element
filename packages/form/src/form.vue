@@ -21,7 +21,11 @@
         type: String,
         default: ''
       },
-      inline: Boolean
+      inline: Boolean,
+      showMessage: {
+        type: Boolean,
+        default: true
+      }
     },
     watch: {
       rules() {
@@ -48,6 +52,11 @@
     },
     methods: {
       resetFields() {
+        if (!this.model) {
+          process.env.NODE_ENV !== 'production' &&
+          console.warn('[Element Warn][Form]model is required for resetFields to work.');
+          return;
+        }
         this.fields.forEach(field => {
           field.resetField();
         });
@@ -55,6 +64,10 @@
       validate(callback) {
         let valid = true;
         let count = 0;
+        // 如果需要验证的fields为空，调用验证时立刻返回callback
+        if (this.fields.length === 0 && callback) {
+          callback(true);
+        }
         this.fields.forEach((field, index) => {
           field.validate('', errors => {
             if (errors) {

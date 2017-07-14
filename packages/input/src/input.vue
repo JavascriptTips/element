@@ -14,21 +14,22 @@
       <div class="el-input-group__prepend" v-if="$slots.prepend">
         <slot name="prepend"></slot>
       </div>
+      <!-- input 图标 -->
+      <slot name="icon">
+        <i class="el-input__icon"
+          :class="[
+            'el-icon-' + icon,
+            onIconClick ? 'is-clickable' : ''
+          ]"
+          v-if="icon"
+          @click="handleIconClick">
+        </i>
+      </slot>
       <input
         v-if="type !== 'textarea'"
         class="el-input__inner"
-        :type="type"
-        :name="name"
-        :placeholder="placeholder"
-        :disabled="disabled"
-        :readonly="readonly"
-        :maxlength="maxlength"
-        :minlength="minlength"
+        v-bind="$props"
         :autocomplete="autoComplete"
-        :autofocus="autofocus"
-        :min="min"
-        :max="max"
-        :form="form"
         :value="currentValue"
         ref="input"
         @keyup.enter="handleEnter"
@@ -36,12 +37,6 @@
         @focus="handleFocus"
         @blur="handleBlur"
       >
-      <!-- input 图标 -->
-      <slot name="icon">
-        <div class="el-input__icon" @click="handleIconClick">
-          <i class="el-input__icon-text" :class="['el-icon-' + icon, icon]" v-if="icon && !hasClear && !validating"></i>
-        </div>
-      </slot>
 
       <i class="el-input__icon el-icon-loading" v-if="validating"></i>
       <i @click="handleClearClick" class="el-input__icon el-icon-circle-cross" v-if="hasClear && !validating"></i>
@@ -56,16 +51,8 @@
       :value="currentValue"
       @input="handleInput"
       ref="textarea"
-      :name="name"
-      :placeholder="placeholder"
-      :disabled="disabled"
+      v-bind="$props"
       :style="textareaStyle"
-      :readonly="readonly"
-      :rows="rows"
-      :form="form"
-      :autofocus="autofocus"
-      :maxlength="maxlength"
-      :minlength="minlength"
       @focus="handleFocus"
       @blur="handleBlur">
     </textarea>
@@ -74,6 +61,7 @@
 <script>
   import emitter from 'element-ui/src/mixins/emitter';
   import calcTextareaHeight from './calcTextareaHeight';
+  import merge from 'element-ui/src/utils/merge';
 
   export default {
     name: 'ElInput',
@@ -85,7 +73,7 @@
     data() {
       return {
         currentValue: this.value,
-        textareaStyle: {}
+        textareaCalcStyle: {}
       };
     },
 
@@ -93,6 +81,7 @@
       value: [String, Number],
       placeholder: String,
       size: String,
+      resize: String,
       readonly: Boolean,
       autofocus: Boolean,
       icon: String,
@@ -123,10 +112,12 @@
       minlength: Number,
       max: {},
       min: {},
+      step: {},
       validateEvent: {
         type: Boolean,
         default: true
-      }
+      },
+      onIconClick: Function
     },
 
     computed: {
@@ -135,6 +126,9 @@
       },
       hasClear() {
         return this.autoClear && this.currentValue.length > 0;
+      },
+      textareaStyle() {
+        return merge({}, this.textareaCalcStyle, { resize: this.resize });
       }
     },
 
@@ -167,15 +161,21 @@
         const minRows = autosize.minRows;
         const maxRows = autosize.maxRows;
 
-        this.textareaStyle = calcTextareaHeight(this.$refs.textarea, minRows, maxRows);
+        this.textareaCalcStyle = calcTextareaHeight(this.$refs.textarea, minRows, maxRows);
       },
       handleFocus(event) {
         this.$emit('focus', event);
       },
       handleInput(event) {
-        this.setCurrentValue(event.target.value);
+        const value = event.target.value;
+        this.$emit('input', value);
+        this.setCurrentValue(value);
+        this.$emit('change', value);
       },
       handleIconClick(event) {
+        if (this.onIconClick) {
+          this.onIconClick(event);
+        }
         this.$emit('click', event);
       },
       handleClearClick() {
@@ -188,8 +188,6 @@
           this.resizeTextarea();
         });
         this.currentValue = value;
-        this.$emit('input', value);
-        this.$emit('change', value);
         if (this.validateEvent) {
           this.dispatch('ElFormItem', 'el.form.change', [value]);
         }

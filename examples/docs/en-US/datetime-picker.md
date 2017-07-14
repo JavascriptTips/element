@@ -72,6 +72,30 @@
   };
 </script>
 
+<style>
+.demo-block.demo-datetime-picker .source {
+    padding: 0;
+    display: flex;
+  }
+
+  .demo-datetime-picker .block {
+    padding: 30px 0;
+    text-align: center;
+    border-right: solid 1px #EFF2F6;
+    flex: 1;
+    &:last-child {
+      border-right: none;
+    }
+  }
+
+  .demo-datetime-picker .demonstration {
+    display: block;
+    color: #8492a6;
+    font-size: 14px;
+    margin-bottom: 20px;
+  }
+</style>
+
 ## DateTimePicker
 
 Select date and time in one picker.
@@ -216,6 +240,7 @@ Select date and time in one picker.
 | align | alignment | left/center/right | left |
 | popper-class | custom class name for DateTimePicker's dropdown | string | — | — |
 | picker-options | additional options, check the table below | object | — | {} |
+| range-separator | range separator | string | - | ' - ' |
 
 ### Picker Options
 | Attribute      | Description          | Type      | Accepted Values       | Default  |

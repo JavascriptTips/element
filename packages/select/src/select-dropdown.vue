@@ -11,7 +11,7 @@
   import Popper from 'element-ui/src/utils/vue-popper';
 
   export default {
-    name: 'el-select-dropdown',
+    name: 'ElSelectDropdown',
 
     componentName: 'ElSelectDropdown',
 
@@ -26,7 +26,7 @@
         default: 0
       },
 
-      options: {
+      popperOptions: {
         default() {
           return {
             forceAbsolute: true,
@@ -57,7 +57,9 @@
     mounted() {
       this.referenceElm = this.$parent.$refs.reference.$el;
       this.$parent.popperElm = this.popperElm = this.$el;
-      this.$on('updatePopper', this.updatePopper);
+      this.$on('updatePopper', () => {
+        if (this.$parent.visible) this.updatePopper();
+      });
       this.$on('destroyPopper', this.destroyPopper);
     }
   };

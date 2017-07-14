@@ -58,6 +58,17 @@
 
       ul {
         padding-left: 0;
+        ul {
+          padding-left: 20px;
+          li::before {
+            content: '';
+            circle: 4px #fff;
+            border: solid 1px #5e6d82;
+            margin-right: 5px;
+            display: inline-block;
+            vertical-align: middle;
+          }
+        }
       }
 
       li li {
@@ -159,6 +170,7 @@
         }
       }
       fragments = fragments.replace(/#(\d+)/g, '<a href="https://github.com/ElemeFE/element/issues/$1" target="_blank">#$1</a>');
+      fragments = fragments.replace(/@(\w+)/g, '<a href="https://github.com/$1" target="_blank">@$1</a>');
       this.$refs.timeline.innerHTML = `${fragments}</li>`;
 
       changeLog.$el.remove();

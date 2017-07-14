@@ -19,10 +19,12 @@
 <details>
 <summary>如何在 Table 组件的每一行添加操作该行数据的按钮？</summary>
 
-使用 inline-template 即可：
+使用 [Scoped slot](https://vuejs.org/v2/guide/components.html#Scoped-Slots) 即可：
 ```html
-<el-table-column label="操作" inline-template>
-  <el-button @click.native="showDetail(row)">查看详情</el-button>
+<el-table-column label="操作">
+  <template scoped="props">
+    <el-button @click.native="showDetail(props.row)">查看详情</el-button>
+  </template>
 </el-table-column>
 ```
 参数 `row` 即为对应行的数据。
@@ -41,7 +43,7 @@
 ```css
 [class^="el-icon-my"], [class*=" el-icon-my"] {
   font-family:"your-font-family" !important;
-  
+
   /* 以下内容参照第三方图标库本身的规则 */
   font-size: inherit;
   font-style:normal;
@@ -53,6 +55,12 @@
 ```html
 <el-input icon="my-xxx" />
 ```
+</details>
+
+<details>
+<summary>所有组件的任意属性都支持 `.sync` 修饰符吗？</summary>
+  
+不是。对于支持 `.sync` 修饰符的属性，我们会在文档的 API 表格中注明。更多 `.sync` 的用法请查看 [Vue 文档](https://vuejs.org/v2/guide/components.html#sync-Modifier)。
 </details>
 
 <details>
@@ -104,10 +112,12 @@ For other components, the `.native` modifier is still mandatory.
 <details>
 <summary>How do I add buttons in each row of Table to operate data of that row?</summary>
 
-Just use `inline-template`:
+Just use [Scoped slot](https://vuejs.org/v2/guide/components.html#Scoped-Slots):
 ```html
-<el-table-column label="Operations" inline-template>
-  <el-button @click.native="showDetail(row)">Details</el-button>
+<el-table-column label="Operations">
+  <template scoped="props">
+    <el-button @click.native="showDetail(props.row)">Details</el-button>
+  </template>
 </el-table-column>
 ```
 The parameter `row` is the data object of corresponding row.
@@ -126,7 +136,7 @@ You just need to modify the class name prefix of the third-party library (see th
 ```css
 [class^="el-icon-my"], [class*=" el-icon-my"] {
   font-family:"your-font-family" !important;
-  
+
   /* The following is based on original CSS rules of third-party library */
   font-size: inherit;
   font-style:normal;
@@ -138,6 +148,12 @@ Now you can use them as you do with built-in icons. For example, in `el-input`:
 ```html
 <el-input icon="my-xxx" />
 ```
+</details>
+
+<details>
+<summary>Can I use `.sync` modifier on every attribute?</summary>
+  
+No, only a few attributes supports the `.sync` modifier, and we have explicitly marked them on the documentation's API table. For more information about `.sync`, please refer to [Vue documentation](https://vuejs.org/v2/guide/components.html#sync-Modifier).
 </details>
 
 <details>

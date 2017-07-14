@@ -51,18 +51,8 @@
           user: '',
           region: ''
         },
-        formStacked: {
-          name: '',
-          region: '',
-          type: '',
-          remark: ''
-        },
-        formAlignRight: {
-          name: '',
-          region: '',
-          type: ''
-        },
-        formAlignLeft: {
+        labelPosition: 'right',
+        formLabelAlign: {
           name: '',
           region: '',
           type: ''
@@ -209,18 +199,13 @@
       width: 440px;
     }
     .demo-form-inline {
+      width: auto;
+
       .el-input {
         width: 150px;
       }
       > * {
         margin-right: 10px;
-      }
-    }
-    .demo-form-stacked {
-      width: 270px;
-
-      .el-select .el-input {
-        width: 100%;
       }
     }
     .demo-ruleForm {
@@ -330,9 +315,10 @@
 ::: demo 设置 `inline` 属性可以让表单域变为行内的表单域
 ```html
 <el-form :inline="true" :model="formInline" class="demo-form-inline">
-  <el-form-item>
+  <el-form-item label="审批人">
     <el-input v-model="formInline.user" placeholder="审批人"></el-input>
-  </el-form-item><el-form-item>
+  </el-form-item>
+  <el-form-item label="活动区域">
     <el-select v-model="formInline.region" placeholder="活动区域">
       <el-option label="区域一" value="shanghai"></el-option>
       <el-option label="区域二" value="beijing"></el-option>
@@ -365,88 +351,31 @@
 
 根据具体目标和制约因素，选择最佳的标签对齐方式。
 
-顶部对齐
-
 ::: demo 通过设置 `label-position` 属性可以改变表单域标签的位置，可选值为 `top`、`left`，当设为 `top` 时标签会置于表单域的顶部
 ```html
-<el-form label-position="top" :model="formStacked" class="demo-form-stacked">
+<el-radio-group v-model="labelPosition" size="small">
+  <el-radio-button label="left">左对齐</el-radio-button>
+  <el-radio-button label="right">右对齐</el-radio-button>
+  <el-radio-button label="top">顶部对齐</el-radio-button>
+</el-radio-group>
+<div style="margin: 20px;"></div>
+<el-form :label-position="labelPosition" label-width="80px" :model="formLabelAlign">
   <el-form-item label="名称">
-    <el-input v-model="formStacked.name"></el-input>
+    <el-input v-model="formLabelAlign.name"></el-input>
   </el-form-item>
   <el-form-item label="活动区域">
-    <el-input v-model="formStacked.region"></el-input>
-  </el-form-item>
-  <el-form-item label="活动展开形式">
-    <el-input v-model="formStacked.type"></el-input>
-  </el-form-item>
-</el-form>
-<script>
-  export default {
-    data() {
-      return {
-        formStacked: {
-          name: '',
-          region: '',
-          type: ''
-        }
-      };
-    }
-  }
-</script>
-```
-:::
-
-右对齐
-
-::: demo 通过设置 `label-position` 属性可以改变表单域标签的位置，默认不设置的情况下标签是右对齐的
-```html
-<el-form :model="formAlignRight" label-width="80px">
-  <el-form-item label="活动名称">
-    <el-input v-model="formAlignRight.name"></el-input>
-  </el-form-item>
-  <el-form-item label="推广地">
-    <el-input v-model="formAlignRight.region"></el-input>
+    <el-input v-model="formLabelAlign.region"></el-input>
   </el-form-item>
   <el-form-item label="活动形式">
-    <el-input v-model="formAlignRight.type"></el-input>
+    <el-input v-model="formLabelAlign.type"></el-input>
   </el-form-item>
 </el-form>
 <script>
   export default {
     data() {
       return {
-        formAlignRight: {
-          name: '',
-          region: '',
-          type: ''
-        }
-      };
-    }
-  }
-</script>
-```
-:::
-
-左对齐
-
-::: demo 通过设置 `label-position` 属性可以改变表单域标签的位置，可选值为 `top`、`left`，当设为 `left` 时标签会变为左对齐
-```html
-<el-form :model="formAlignLeft" label-position="left" label-width="80px">
-  <el-form-item label="活动名称">
-    <el-input v-model="formAlignLeft.name"></el-input>
-  </el-form-item>
-  <el-form-item label="推广地">
-    <el-input v-model="formAlignLeft.region"></el-input>
-  </el-form-item>
-  <el-form-item label="活动形式">
-    <el-input v-model="formAlignLeft.type"></el-input>
-  </el-form-item>
-</el-form>
-<script>
-  export default {
-    data() {
-      return {
-        formAlignLeft: {
+        labelPosition: 'right',
+        formLabelAlign: {
           name: '',
           region: '',
           type: ''
@@ -462,7 +391,7 @@
 
 在防止用户犯错的前提下，尽可能让用户更早地发现并纠正错误。
 
-::: demo Form 组件提供了表单验证的功能，只需要通过 `rule` 属性传入约定的验证规则，并 Form-Item 的 `prop` 属相设置为需校验的字段名即可。校验规则参见 [async-validator](https://github.com/yiminghe/async-validator)
+::: demo Form 组件提供了表单验证的功能，只需要通过 `rule` 属性传入约定的验证规则，并 Form-Item 的 `prop` 属性设置为需校验的字段名即可。校验规则参见 [async-validator](https://github.com/yiminghe/async-validator)
 ```html
 <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
   <el-form-item label="活动名称" prop="name">
@@ -803,6 +732,7 @@
 | label-position | 表单域标签的位置 | string |  right/left/top            | right |
 | label-width | 表单域标签的宽度，所有的 form-item 都会继承 form 组件的 labelWidth 的值 | string | — | — |
 | label-suffix | 表单域标签的后缀 | string | — | — |
+| show-message  | 是否显示校验错误信息 | boolean | — | true |
 
 ### Form Methods
 
@@ -810,15 +740,22 @@
 |---------- |-------------- | --------------
 | validate | 对整个表单进行校验的方法 | Function(callback: Function(boolean))
 | validateField | 对部分表单字段进行校验的方法 | Function(prop: string, callback: Function(errorMessage: string))
-| resetFields | 对整个表单进行重置，将所有字段值重置为空并移除校验结果 | -
+| resetFields | 对整个表单进行重置，将所有字段值重置为初始值并移除校验结果 | -
 
 ### Form-Item Attributes
 
 | 参数      | 说明          | 类型      | 可选值                           | 默认值  |
 |---------- |-------------- |---------- |--------------------------------  |-------- |
-| prop    | 表单域 model 字段 | string    | 传入 Form 组件的 `model` 中的字段 | — |
+| prop    | 表单域 model 字段，在使用 validate、resetFields 方法的情况下，该属性是必填的 | string    | 传入 Form 组件的 `model` 中的字段 | — |
 | label | 标签文本 | string | — | — |
 | label-width | 表单域标签的的宽度，例如 '50px' | string |       —       | — |
 | required | 是否必填，如不设置，则会根据校验规则自动生成 | bolean | — | false |
 | rules    | 表单验证规则 | object | — | — |
 | error    | 表单域验证错误信息, 设置该值会使表单验证状态变为`error`，并显示该错误信息 | string | — | — |
+| show-message  | 是否显示校验错误信息 | boolean | — | true |
+
+### Form-Item Slot
+| name | 说明 |
+|------|--------|
+| — | Form Item 的内容 |
+| label | 标签文本的内容 |

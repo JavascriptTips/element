@@ -1,4 +1,9 @@
-import { createTest, createVue, destroyVM, triggerEvent } from '../util';
+import {
+  createTest,
+  createVue,
+  destroyVM,
+  triggerEvent
+} from '../util';
 import DatePicker from 'packages/date-picker';
 
 const DELAY = 10;
@@ -27,7 +32,9 @@ describe('DatePicker', () => {
         <el-date-picker ref="compo" v-model="value"></el-date-picker>
       `,
       data() {
-        return { value: '' };
+        return {
+          value: ''
+        };
       }
     }, true);
     const input = vm.$el.querySelector('input');
@@ -50,13 +57,13 @@ describe('DatePicker', () => {
         arrowLeftElm.click();
       }
 
-      count = 18;
+      count = 20;
       while (--count) {
         arrowRightElm.click();
       }
       setTimeout(_ => {
         expect(spans[0].textContent).to.include(date.getFullYear() - 1);
-        expect(spans[1].textContent).to.include(date.getMonth() - 1);
+        expect(spans[1].textContent).to.include(date.getMonth() + 1);
         $el.querySelector('td.available').click();
         vm.$nextTick(_ => {
           expect(vm.value).to.exist;
@@ -72,7 +79,9 @@ describe('DatePicker', () => {
         <el-date-picker v-model="value" ref="compo"></el-date-picker>
       `,
       data() {
-        return { value: '' };
+        return {
+          value: ''
+        };
       }
     }, true);
     const input = vm.$el.querySelector('input');
@@ -97,7 +106,9 @@ describe('DatePicker', () => {
         <el-date-picker v-model="value" ref="compo" :clearable="false"></el-date-picker>
       `,
       data() {
-        return { value: '' };
+        return {
+          value: ''
+        };
       }
     }, true);
     const input = vm.$el.querySelector('input');
@@ -122,7 +133,9 @@ describe('DatePicker', () => {
         <el-date-picker ref="compo" v-model="value"></el-date-picker>
       `,
       data() {
-        return { value: '' };
+        return {
+          value: ''
+        };
       }
     }, true);
     const input = vm.$el.querySelector('input');
@@ -163,7 +176,9 @@ describe('DatePicker', () => {
       },
 
       data() {
-        return { value: '' };
+        return {
+          value: ''
+        };
       }
     }, true);
 
@@ -178,11 +193,167 @@ describe('DatePicker', () => {
       picker.$el.querySelector('td.available').click();
       vm.$nextTick(_ => {
         const date = picker.date;
+        let month = date.getMonth() + 1;
+        if (month < 10) month = '0' + month;
 
-        expect(inputValue).to.equal(`${date.getFullYear()}-${date.getMonth() + 1 }`);
+        expect(inputValue).to.equal(`${date.getFullYear()}-${ month }`);
         done();
       });
     }, DELAY);
+  });
+
+  describe('input event', () => {
+    // mimic standard <select>'s behavior
+    // emit input if and only if value changes
+    afterEach(() => {
+      destroyVM(vm);
+    });
+
+    it('works for type=date', done => {
+      let emitted = false;
+      vm = createVue({
+        template: `
+          <el-date-picker
+            ref="compo"
+            v-model="value"
+            type="date"
+            @input="handleInput" />`,
+
+        methods: {
+          handleInput(val) {
+            emitted = true;
+          }
+        },
+
+        data() {
+          return {
+            value: ''
+          };
+        }
+      }, true);
+
+      const input = vm.$el.querySelector('input');
+
+      input.blur();
+      input.focus();
+
+      setTimeout(_ => {
+        const picker = vm.$refs.compo.picker;
+
+        picker.$el.querySelector('td.available').click();
+        setTimeout(_ => {
+          expect(emitted).to.true;
+          emitted = false;
+
+          setTimeout(_ => {
+            input.blur();
+            input.focus();
+
+            picker.$el.querySelector('td.available').click();
+            setTimeout(_ => {
+              expect(emitted).to.false;
+              done();
+            }, DELAY);
+          }, DELAY);
+        }, DELAY);
+      }, DELAY);
+    });
+
+    it('works for type=daterange', done => {
+      let emitted = false;
+      vm = createVue({
+        template: `
+          <el-date-picker
+            ref="compo"
+            v-model="value"
+            type="daterange"
+            @input="handleInput" />`,
+
+        methods: {
+          handleInput(val) {
+            emitted = true;
+          }
+        },
+
+        data() {
+          return {
+            value: ''
+          };
+        }
+      }, true);
+
+      const input = vm.$el.querySelector('input');
+
+      input.blur();
+      input.focus();
+
+      setTimeout(_ => {
+        const picker = vm.$refs.compo.picker;
+
+        picker.$el.querySelector('td.available').click();
+        setTimeout(_ => {
+          picker.$el.querySelector('td.available + td.available').click();
+          setTimeout(_ => {
+            expect(emitted).to.true;
+            emitted = false;
+
+            setTimeout(_ => {
+              input.blur();
+              input.focus();
+
+              const picker = vm.$refs.compo.picker;
+              picker.$el.querySelector('td.available').click();
+              setTimeout(_ => {
+                picker.$el.querySelector('td.available + td.available').click();
+                setTimeout(_ => {
+                  expect(emitted).to.false;
+                  done();
+                });
+              }, DELAY);
+            }, DELAY);
+          });
+        }, DELAY);
+      }, DELAY);
+    });
+
+  });
+
+  it('default value', done => {
+    const toDateStr = date => {
+      let d = new Date(date);
+      return `${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`;
+    };
+    let today = new Date();
+    let nextMonth = new Date(today);
+    nextMonth.setDate(1);
+    if (nextMonth.getMonth() === 12) {
+      nextMonth.setFullYear(today.getFullYear + 1);
+      nextMonth.setMonth(1);
+    } else {
+      nextMonth.setMonth(today.getMonth() + 1);
+    }
+    let nextMonthStr = toDateStr(nextMonth);
+
+    vm = createVue({
+      template: `<el-date-picker v-model="value" ref="compo" default-value="${nextMonthStr}" />`,
+      data() {
+        return {
+          value: ''
+        };
+      }
+    }, true);
+
+    const input = vm.$el.querySelector('input');
+
+    input.focus();
+    setTimeout(_ => {
+      const $el = vm.$refs.compo.picker.$el;
+      $el.querySelector('td.current').click();
+      setTimeout(_ => {
+        expect(vm.value).to.equal(nextMonthStr);
+      });
+      done();
+    });
   });
 
   describe('keydown', () => {
@@ -214,7 +385,7 @@ describe('DatePicker', () => {
       input.value = '2000-10-1';
       triggerEvent(input, 'change', true);
       setTimeout(_ => {
-        expect(vm.pickerVisible).to.true; // 敲回车不会消失
+        expect(vm.pickerVisible).to.false;
         expect(vm.picker.date.getFullYear()).to.equal(2000);
         expect(vm.picker.date.getMonth()).to.equal(9);
         expect(vm.picker.date.getDate()).to.equal(1);
@@ -442,7 +613,10 @@ describe('DatePicker', () => {
       setTimeout(_ => {
         panels[1].querySelector('td.available').click();
 
-        const { minDate, maxDate } = vm.picker;
+        const {
+          minDate,
+          maxDate
+        } = vm.picker;
         expect(minDate).to.exist;
         expect(maxDate).to.exist;
         expect(maxDate > minDate).to.true;
@@ -534,7 +708,10 @@ describe('DatePicker', () => {
         triggerEvent(rightCell, 'click', true);
 
         setTimeout(_ => {
-          const { minDate, maxDate } = vm.picker;
+          const {
+            minDate,
+            maxDate
+          } = vm.picker;
           const minMonth = minDate.getMonth();
           const maxMonth = maxDate.getMonth();
 
@@ -679,7 +856,6 @@ describe('DatePicker', () => {
 
   const currentMonth = new Date(new Date().getTime());
   currentMonth.setDate(1);
-  const FirstDayOfCurrentMonth = currentMonth.getDay();
   const chineseWeek = ['一', '二', '三', '四', '五', '六', '日'];
 
   const testWeek = (i) => it('picker-options:firstDayOfWeek ' + i, done => {
@@ -695,12 +871,8 @@ describe('DatePicker', () => {
     input.focus();
 
     setTimeout(_ => {
-      const prevMonthLen = vm.picker.$el.querySelectorAll('.prev-month').length;
       const firstWeek = vm.picker.$el.querySelector('tr th');
-      const offset = i > 3 ? 7 - i : -i;
-
       expect(firstWeek.innerText).to.equal(chineseWeek[i - 1]);
-      expect(prevMonthLen - FirstDayOfCurrentMonth).to.equal(offset);
       done();
     });
   });
@@ -712,15 +884,13 @@ describe('DatePicker', () => {
     let test;
     vm = createTest(DatePicker, {
       pickerOptions: {
-        shortcuts: [
-          {
-            text: '今天',
-            onClick(picker) {
-              test = true;
-              picker.$emit('pick', new Date());
-            }
+        shortcuts: [{
+          text: '今天',
+          onClick(picker) {
+            test = true;
+            picker.$emit('pick', new Date());
           }
-        ]
+        }]
       }
     }, true);
     const input = vm.$el.querySelector('input');

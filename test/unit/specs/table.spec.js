@@ -459,7 +459,7 @@ describe('Table', () => {
         const cell = vm.$el.querySelectorAll('.el-table__body .cell')[2]; // first row
 
         triggerEvent(cell.parentNode.parentNode, 'dblclick');
-        expect(vm.result).to.length(2); // row, event
+        expect(vm.result).to.length(3); // row, event, column
         expect(vm.result[0]).to.have.property('name').to.equal(getTestData()[0].name);
         destroyVM(vm);
         done();
@@ -1105,9 +1105,9 @@ describe('Table', () => {
           });
 
         setTimeout(_ => {
-          const elm = vm.$el.querySelector('.caret-wrapper > .ascending');
-
+          const elm = vm.$el.querySelector('.caret-wrapper');
           elm.click();
+
           setTimeout(_ => {
             const lastCells = vm.$el.querySelectorAll('.el-table__body-wrapper tbody tr td:last-child');
             expect(toArray(lastCells).map(node => node.textContent)).to.eql(['100', '95', '92', '92', '80']);
@@ -1127,7 +1127,7 @@ describe('Table', () => {
           }
         }, '@sort-change="sortChange"');
         setTimeout(_ => {
-          const elm = vm.$el.querySelector('.caret-wrapper > .ascending');
+          const elm = vm.$el.querySelector('.caret-wrapper');
 
           elm.click();
           setTimeout(_ => {
@@ -1143,7 +1143,7 @@ describe('Table', () => {
       const vm = createTable('', '', '', 'sortable');
 
       it('ascending', done => {
-        const elm = vm.$el.querySelector('.caret-wrapper > .ascending');
+        const elm = vm.$el.querySelector('.caret-wrapper');
 
         elm.click();
         setTimeout(_ => {
@@ -1155,7 +1155,7 @@ describe('Table', () => {
       });
 
       it('descending', done => {
-        const elm = vm.$el.querySelector('.caret-wrapper > .descending');
+        const elm = vm.$el.querySelector('.caret-wrapper');
 
         elm.click();
         setTimeout(_ => {
@@ -1166,6 +1166,102 @@ describe('Table', () => {
           done();
         }, DELAY);
       });
+    });
+  });
+
+  describe('summary row', () => {
+    it('should render', done => {
+      const vm = createVue({
+        template: `
+          <el-table :data="testData" show-summary>
+            <el-table-column prop="name" />
+            <el-table-column prop="release"/>
+            <el-table-column prop="director"/>
+            <el-table-column prop="runtime"/>
+          </el-table>
+        `,
+
+        created() {
+          this.testData = getTestData();
+        }
+      }, true);
+
+      setTimeout(_ => {
+        const footer = vm.$el.querySelector('.el-table__footer');
+        expect(footer).to.exist;
+        const cells = toArray(footer.querySelectorAll('.cell'));
+        expect(cells[cells.length - 1].innerText).to.equal('459');
+        destroyVM(vm);
+        done();
+      }, DELAY);
+    });
+
+    it('custom sum text', done => {
+      const vm = createVue({
+        template: `
+          <el-table :data="testData" show-summary sum-text="Time">
+            <el-table-column prop="name" />
+            <el-table-column prop="release"/>
+            <el-table-column prop="director"/>
+            <el-table-column prop="runtime"/>
+          </el-table>
+        `,
+
+        created() {
+          this.testData = getTestData();
+        }
+      }, true);
+
+      setTimeout(_ => {
+        const cells = toArray(vm.$el.querySelectorAll('.el-table__footer .cell'));
+        expect(cells[0].innerText).to.equal('Time');
+        destroyVM(vm);
+        done();
+      }, DELAY);
+    });
+
+    it('custom summary method', done => {
+      const vm = createVue({
+        template: `
+          <el-table :data="testData" show-summary :summary-method="getSummary">
+            <el-table-column prop="name" />
+            <el-table-column prop="release"/>
+            <el-table-column prop="director"/>
+            <el-table-column prop="runtime"/>
+          </el-table>
+        `,
+
+        created() {
+          this.testData = getTestData();
+        },
+
+        methods: {
+          getSummary(param) {
+            const { columns, data } = param;
+            const result = [];
+            columns.forEach(column => {
+              const prop = column.property;
+              if (prop === 'release') {
+                const dates = data.map(item => item[prop]);
+                const releaseYears = dates.map(date => Number(date.slice(0, 4)));
+                result.push(releaseYears.reduce((prev, curr) => {
+                  return prev + curr;
+                }));
+              } else {
+                result.push('');
+              }
+            });
+            return result;
+          }
+        }
+      }, true);
+
+      setTimeout(_ => {
+        const cells = toArray(vm.$el.querySelectorAll('.el-table__footer .cell'));
+        expect(cells[1].innerText).to.equal('9996');
+        destroyVM(vm);
+        done();
+      }, DELAY);
     });
   });
 
@@ -1305,8 +1401,9 @@ describe('Table', () => {
         vm.label = 'NAME';
         vm.$nextTick(() => {
           expect(vm.$el.querySelector('.el-table__header th .cell').textContent).to.equal('NAME');
+          destroyVM(vm);
+          done();
         });
-        done();
       }, DELAY);
     });
 
@@ -1334,8 +1431,9 @@ describe('Table', () => {
         vm.align = 'right';
         vm.$nextTick(() => {
           expect(vm.$el.querySelectorAll('.el-table__body td.is-right').length > 0).to.be.true;
+          destroyVM(vm);
+          done();
         });
-        done();
       }, DELAY);
     });
 
@@ -1359,21 +1457,31 @@ describe('Table', () => {
         }
       }, true);
 
-      setTimeout(() => {
-        expect(vm.$el.querySelectorAll('.el-table__header th.is-left').length > 0).to.be.true;
-        expect(vm.$el.querySelectorAll('.el-table__header td.is-center').length === 0).to.be.true;
+      vm.$nextTick(() => {
+        expect(vm.$el.querySelectorAll('.el-table__header th.is-left').length).to.above(0);
+        expect(vm.$el.querySelectorAll('.el-table__header th.is-center').length).to.equal(0);
+        expect(vm.$el.querySelectorAll('.el-table__header th.is-right').length).to.equal(0);
         vm.align = 'right';
         vm.$nextTick(() => {
-          expect(vm.$el.querySelectorAll('.el-table__header th.is-right').length > 0).to.be.true;
-          expect(vm.$el.querySelectorAll('.el-table__header td.is-center').length === 0).to.be.true;
+          expect(vm.$el.querySelectorAll('.el-table__header th.is-left').length).to.equal(0);
+          expect(vm.$el.querySelectorAll('.el-table__header th.is-center').length).to.equal(0);
+          expect(vm.$el.querySelectorAll('.el-table__header th.is-right').length).to.above(0);
           vm.headerAlign = 'center';
           vm.$nextTick(() => {
-            expect(vm.$el.querySelectorAll('.el-table__header th.is-right').length === 0).to.be.true;
-            expect(vm.$el.querySelectorAll('.el-table__header td.is-center').length > 0).to.be.true;
+            expect(vm.$el.querySelectorAll('.el-table__header th.is-left').length).to.equal(0);
+            expect(vm.$el.querySelectorAll('.el-table__header th.is-center').length).to.above(0);
+            expect(vm.$el.querySelectorAll('.el-table__header th.is-right').length).to.equal(0);
+            vm.headerAlign = null;
+            vm.$nextTick(() => {
+              expect(vm.$el.querySelectorAll('.el-table__header th.is-left').length).to.equal(0);
+              expect(vm.$el.querySelectorAll('.el-table__header th.is-center').length).to.equal(0);
+              expect(vm.$el.querySelectorAll('.el-table__header th.is-right').length).to.above(0);
+              destroyVM(vm);
+              done();
+            });
           });
         });
-        done();
-      }, DELAY);
+      });
     });
 
     it('width', (done) => {
@@ -1398,10 +1506,11 @@ describe('Table', () => {
       setTimeout(() => {
         expect(vm.$el.querySelector('.el-table__body col').getAttribute('width')).to.equal('100');
         vm.width = 200;
-        vm.$nextTick(() => {
+        setTimeout(() => {
           expect(vm.$el.querySelector('.el-table__body col').getAttribute('width')).to.equal('200');
-        });
-        done();
+          destroyVM(vm);
+          done();
+        }, 100);
       }, DELAY);
     });
 
@@ -1427,10 +1536,11 @@ describe('Table', () => {
       setTimeout(() => {
         expect(vm.$el.querySelector('.el-table__body col').getAttribute('width')).to.equal('100');
         vm.width = 200;
-        vm.$nextTick(() => {
+        setTimeout(() => {
           expect(vm.$el.querySelector('.el-table__body col').getAttribute('width')).to.equal('200');
-        });
-        done();
+          destroyVM(vm);
+          done();
+        }, 100);
       }, DELAY);
     });
 
@@ -1459,10 +1569,11 @@ describe('Table', () => {
       setTimeout(() => {
         expect(!vm.$el.querySelector('.el-table__fixed')).to.be.true;
         vm.fixed = true;
-        vm.$nextTick(() => {
+        setTimeout(() => {
           expect(!!vm.$el.querySelector('.el-table__fixed')).to.be.true;
-        });
-        done();
+          destroyVM(vm);
+          done();
+        }, 100);
       }, DELAY);
     });
 
@@ -1470,7 +1581,7 @@ describe('Table', () => {
       const vm = createVue({
         template: `
           <el-table :data="testData">
-            <el-table-column :prop="name" />
+            <el-table-column :prop="prop" />
             <el-table-column prop="release" />
             <el-table-column prop="director" />
             <el-table-column prop="runtime" />
@@ -1493,13 +1604,13 @@ describe('Table', () => {
         let secondColumnContent = vm.$el.querySelector('.el-table__body td:nth-child(2) .cell').textContent;
         expect(firstColumnContent !== secondColumnContent).to.be.true;
         vm.prop = 'release';
-        vm.property = 'release';
-        vm.$nextTick(() => {
+        setTimeout(() => {
           firstColumnContent = vm.$el.querySelector('.el-table__body td .cell').textContent;
           secondColumnContent = vm.$el.querySelector('.el-table__body td:nth-child(2) .cell').textContent;
           expect(firstColumnContent === secondColumnContent).to.be.true;
-        });
-        done();
+          destroyVM(vm);
+          done();
+        }, 100);
       }, DELAY);
     });
   });
