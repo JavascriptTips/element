@@ -19,6 +19,7 @@
       .el-input{
         .el-input__icon{
           border-color: var(--select-border-color-hover);
+          color: var(--select-border-color-hover);
 
           .el-input__icon-text{
             color: var(--select-border-color-hover);
@@ -31,8 +32,6 @@
       cursor: pointer;
       padding-top: 0;
       padding-bottom: 0;
-      border-color: var(--select-border-color);
-      border-radius: var(--select-icon-radius);
 
 
       &:focus {
@@ -51,9 +50,9 @@
 
     & .el-input {
       & .el-input__icon {
-        background-color: var(--select-icon-bg);
+        /*background-color: var(--select-icon-bg);*/
         box-sizing: border-box;
-        border:1px solid var(--select-border-color);
+        /*border:1px solid var(--select-border-color);*/
         border-radius: 0 var(--select-icon-radius) var(--select-icon-radius) 0;
         color: var(--select-input-color);
         font-size: var(--select-input-font-size);
@@ -73,9 +72,11 @@
         }
 
         @when reverse {
+          transform: rotate(180deg);
+          transform-origin: center 25%;
 
           .el-input__icon-text{
-            transform: translate(0,0);
+            transform: translate(0,0) rotate(180deg);
           }
         }
 

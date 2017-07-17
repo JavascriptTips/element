@@ -37,7 +37,7 @@
   -------------------------- */
   --border-width-base: 1px;
   --border-style-base: solid;
-  --border-color-base: #c2c9d9;  /*var(--color-grey); */
+  --border-color-base: #e6e7ec;  /*var(--color-grey); */
   --border-color-hover: var(--color-primary); /* #8492a6; */
   --border-base: var(--border-width-base) var(--border-style-base) var(--border-color-base);
   --border-radius-base: 4px;
@@ -266,7 +266,7 @@
   --input-fill: var(--color-white);
   --input-fill-disabled: var(--disabled-fill-base);
   --input-color-disabled: var(--font-color-disabled-base);
-  --input-icon-color: var(--color-grey);
+  --input-icon-color: #c6c6c6, /* var(--color-grey) */;
   --input-placeholder-color: #99a9bf;
   --input-max-width: 314px;
 
