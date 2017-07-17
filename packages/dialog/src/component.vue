@@ -1,6 +1,6 @@
 <template>
   <transition name="dialog-fade">
-    <div class="el-dialog__wrapper" v-show="visible" @click.self="handleWrapperClick">
+    <div class="el-dialog__wrapper" v-show="visible || value" @click.self="handleWrapperClick">
       <div
         class="el-dialog"
         :class="[sizeClass, customClass]"
@@ -94,11 +94,28 @@
         type: String,
         default: '15%'
       },
-      beforeClose: Function
+      beforeClose: Function,
+
+      value: Boolean
     },
 
     watch: {
       visible(val) {
+        this.$emit('update:visible', val);
+        if (val) {
+          this.$emit('open');
+          this.$el.addEventListener('scroll', this.updatePopper);
+          this.$nextTick(() => {
+            const dialogWidth = parseInt(getComputedStyle(this.$refs.dialog).width, 10);
+            this.$refs.dialog.scrollTop = 0;
+            this.$refs.dialog.style.marginLeft = `-${dialogWidth / 2}px`;
+          });
+        } else {
+          this.$el.removeEventListener('scroll', this.updatePopper);
+          this.$emit('close');
+        }
+      },
+      value(val) {
         this.$emit('update:visible', val);
         if (val) {
           this.$emit('open');
@@ -139,6 +156,7 @@
       hide(cancel) {
         if (cancel !== false) {
           this.$emit('update:visible', false);
+          this.$emit('value', false);
           this.$emit('visible-change', false);
         }
       },
@@ -149,7 +167,7 @@
     },
 
     mounted() {
-      if (this.visible) {
+      if (this.value) {
         this.rendered = true;
         this.open();
       }

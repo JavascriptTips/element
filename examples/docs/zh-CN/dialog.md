@@ -84,7 +84,7 @@ Dialog 弹出一个对话框，适合需要定制性更大的场景。
 
 <el-dialog
   title="提示"
-  :visible.sync="dialogVisible"
+  v-model="dialogVisible"
   size="tiny"
   :before-close="handleClose">
   <span>这是一段信息</span>
