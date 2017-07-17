@@ -82,6 +82,8 @@
     }
 
     @e headerbtn {
+      background: none;
+      border: 0;
       position: absolute;
       top: 50%;
       right: 18px;

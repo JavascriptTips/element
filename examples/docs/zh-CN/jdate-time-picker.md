@@ -36,7 +36,7 @@
 :::demo input
 ```html
 <el-jdate-time-picker v-model="date" :max-date="maxDate">
-  <el-input v-model="date" ></el-input>
+  <el-input v-model="date" :auto-clear="true"></el-input>
 </el-jdate-time-picker>
 ```
 :::
