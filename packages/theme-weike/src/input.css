@@ -43,11 +43,11 @@
 
     @e icon {
       position: absolute;
-      width: 35px;
-      height: 100%;
+      width: 33px;
       line-height: 16px;
-      right: 0;
+      right: 1px;
       top: 0;
+      bottom: 0;
       text-align: center;
       color: var(--input-icon-color);
 
