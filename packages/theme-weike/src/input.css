@@ -42,12 +42,13 @@
     }
 
     @e icon {
+      background: #fff;
       position: absolute;
       width: 33px;
       line-height: 16px;
       right: 1px;
-      top: 0;
-      bottom: 0;
+      top: 1px;
+      bottom: 1px;
       text-align: center;
       color: var(--input-icon-color);
 

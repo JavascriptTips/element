@@ -21,7 +21,7 @@
             'el-icon-' + icon,
             onIconClick ? 'is-clickable' : ''
           ]"
-          v-if="icon && validating"
+          v-if="icon"
           @click="handleIconClick">
         </i>
       </slot>
