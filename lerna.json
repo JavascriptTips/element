@@ -1,5 +1,5 @@
 {
-  "lerna": "2.0.0-beta.32",
+  "lerna": "2.0.0-beta.29",
   "version": "independent",
   "publishConfig": {
     "ignore": [
@@ -7,5 +7,12 @@
       "log.*"
     ]
   },
-  "packages": ["packages/carousel", "packages/table", "packages/upload", "packages/date-picker", "packages/loading", "packages/pagination"]
+  "packages": [
+    "packages/carousel",
+    "packages/table",
+    "packages/upload",
+    "packages/date-picker",
+    "packages/loading",
+    "packages/pagination"
+  ]
 }

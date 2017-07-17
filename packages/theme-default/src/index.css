@@ -57,6 +57,9 @@
 @import "./carousel-item.css";
 @import "./collapse.css";
 @import "./collapse-item.css";
+@import "./switching-tabs.css";
+@import "./jdate-time-picker.css";
+@import "./pair-tabs.css";
 @import "./cascader.css";
 @import "./color-picker.css";
 @import "./transfer.css";
