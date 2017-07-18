@@ -102,6 +102,7 @@
       font-size: var(--input-small-font-size);
 
       & .el-input__inner {
+        padding-right: 30px;
         height: var(--input-small-height);
       }
       & .el-input__icon{
