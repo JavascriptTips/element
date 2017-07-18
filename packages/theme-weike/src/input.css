@@ -106,8 +106,6 @@
       }
       & .el-input__icon{
         width: var(--input-small-height);
-        height: var(--input-small-height);
-        line-height: var(--input-small-height);
       }
     }
     @m mini {
