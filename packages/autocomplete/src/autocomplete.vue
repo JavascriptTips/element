@@ -36,9 +36,9 @@
   </div>
 </template>
 <script>
-  import ElInput from 'element-ui/packages/input';
+  import ElInput from '@qp/qp-element-ui/packages/input';
   import ElAutocompleteSuggestions from './autocomplete-suggestions.vue';
-  import Emitter from 'element-ui/src/mixins/emitter';
+  import Emitter from '@qp/qp-element-ui/src/mixins/emitter';
 
   export default {
     name: 'ElAutocomplete',

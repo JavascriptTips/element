@@ -46,13 +46,13 @@
 </template>
 
 <script type="text/babel">
-  import Popup from 'element-ui/src/utils/popup';
-  import Locale from 'element-ui/src/mixins/locale';
-  import ElInput from 'element-ui/packages/input';
-  import ElButton from 'element-ui/packages/button';
-  import ElJdateTimePicker from 'element-ui/packages/jdate-time-picker';
-  import { addClass, removeClass } from 'element-ui/src/utils/dom';
-  import { t } from 'element-ui/src/locale';
+  import Popup from '@qp/qp-element-ui/src/utils/popup';
+  import Locale from '@qp/qp-element-ui/src/mixins/locale';
+  import ElInput from '@qp/qp-element-ui/packages/input';
+  import ElButton from '@qp/qp-element-ui/packages/button';
+  import ElJdateTimePicker from '@qp/qp-element-ui/packages/jdate-time-picker';
+  import { addClass, removeClass } from '@qp/qp-element-ui/src/utils/dom';
+  import { t } from '@qp/qp-element-ui/src/locale';
 
   let typeMap = {
     success: 'circle-check',

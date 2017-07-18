@@ -16,7 +16,9 @@
             <i class="el-dialog__close el-icon el-icon-close"></i>
           </button>
         </div>
-        <div class="el-dialog__body" v-if="rendered"><slot></slot></div>
+        <div class="el-dialog__body" v-if="rendered">
+          <slot></slot>
+        </div>
         <div class="el-dialog__footer" v-if="$slots.footer">
           <slot name="footer"></slot>
         </div>
@@ -26,8 +28,8 @@
 </template>
 
 <script>
-  import Popup from 'element-ui/src/utils/popup';
-  import emitter from 'element-ui/src/mixins/emitter';
+  import Popup from '@qp/qp-element-ui/src/utils/popup';
+  import emitter from '@qp/qp-element-ui/src/mixins/emitter';
 
   export default {
     name: 'ElDialog',
@@ -102,6 +104,7 @@
     watch: {
       visible(val) {
         this.$emit('update:visible', val);
+        this.$emit('input', val);
         if (val) {
           this.$emit('open');
           this.$el.addEventListener('scroll', this.updatePopper);
@@ -116,9 +119,9 @@
         }
       },
       value(val) {
-        this.$emit('update:visible', val);
         if (val) {
           this.$emit('open');
+          this.open();
           this.$el.addEventListener('scroll', this.updatePopper);
           this.$nextTick(() => {
             const dialogWidth = parseInt(getComputedStyle(this.$refs.dialog).width, 10);
@@ -127,6 +130,7 @@
           });
         } else {
           this.$el.removeEventListener('scroll', this.updatePopper);
+          this.close();
           this.$emit('close');
         }
       }
@@ -158,6 +162,7 @@
           this.$emit('update:visible', false);
           this.$emit('value', false);
           this.$emit('visible-change', false);
+          this.$emit('input', false);
         }
       },
       updatePopper() {
@@ -167,7 +172,7 @@
     },
 
     mounted() {
-      if (this.value) {
+      if (this.value || this.visible) {
         this.rendered = true;
         this.open();
       }

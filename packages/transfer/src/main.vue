@@ -40,9 +40,9 @@
 </template>
 
 <script>
-  import ElButton from 'element-ui/packages/button';
-  import Emitter from 'element-ui/src/mixins/emitter';
-  import Locale from 'element-ui/src/mixins/locale';
+  import ElButton from '@qp/qp-element-ui/packages/button';
+  import Emitter from '@qp/qp-element-ui/src/mixins/emitter';
+  import Locale from '@qp/qp-element-ui/src/mixins/locale';
   import TransferPanel from './transfer-panel.vue';
 
   export default {
