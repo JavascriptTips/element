@@ -28,6 +28,9 @@
       <input
         v-if="type !== 'textarea'"
         class="el-input__inner"
+        :class="{
+          'el-input__inner--no-icon': !icon
+        }"
         v-bind="$props"
         :autocomplete="autoComplete"
         :value="currentValue"

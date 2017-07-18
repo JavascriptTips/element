@@ -39,6 +39,10 @@
         outline: none;
         border-color: var(--input-focus-border);
       }
+
+      @m no-icon{
+        padding-right: 0;
+      }
     }
 
     @e icon {
@@ -61,7 +65,7 @@
       }
 
       & + .el-input__inner {
-        padding-right: 35px;
+        padding-right: 30px;
       }
     }
 
@@ -102,7 +106,6 @@
       font-size: var(--input-small-font-size);
 
       & .el-input__inner {
-        padding-right: 30px;
         height: var(--input-small-height);
       }
       & .el-input__icon{
