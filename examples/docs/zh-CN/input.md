@@ -238,6 +238,14 @@ export default {
   v-model="input2"
   :on-icon-click="handleIconClick">
 </el-input>
+<p></p>
+<el-input
+  placeholder="哈哈哈"
+  size="small"
+  icon="search"
+  v-model="input2" >
+</el-input>
+
 
 <script>
 export default {
