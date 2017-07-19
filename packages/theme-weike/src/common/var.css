@@ -267,7 +267,7 @@
   --input-fill-disabled: var(--disabled-fill-base);
   --input-color-disabled: var(--font-color-disabled-base);
   --input-icon-color: #c6c6c6 /* var(--color-grey) */;
-  --input-placeholder-color: #99a9bf;
+  --input-placeholder-color: #a5a5a5 /*#99a9bf*/ ;
   --input-max-width: 314px;
 
   --input-hover-border: var(--border-color-hover);
