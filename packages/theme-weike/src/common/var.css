@@ -189,18 +189,18 @@
   -------------------------- */
   --alert-padding: 8px 16px;
   --alert-border-radius: var(--border-radius-base);
-  --alert-title-font-size: 13px;
+  --alert-title-font-size: 14px;
   --alert-description-font-size: 12px;
   --alert-close-font-size: 12px;
   --alert-close-customed-font-size: 13px;
 
-  --alert-success-color: var(--color-success);
-  --alert-info-color: var(--color-info);
-  --alert-warning-color: var(--color-warning);
-  --alert-danger-color: var(--color-danger);
+  --alert-success-color: #ebf8f2;
+  --alert-info-color: #ecf6fd;
+  --alert-warning-color: #fffaeb;
+  --alert-danger-color: #fef3eb;
 
   --alert-icon-size: 16px;
-  --alert-icon-large-size: 28px;
+  --alert-icon-large-size: 24px;
 
   /* Message Box
   -------------------------- */

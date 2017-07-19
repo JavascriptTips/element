@@ -1,9 +1,9 @@
 <template>
   <transition name="el-alert-fade">
-    <div class="el-alert" :class="[ typeClass ]" v-show="visible">
+    <div class="el-alert" :class="[ typeClass ]" :style="paddingBig" v-show="visible">
       <i class="el-alert__icon" :class="[ iconClass, isBigIcon ]" v-if="showIcon"></i>
       <div class="el-alert__content">
-        <span class="el-alert__title" :class="[ isBoldTitle ]" v-if="title">{{ title }}</span>
+        <span class="el-alert__title" :class="[ isBoldTitle ]" :style="fontSize" v-if="title">{{ title }}</span>
         <slot>
           <p class="el-alert__description" v-if="description">{{ description }}</p>
         </slot>
@@ -77,7 +77,20 @@
       },
 
       isBoldTitle() {
-        return this.description ? 'is-bold' : '';
+        // return this.description ? 'is-bold' : '';
+        return '';
+      },
+
+      paddingBig() {
+        return this.description ? {
+          padding: '16px'
+        } : '';
+      },
+
+      fontSize() {
+        return !this.description ? {
+          fontSize: '13px'
+        } : '';
       }
     }
   };
