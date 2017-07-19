@@ -5,7 +5,6 @@
         <el-checkbox-group class="el-table-filter__checkbox-group" v-model="filteredValue">
           <el-checkbox
             v-for="filter in filters"
-            :key="filter.value"
             :label="filter.value">{{ filter.text }}</el-checkbox>
         </el-checkbox-group>
       </div>
@@ -24,7 +23,6 @@
         <li class="el-table-filter__list-item"
             v-for="filter in filters"
             :label="filter.value"
-            :key="filter.value"
             :class="{ 'is-active': isActive(filter) }"
             @click="handleSelect(filter.value)" >{{ filter.text }}</li>
       </ul>
@@ -33,16 +31,15 @@
 </template>
 
 <script type="text/babel">
-  import Popper from '@qp/qp-element-ui/src/utils/vue-popper';
-  import { PopupManager } from '@qp/qp-element-ui/src/utils/popup';
-  import Locale from '@qp/qp-element-ui/src/mixins/locale';
-  import Clickoutside from '@qp/qp-element-ui/src/utils/clickoutside';
+  import Popper from 'element-ui/src/utils/vue-popper';
+  import Locale from 'element-ui/src/mixins/locale';
+  import Clickoutside from 'element-ui/src/utils/clickoutside';
   import Dropdown from './dropdown';
-  import ElCheckbox from '@qp/qp-element-ui/packages/checkbox';
-  import ElCheckboxGroup from '@qp/qp-element-ui/packages/checkbox-group';
+  import ElCheckbox from 'element-ui/packages/checkbox';
+  import ElCheckboxGroup from 'element-ui/packages/checkbox-group';
 
   export default {
-    name: 'ElTableFilterPanel',
+    name: 'el-table-filter-panel',
 
     mixins: [Popper, Locale],
 
@@ -96,7 +93,7 @@
       handleSelect(filterValue) {
         this.filterValue = filterValue;
 
-        if ((typeof filterValue !== 'undefined') && (filterValue !== null)) {
+        if (filterValue) {
           this.confirmFilter(this.filteredValue);
         } else {
           this.confirmFilter([]);
@@ -132,7 +129,7 @@
         },
         set(value) {
           if (this.filteredValue) {
-            if ((typeof value !== 'undefined') && (value !== null)) {
+            if (value) {
               this.filteredValue.splice(0, 1, value);
             } else {
               this.filteredValue.splice(0, 1);
@@ -178,13 +175,6 @@
           Dropdown.close(this);
         }
       });
-    },
-    watch: {
-      showPopper(val) {
-        if (val === true && parseInt(this.popperJS._popper.style.zIndex, 10) < PopupManager.zIndex) {
-          this.popperJS._popper.style.zIndex = PopupManager.nextZIndex();
-        }
-      }
     }
   };
 </script>

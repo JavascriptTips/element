@@ -1,6 +1,6 @@
-import ElCheckbox from '@qp/qp-element-ui/packages/checkbox';
-import ElTag from '@qp/qp-element-ui/packages/tag';
-import objectAssign from '@qp/qp-element-ui/src/utils/merge';
+import ElCheckbox from 'element-ui/packages/checkbox';
+import ElTag from 'element-ui/packages/tag';
+import objectAssign from 'element-ui/src/utils/merge';
 import { getValueByPath } from './util';
 
 let columnIdSeed = 1;
@@ -35,11 +35,11 @@ const forced = {
     renderHeader: function(h) {
       return <el-checkbox
         nativeOn-click={ this.toggleAllSelection }
-        value={ this.isAllSelected } />;
+        domProps-value={ this.isAllSelected } />;
     },
     renderCell: function(h, { row, column, store, $index }) {
       return <el-checkbox
-        value={ store.isSelected(row) }
+        domProps-value={ store.isSelected(row) }
         disabled={ column.selectable ? !column.selectable.call(null, row, $index) : false }
         on-input={ () => { store.commit('rowSelectedChanged', row); } } />;
     },
@@ -109,7 +109,7 @@ const DEFAULT_RENDER_CELL = function(h, { row, column }) {
 };
 
 export default {
-  name: 'ElTableColumn',
+  name: 'el-table-column',
 
   props: {
     type: {
@@ -118,7 +118,6 @@ export default {
     },
     label: String,
     className: String,
-    labelClassName: String,
     property: String,
     prop: String,
     width: {},
@@ -144,9 +143,7 @@ export default {
     selectable: Function,
     reserveSelection: Boolean,
     filterMethod: Function,
-    filteredValue: Array,
     filters: Array,
-    filterPlacement: String,
     filterMultiple: {
       type: Boolean,
       default: true
@@ -186,7 +183,8 @@ export default {
   created() {
     this.customRender = this.$options.render;
     this.$options.render = h => h('div', this.$slots.default);
-    this.columnId = (this.$parent.tableId || (this.$parent.columnId + '_')) + 'column_' + columnIdSeed++;
+
+    let columnId = this.columnId = this.columnKey || ((this.$parent.tableId || (this.$parent.columnId + '_')) + 'column_' + columnIdSeed++);
 
     let parent = this.$parent;
     let owner = this.owner;
@@ -213,11 +211,9 @@ export default {
     let isColumnGroup = false;
 
     let column = getDefaultColumn(type, {
-      id: this.columnId,
-      columnKey: this.columnKey,
+      id: columnId,
       label: this.label,
       className: this.className,
-      labelClassName: this.labelClassName,
       property: this.prop || this.property,
       type,
       renderCell: null,
@@ -241,12 +237,11 @@ export default {
       filterable: this.filters || this.filterMethod,
       filterMultiple: this.filterMultiple,
       filterOpened: false,
-      filteredValue: this.filteredValue || [],
+      filteredValue: [],
       screens: this.screens,
       screenOpened: false,
       screenedValue: [],
-      screenMethod: this.screenMethod,
-      filterPlacement: this.filterPlacement || ''
+      screenMethod: this.screenMethod
     });
 
     objectAssign(column, forced[type] || {});
@@ -296,7 +291,13 @@ export default {
       }
 
       return _self.showOverflowTooltip || _self.showTooltipWhenOverflow
-        ? <div class="cell el-tooltip" style={'width:' + (data.column.realWidth || data.column.width) + 'px'}>{ renderCell(h, data) }</div>
+        ? <el-tooltip
+            effect={ this.effect }
+            placement="top"
+            disabled={ this.tooltipDisabled }>
+            <div class="cell">{ renderCell(h, data) }</div>
+            <span slot="content">{ renderCell(h, data) }</span>
+          </el-tooltip>
         : <div class="cell">{ renderCell(h, data) }</div>;
     };
   },
@@ -346,16 +347,12 @@ export default {
     align(newVal) {
       if (this.columnConfig) {
         this.columnConfig.align = newVal ? 'is-' + newVal : null;
-
-        if (!this.headerAlign) {
-          this.columnConfig.headerAlign = newVal ? 'is-' + newVal : null;
-        }
       }
     },
 
     headerAlign(newVal) {
       if (this.columnConfig) {
-        this.columnConfig.headerAlign = 'is-' + (newVal ? newVal : this.align);
+        this.columnConfig.headerAlign = newVal ? 'is-' + newVal : this.align;
       }
     },
 
@@ -377,12 +374,6 @@ export default {
       if (this.columnConfig) {
         this.columnConfig.fixed = newVal;
         this.owner.store.scheduleLayout();
-      }
-    },
-
-    sortable(newVal) {
-      if (this.columnConfig) {
-        this.columnConfig.sortable = newVal;
       }
     }
   },
