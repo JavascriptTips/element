@@ -149,16 +149,16 @@
   -------------------------- */
   --select-icon-bg:#eee;
   --select-border-color:#bebebe;
-  --select-border-color-hover: var(--border-color-hover);
+  --select-border-color-hover: #e6e7ec; /*var(--border-color-hover);*/
   --select-disabled-border: var(--disabled-border-base);
   --select-font-size: var(--font-size-base);
   --select-close-hover-color: #99a9bf;
   --select-icon-color:#666666;
   --select-icon-radius:4px;
 
-  --select-input-color: var(--color-grey);
+  --select-input-color:  #c6c6c6; /*var(--color-grey);*/
   --select-multiple-input-color: #666;
-  --select-input-focus-background: var(--color-primary);
+  --select-input-focus-background: #e6e7ec; /*var(--color-primary);*/
   --select-input-font-size: 12px;
 
   --select-tag-height: 24px;
@@ -168,9 +168,9 @@
   --select-option-color: var(--select-group-color);
   --select-option-disabled-color: var(--color-grey);
   --select-option-height: 36px;
-  --select-option-hover-background: #e5f4fd; /*lsy*/
+  --select-option-hover-background:  #f4f5f9; /* #e5f4fd; */ /*lsy*/
   --select-option-selected: var(--color-primary);
-  --select-option-selected-hover: #0097e8;
+  --select-option-selected-hover: #444; /*#0097e8;*/
 
   /*lsy*/
   --select-group-color: #333;
@@ -267,7 +267,7 @@
   --input-fill-disabled: var(--disabled-fill-base);
   --input-color-disabled: var(--font-color-disabled-base);
   --input-icon-color: #c6c6c6 /* var(--color-grey) */;
-  --input-placeholder-color: #99a9bf;
+  --input-placeholder-color: #a5a5a5 /*#99a9bf*/ ;
   --input-max-width: 314px;
 
   --input-hover-border: var(--border-color-hover);
