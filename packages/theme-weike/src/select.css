@@ -14,15 +14,18 @@
 
     &:hover {
       .el-input__inner {
+        background-color: #f4f5f9;
+        border-color: #e6e7ec;
         border-color: var(--select-border-color-hover);
       }
       .el-input{
         .el-input__icon{
+          background-color: #f4f5f9;
           border-color: var(--select-border-color-hover);
-          color: var(--select-border-color-hover);
+          /*color: var(--select-border-color-hover);*/
 
           .el-input__icon-text{
-            color: var(--select-border-color-hover);
+            /*color: var(--select-border-color-hover);*/
           }
         }
       }

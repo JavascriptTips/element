@@ -6,7 +6,7 @@
   @b select-dropdown {
     position: absolute;
     z-index: 1001;
-    border: var(--select-dropdown-border);
+    border: var(--select-border-color-hover);
     border-radius: var(--border-radius-small);
     background-color: var(--select-dropdown-background);
     box-shadow: var(--select-dropdown-shadow);
