@@ -19,6 +19,7 @@
         <i class="el-input__icon"
           :class="[
             'el-icon-' + icon,
+            icon,
             onIconClick ? 'is-clickable' : ''
           ]"
           v-if="icon"
