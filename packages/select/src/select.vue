@@ -128,7 +128,7 @@
           !this.multiple &&
           this.value !== undefined &&
           this.value !== '';
-        return criteria ? 'circle-close is-show-close' : (this.remote && this.filterable ? '' : 'caret-top');
+        return criteria ? 'circle-close is-show-close' : (this.remote && this.filterable ? '' : 'caret-bottom');
       },
 
       debounce() {
