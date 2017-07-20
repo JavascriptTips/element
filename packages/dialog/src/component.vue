@@ -1,24 +1,19 @@
 <template>
   <transition name="dialog-fade">
-    <div class="el-dialog__wrapper" v-show="visible || value" @click.self="handleWrapperClick">
+    <div class="el-dialog__wrapper" v-show="visible" @click.self="handleWrapperClick">
       <div
         class="el-dialog"
         :class="[sizeClass, customClass]"
         ref="dialog"
         :style="style">
         <div class="el-dialog__header" :class="{'el-dialog__header--bottom': titleBottom}">
-          <slot name="title">
-            <span class="el-dialog__title">{{title}}</span>
-          </slot>
+          <span class="el-dialog__title">{{title}}</span>
           <span class="el-dialog__title--small" v-html="subtitle"></span>
-          <button type="button" class="el-dialog__headerbtn" aria-label="Close"
-                  v-if="showClose" @click="handleClose">
-            <i class="el-dialog__close el-icon el-icon-close"></i>
-          </button>
+          <div class="el-dialog__headerbtn">
+            <i v-if="showClose" class="el-dialog__close el-icon el-icon-close" @click='close()'></i>
+          </div>
         </div>
-        <div class="el-dialog__body" v-if="rendered">
-          <slot></slot>
-        </div>
+        <div class="el-dialog__body" v-if="rendered"><slot></slot></div>
         <div class="el-dialog__footer" v-if="$slots.footer">
           <slot name="footer"></slot>
         </div>
@@ -28,13 +23,12 @@
 </template>
 
 <script>
-  import Popup from '@qp/qp-element-ui/src/utils/popup';
-  import emitter from '@qp/qp-element-ui/src/mixins/emitter';
+  import Popup from 'element-ui/src/utils/popup-old/';
 
   export default {
-    name: 'ElDialog',
+    name: 'el-dialog',
 
-    mixins: [Popup, emitter],
+    mixins: [Popup],
 
     props: {
       title: {
@@ -53,11 +47,6 @@
       },
 
       modal: {
-        type: Boolean,
-        default: true
-      },
-
-      modalAppendToBody: {
         type: Boolean,
         default: true
       },
@@ -95,42 +84,28 @@
       top: {
         type: String,
         default: '15%'
-      },
-      beforeClose: Function,
-
-      value: Boolean
+      }
+    },
+    data() {
+      return {
+        visible: false
+      };
     },
 
     watch: {
+      value(val) {
+        this.visible = val;
+      },
       visible(val) {
-        this.$emit('update:visible', val);
         this.$emit('input', val);
         if (val) {
           this.$emit('open');
-          this.$el.addEventListener('scroll', this.updatePopper);
           this.$nextTick(() => {
             const dialogWidth = parseInt(getComputedStyle(this.$refs.dialog).width, 10);
             this.$refs.dialog.scrollTop = 0;
             this.$refs.dialog.style.marginLeft = `-${dialogWidth / 2}px`;
           });
         } else {
-          this.$el.removeEventListener('scroll', this.updatePopper);
-          this.$emit('close');
-        }
-      },
-      value(val) {
-        if (val) {
-          this.$emit('open');
-          this.open();
-          this.$el.addEventListener('scroll', this.updatePopper);
-          this.$nextTick(() => {
-            const dialogWidth = parseInt(getComputedStyle(this.$refs.dialog).width, 10);
-            this.$refs.dialog.scrollTop = 0;
-            this.$refs.dialog.style.marginLeft = `-${dialogWidth / 2}px`;
-          });
-        } else {
-          this.$el.removeEventListener('scroll', this.updatePopper);
-          this.close();
           this.$emit('close');
         }
       }
@@ -141,38 +116,20 @@
         return `el-dialog--${ this.size }`;
       },
       style() {
-        return this.size === 'full' ? {} : { 'top': this.top };
+        return this.size === 'full' ? {} : { 'margin-bottom': '50px', 'top': this.top };
       }
     },
 
     methods: {
       handleWrapperClick() {
-        if (!this.closeOnClickModal) return;
-        this.handleClose();
-      },
-      handleClose() {
-        if (typeof this.beforeClose === 'function') {
-          this.beforeClose(this.hide);
-        } else {
-          this.hide();
+        if (this.closeOnClickModal) {
+          this.close();
         }
-      },
-      hide(cancel) {
-        if (cancel !== false) {
-          this.$emit('update:visible', false);
-          this.$emit('value', false);
-          this.$emit('visible-change', false);
-          this.$emit('input', false);
-        }
-      },
-      updatePopper() {
-        this.broadcast('ElSelectDropdown', 'updatePopper');
-        this.broadcast('ElDropdownMenu', 'updatePopper');
       }
     },
 
     mounted() {
-      if (this.value || this.visible) {
+      if (this.value) {
         this.rendered = true;
         this.open();
       }
