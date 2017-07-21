@@ -44,9 +44,9 @@
 </template>
 
 <script type="text/jsx">
-  import ElCollapseTransition from '@qp/qp-element-ui/src/transitions/collapse-transition';
-  import ElCheckbox from '@qp/qp-element-ui/packages/checkbox';
-  import emitter from '@qp/qp-element-ui/src/mixins/emitter';
+  import ElCollapseTransition from 'element-ui/src/transitions/collapse-transition';
+  import ElCheckbox from 'element-ui/packages/checkbox';
+  import emitter from 'element-ui/src/mixins/emitter';
 
   export default {
     name: 'ElTreeNode',

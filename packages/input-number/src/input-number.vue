@@ -44,8 +44,8 @@
   </div>
 </template>
 <script>
-  import ElInput from '@qp/qp-element-ui/packages/input';
-  import { once, on } from '@qp/qp-element-ui/src/utils/dom';
+  import ElInput from 'element-ui/packages/input';
+  import { once, on } from 'element-ui/src/utils/dom';
   import debounce from 'throttle-debounce/debounce';
 
   export default {

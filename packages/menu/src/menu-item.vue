@@ -11,7 +11,7 @@
 </template>
 <script>
   import Menu from './menu-mixin';
-  import Emitter from '@qp/qp-element-ui/src/mixins/emitter';
+  import Emitter from 'element-ui/src/mixins/emitter';
 
   export default {
     name: 'ElMenuItem',

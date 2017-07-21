@@ -63,9 +63,9 @@
   </div>
 </template>
 <script>
-  import emitter from '@qp/qp-element-ui/src/mixins/emitter';
+  import emitter from 'element-ui/src/mixins/emitter';
   import calcTextareaHeight from './calcTextareaHeight';
-  import merge from '@qp/qp-element-ui/src/utils/merge';
+  import merge from 'element-ui/src/utils/merge';
 
   export default {
     name: 'ElInput',

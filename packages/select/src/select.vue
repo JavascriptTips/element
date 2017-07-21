@@ -92,18 +92,18 @@
 </template>
 
 <script type="text/babel">
-  import Emitter from '@qp/qp-element-ui/src/mixins/emitter';
-  import Locale from '@qp/qp-element-ui/src/mixins/locale';
-  import ElInput from '@qp/qp-element-ui/packages/input';
+  import Emitter from 'element-ui/src/mixins/emitter';
+  import Locale from 'element-ui/src/mixins/locale';
+  import ElInput from 'element-ui/packages/input';
   import ElSelectMenu from './select-dropdown.vue';
   import ElOption from './option.vue';
-  import ElTag from '@qp/qp-element-ui/packages/tag';
-  import ElScrollbar from '@qp/qp-element-ui/packages/scrollbar';
+  import ElTag from 'element-ui/packages/tag';
+  import ElScrollbar from 'element-ui/packages/scrollbar';
   import debounce from 'throttle-debounce/debounce';
-  import Clickoutside from '@qp/qp-element-ui/src/utils/clickoutside';
-  import { addClass, removeClass, hasClass } from '@qp/qp-element-ui/src/utils/dom';
-  import { addResizeListener, removeResizeListener } from '@qp/qp-element-ui/src/utils/resize-event';
-  import { t } from '@qp/qp-element-ui/src/locale';
+  import Clickoutside from 'element-ui/src/utils/clickoutside';
+  import { addClass, removeClass, hasClass } from 'element-ui/src/utils/dom';
+  import { addResizeListener, removeResizeListener } from 'element-ui/src/utils/resize-event';
+  import { t } from 'element-ui/src/locale';
   const sizeMap = {
     'large': 42,
     'small': 30,
