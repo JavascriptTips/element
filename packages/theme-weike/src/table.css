@@ -303,9 +303,23 @@
         color: #20a0ff;
       }
     }
-    & th.el-table-column--selection > .cell{
-      padding-left: 14px;
-      padding-right: 14px;
+    /* 在table-column 有同样的 */
+    th.el-table-column--selection,
+    td.el-table-column--selection {
+      border-right: 0;
+
+      > .cell{
+        padding-left: 14px;
+        padding-right: 0;
+
+      }
+
+      & + th,
+      & + td {
+        .cell {
+          padding-left: 4px;
+        }
+      }
     }
 
     & .caret-wrapper {

@@ -29,11 +29,12 @@ export default {
         cellpadding="0"
         border="0">
         {
-          this._l(this.columns, column =>
-            <col
+          this._l(this.columns, column => {
+            return (<col
               name={ column.id }
               width={ column.realWidth || column.width }
-            />)
+            />);
+          })
         }
         <tbody>
           {

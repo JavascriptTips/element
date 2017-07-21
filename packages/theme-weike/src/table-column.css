@@ -5,9 +5,11 @@
 
 @component-namespace el {
   @b table-column {
-    @m selection .cell {
-      padding-left: 14px;
-      padding-right: 14px;
+    @m selection {
+      .cell {
+        padding-left: 14px;
+        padding-right: 14px;
+      }
     }
   }
 
