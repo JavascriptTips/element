@@ -303,6 +303,10 @@
         color: #20a0ff;
       }
     }
+    & th.el-table-column--selection > .cell{
+      padding-left: 14px;
+      padding-right: 14px;
+    }
 
     & .caret-wrapper {
       position: relative;
