@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import { addClass, removeClass } from 'element-ui/src/utils/dom';
+import NewPopupManager from 'element-ui/src/utils/popup/popup-manager';
 
 let hasModal = false;
 
@@ -51,6 +52,7 @@ const PopupManager = {
   },
 
   nextZIndex: function() {
+    NewPopupManager.nextZIndex();
     return PopupManager.zIndex++;
   },
 

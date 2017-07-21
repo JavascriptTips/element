@@ -88,18 +88,20 @@ Dialog 弹出一个对话框，适合需要定制性更大的场景。
   size="tiny"
   :before-close="handleClose">
   <span>这是一段信息</span>
+  <br/>
+  <el-button @click="dialog2 = true">弹框2</el-button>
+
   <span slot="footer" class="dialog-footer">
     <el-button @click="dialogVisible = false">取 消</el-button>
     <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
   </span>
 
+</el-dialog>
+
 
   <el-dialog title="提示" v-model="dialog2" size="tiny" :title-bottom="false">
     <span>这是2段信息</span>
   </el-dialog>
-
-
-</el-dialog>
 
 <script>
   export default {
