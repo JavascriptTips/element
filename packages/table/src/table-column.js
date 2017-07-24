@@ -35,7 +35,8 @@ const forced = {
     renderHeader: function(h) {
       return <el-checkbox
         nativeOn-click={ this.toggleAllSelection }
-        domProps-value={ this.isAllSelected } />;
+        domProps-value={ this.isAllSelected }
+        value={ this.isAllSelected } />;
     },
     renderCell: function(h, { row, column, store, $index }) {
       return <el-checkbox
