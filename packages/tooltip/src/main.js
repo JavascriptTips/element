@@ -79,14 +79,14 @@ export default {
     const vnode = getFirstComponentChild(this.$slots.default);
     if (!vnode) return vnode;
     const data = vnode.data = vnode.data || {};
-    const on = vnode.data.on = vnode.data.on || {};
+    // const on = vnode.data.on = vnode.data.on || {};
     const nativeOn = vnode.data.nativeOn = vnode.data.nativeOn || {};
 
-    nativeOn.mouseenter = this.addEventHandle(on.mouseenter, () => {
+    nativeOn.mouseenter = this.addEventHandle(nativeOn.mouseenter, () => {
       this.setExpectedState(true);
       this.handleShowPopper();
     });
-    nativeOn.mouseleave = this.addEventHandle(on.mouseleave, () => {
+    nativeOn.mouseleave = this.addEventHandle(nativeOn.mouseleave, () => {
       this.setExpectedState(false);
       this.debounceClose();
     });
