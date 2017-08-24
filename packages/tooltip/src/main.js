@@ -83,10 +83,12 @@ export default {
     const nativeOn = vnode.data.nativeOn = vnode.data.nativeOn || {};
 
     nativeOn.mouseenter = this.addEventHandle(nativeOn.mouseenter, () => {
+      console.log(1);
       this.setExpectedState(true);
       this.handleShowPopper();
     });
     nativeOn.mouseleave = this.addEventHandle(nativeOn.mouseleave, () => {
+      console.log(2);
       this.setExpectedState(false);
       this.debounceClose();
     });
@@ -97,7 +99,6 @@ export default {
 
   mounted() {
     this.referenceElm = this.$el;
-    window.TT = this;
   },
 
   methods: {

@@ -642,8 +642,10 @@
         // lines of this modifier!
         Object.assign(styles, data.styles);
 
-        if(data.offsets.arrow && this.modifiers.arrow){
-          // 箭头和边的最小间隔 15
+        console.log(`data:`, data);
+
+        if(data.offsets.arrow && this.modifiers.arrow && data.placement !== 'right' && data.placement !== 'left'){
+          // 箭头和边的最小间隔 15, 除了框了在左右两边的除外
           if(data.offsets.arrow.left <= 15){
             styles.left -= 15;
             data.offsets.arrow.left = 15;

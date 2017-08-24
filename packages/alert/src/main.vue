@@ -3,7 +3,7 @@
     <div class="el-alert" :class="[ typeClass ]" :style="paddingBig" v-show="visible">
       <i class="el-alert__icon" :class="[ iconClass, isBigIcon ]" v-if="showIcon"></i>
       <div class="el-alert__content">
-        <span class="el-alert__title" :class="[ isBoldTitle ]" :style="fontSize" v-if="title">{{ title }}</span>
+        <span class="el-alert__title" :class="[ isBoldTitle ]" :style="fontSize" v-if="title" v-html="title"></span>
         <slot>
           <p class="el-alert__description" v-if="description">{{ description }}</p>
         </slot>
