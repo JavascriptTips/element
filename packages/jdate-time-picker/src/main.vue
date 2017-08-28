@@ -50,7 +50,8 @@ export default {
         minDate: this.minDate || this.minDateTime,
         maxDate: this.maxDate || this.maxDateTime,
         minDateTime: this.minDateTime,
-        maxDateTime: this.maxDateTime
+        maxDateTime: this.maxDateTime,
+        changeYear: true
       });
 
       return option;
