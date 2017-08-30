@@ -13,7 +13,7 @@
     max-width: 100%;
     background-color: #fff;
     border: 1px solid var(--table-border-color);
-    font-size: 14px;
+    font-size: 12px;
     color: var(--table-text-color);
 
     &::before {
@@ -292,13 +292,13 @@
       word-wrap: normal;
       text-overflow: ellipsis;
       display: inline-block;
-      line-height: 20px;
+      line-height: 1em;
       vertical-align: middle;
       width: 100%;
       box-sizing: border-box;
       font-weight: normal;
-      padding-left: 30px;
-      padding-right: 18px;
+      padding-left: 16px;
+      padding-right: 16px;
       &.highlight {
         color: #20a0ff;
       }
@@ -393,8 +393,8 @@
       white-space: normal;
       word-break: break-all;
       padding: 10px 0;
-      padding-left: 30px;
-      padding-right: 18px;
+      padding-left: 16px;
+      padding-right: 16px;
       &.clear-overflow {
         overflow: visible;
       }
