@@ -65,13 +65,13 @@
       }
     }
     @when plain-light {
-      /*border: var(--border-base);*/
-      border: 0;
+      border: var(--border-base);
+      /*border: 0;*/
       box-shadow: none;
       background: #fff;
       border-color: var(--color-primary);
-      /*color: var(--color-primary);*/
-      color: var(--button-default-color);
+      color: var(--color-primary);
+      /*color: var(--button-default-color);*/
 
       &:hover,
       &:focus {
