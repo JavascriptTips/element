@@ -9,10 +9,18 @@
 
     display: inline-block;
   }
-  #ui-datepicker-div select.ui-datepicker-year {
+  #ui-datepicker-div select.ui-datepicker-year,
+  #ui-datepicker-div select.ui-datepicker-month{
     width: 4em;
     border: 0;
-    font-size: 16px;
+    font-size: 14px;
     outline: 0;
+    vertical-align: 0;
+    background: none;
+    position: relative;
+    top: -0.5px;
+  }
+  #ui-datepicker-div select.ui-datepicker-month{
+    top: 0;
   }
 }

@@ -51,7 +51,8 @@ export default {
         maxDate: this.maxDate || this.maxDateTime,
         minDateTime: this.minDateTime,
         maxDateTime: this.maxDateTime,
-        changeYear: true
+        changeYear: true,
+        changeMonth: true
       });
 
       return option;

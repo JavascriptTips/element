@@ -431,6 +431,9 @@ export default {
       if (this.picker) {
         this.picker.resetView && this.picker.resetView();
         this.pickerVisible = this.picker.visible = false;
+        // 有时间控件的情况下， 隐藏时间选择
+        this.picker.timePickerVisible = false;
+
         this.destroyPopper();
       }
     },
