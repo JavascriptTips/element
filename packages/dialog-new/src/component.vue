@@ -32,7 +32,7 @@
   import emitter from 'element-ui/src/mixins/emitter';
 
   export default {
-    name: 'ElDialog',
+    name: 'ElDialogNew',
 
     mixins: [Popup, emitter],
 

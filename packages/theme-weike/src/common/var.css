@@ -434,11 +434,11 @@
   /* Table
  -------------------------- */
   --table-outer-border-color:#c9d0df;
-  --table-border-color: #dfdfdf;
+  --table-border-color: #e7e7eb;
   --table-text-color: #444444;
   /*--table-header-background: #EFF2F7;*/
   --table-header-background: #f4f5f9;
-  --table-td-color: #424e68;
+  --table-td-color: #444444;
   /*table screen*/
   --table-screen-bg: var(--color-white);
   /* Pagination lsy edit 20170114
