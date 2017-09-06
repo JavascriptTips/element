@@ -200,7 +200,10 @@ export default {
   mixins: [Emitter, NewPopper],
 
   props: {
-    size: String,
+    size: {
+      type: String,
+      default: 'small'
+    },
     format: String,
     readonly: Boolean,
     placeholder: String,
