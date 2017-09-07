@@ -1,5 +1,8 @@
 <script>
   module.exports = {
+    mounted() {
+      window.datePickerMd = this;
+    },
     data() {
       return {
         pickerOptions0: {
@@ -59,7 +62,7 @@
             }
           }]
         },
-        value1: '',
+        value1: '2017-09-21',
         value2: '',
         value3: '',
         value4: '',

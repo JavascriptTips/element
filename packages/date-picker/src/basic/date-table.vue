@@ -13,7 +13,7 @@
     </tr>
     <tr
       class="el-date-table__row"
-      v-for="row in rows"
+      v-for="row in rows()"
       :class="{ current: isWeekActive(row[1]) }">
       <td
         v-for="cell in row"
@@ -99,8 +99,45 @@
 
       startDate() {
         return getStartDateOfMonth(this.year, this.month);
+      }
+    },
+
+    watch: {
+      'rangeState.endDate'(newVal) {
+        this.markRange(newVal);
       },
 
+      minDate(newVal, oldVal) {
+        if (newVal && !oldVal) {
+          this.rangeState.selecting = true;
+          this.markRange(newVal);
+        } else if (!newVal) {
+          this.rangeState.selecting = false;
+          this.markRange(newVal);
+        } else {
+          this.markRange();
+        }
+      },
+
+      maxDate(newVal, oldVal) {
+        if (newVal && !oldVal) {
+          this.rangeState.selecting = false;
+          this.markRange(newVal);
+          this.$emit('pick', {
+            minDate: this.minDate,
+            maxDate: this.maxDate
+          });
+        }
+      }
+    },
+
+    data() {
+      return {
+        tableRows: [ [], [], [], [], [], [] ]
+      };
+    },
+
+    methods: {
       rows() {
         const date = new Date(this.year, this.month, 1);
         let day = getFirstDayOfMonth(date); // day of first day
@@ -188,45 +225,7 @@
         rows.firstDayPosition = firstDayPosition;
 
         return rows;
-      }
-    },
-
-    watch: {
-      'rangeState.endDate'(newVal) {
-        this.markRange(newVal);
       },
-
-      minDate(newVal, oldVal) {
-        if (newVal && !oldVal) {
-          this.rangeState.selecting = true;
-          this.markRange(newVal);
-        } else if (!newVal) {
-          this.rangeState.selecting = false;
-          this.markRange(newVal);
-        } else {
-          this.markRange();
-        }
-      },
-
-      maxDate(newVal, oldVal) {
-        if (newVal && !oldVal) {
-          this.rangeState.selecting = false;
-          this.markRange(newVal);
-          this.$emit('pick', {
-            minDate: this.minDate,
-            maxDate: this.maxDate
-          });
-        }
-      }
-    },
-
-    data() {
-      return {
-        tableRows: [ [], [], [], [], [], [] ]
-      };
-    },
-
-    methods: {
       getCellClasses(cell) {
         const selectionMode = this.selectionMode;
         const monthDate = this.monthDate;
@@ -273,7 +272,7 @@
 
       getCellByDate(date) {
         const startDate = this.startDate;
-        const rows = this.rows;
+        const rows = this.rows();
         const index = (date - startDate) / DAY_DURATION;
         const row = rows[Math.floor(index / 7)];
 
@@ -311,7 +310,7 @@
           maxDate = this.maxDate;
         }
 
-        const rows = this.rows;
+        const rows = this.rows();
         const minDate = this.minDate;
         for (var i = 0, k = rows.length; i < k; i++) {
           const row = rows[i];
@@ -371,7 +370,7 @@
         const cellIndex = target.cellIndex;
         const rowIndex = target.parentNode.rowIndex;
 
-        const cell = this.rows[rowIndex - 1][cellIndex];
+        const cell = this.rows()[rowIndex - 1][cellIndex];
         const text = cell.text;
         const className = target.className;
 

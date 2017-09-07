@@ -226,7 +226,9 @@ export default {
       type: String,
       default: 'left'
     },
-    value: {},
+    value: {
+      type: String
+    },
     defaultValue: {},
     rangeSeparator: {
       default: ' - '
@@ -337,6 +339,7 @@ export default {
 
       set(value) {
         if (value) {
+          value = new Date(value);
           const type = this.type;
           const parser = (
             TYPE_VALUE_RESOLVER_MAP[type] ||
@@ -348,7 +351,7 @@ export default {
             this.picker.value = parsedValue;
           }
         } else {
-          this.$emit('input', value);
+          this.$emit('input', String(value));
           this.picker.value = value;
         }
         this.$forceUpdate();
@@ -504,7 +507,7 @@ export default {
       this.picker.$on('pick', (date = '', visible = false) => {
         // do not emit if values are same
         if (!valueEquals(this.value, date)) {
-          this.$emit('input', date);
+          this.$emit('input', String(date));
         }
         this.pickerVisible = this.picker.visible = visible;
         this.picker.resetView && this.picker.resetView();
