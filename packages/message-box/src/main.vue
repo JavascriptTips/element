@@ -15,12 +15,21 @@
             <div class="el-message-box__errormsg" :style="{ visibility: !!editorErrorMessage ? 'visible' : 'hidden' }">{{ editorErrorMessage }}</div>
           </div>
           <div class="el-message-box__input" v-show="showInput && isDate">
-            <el-jdate-time-picker  v-model="inputValue" :max-date="maxDate" :min-date-time="minDateTime" :max-date-time="maxDateTime" :time-picker="isTime" :min-date="minDate" :placeholder="inputPlaceholder" ref="input">
-              <div class="el-message-box__input-date">
-                <span>{{message}}</span>
-                <div class="el-message-box__el-input"><el-input v-model="inputValue" icon="date" ></el-input></div>
-              </div>
-            </el-jdate-time-picker>
+            <div class="el-message-box__input-date">
+              <span>{{message}}</span>
+              <el-date-picker
+                v-model="inputValue"
+                :type="isTime ? 'datetime' : 'date'"
+                :max-date="maxDate"
+                :min-date-time="minDateTime"
+                :max-date-time="maxDateTime"
+                :time-picker="isTime"
+                :min-date="minDate"
+                :placeholder="inputPlaceholder"
+                ref="input">
+                  <div class="el-message-box__el-input"><el-input v-model="inputValue" icon="date" ></el-input></div>
+              </el-date-picker>
+            </div>
           </div>
         </div>
         <div class="el-message-box__btns">
@@ -50,9 +59,9 @@
   import Locale from 'element-ui/src/mixins/locale';
   import ElInput from 'element-ui/packages/input';
   import ElButton from 'element-ui/packages/button';
-  import ElJdateTimePicker from 'element-ui/packages/jdate-time-picker';
   import { addClass, removeClass } from 'element-ui/src/utils/dom';
   import { t } from 'element-ui/src/locale';
+  import ElDatePicker from 'element-ui/packages/date-picker';
 
   let typeMap = {
     success: 'circle-check',
@@ -86,7 +95,7 @@
     components: {
       ElInput,
       ElButton,
-      ElJdateTimePicker
+      ElDatePicker
     },
 
     computed: {
