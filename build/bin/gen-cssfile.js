@@ -4,6 +4,7 @@ var Components = require('../../components.json');
 var themes = [
   'theme-default',
   'theme-weike'
+  // 'theme-qn'
 ];
 Components = Object.keys(Components);
 var basepath = path.resolve(__dirname, '../../packages/');
@@ -16,12 +17,12 @@ function fileExists(filePath) {
   }
 }
 
-themes.forEach((theme) => {
-  var indexContent = '@import "./base.css";\n';
+function writeIndexCss(theme, initIndexContent, resourcePre = './') {
+  var indexContent = initIndexContent || '@import "./base.css";\n';
   Components.forEach(function(key) {
     if (['icon', 'option', 'option-group'].indexOf(key) > -1) return;
     var fileName = key + '.css';
-    indexContent += '@import "./' + fileName + '";\n';
+    indexContent += `@import "${resourcePre}${fileName}";\n`;
     var filePath = path.resolve(basepath, theme, 'src', fileName);
     if (!fileExists(filePath)) {
       fs.writeFileSync(filePath, '', 'utf8');
@@ -29,4 +30,13 @@ themes.forEach((theme) => {
     }
   });
   fs.writeFileSync(path.resolve(basepath, theme, 'src', 'index.css'), indexContent);
+  return indexContent;
+}
+
+themes.forEach((theme) => {
+  writeIndexCss(theme);
 });
+
+// build weike-theme-qn
+const weikeThemeIndex = writeIndexCss('theme-weike', undefined, path.join(basepath, './theme-weike/src/'));
+writeIndexCss('theme-qn', weikeThemeIndex);
