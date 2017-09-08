@@ -13,7 +13,7 @@
     </tr>
     <tr
       class="el-date-table__row"
-      v-for="row in rows()"
+      v-for="row in rows"
       :class="{ current: isWeekActive(row[1]) }">
       <td
         v-for="cell in row"
@@ -99,6 +99,94 @@
 
       startDate() {
         return getStartDateOfMonth(this.year, this.month);
+      },
+      rows() {
+        const date = new Date(this.year, this.month, 1);
+        let day = getFirstDayOfMonth(date); // day of first day
+        const dateCountOfMonth = getDayCountOfMonth(date.getFullYear(), date.getMonth());
+        const dateCountOfLastMonth = getDayCountOfMonth(date.getFullYear(), (date.getMonth() === 0 ? 11 : date.getMonth() - 1));
+
+        day = (day === 0 ? 7 : day);
+
+        const offset = this.offsetDay;
+        const rows = this.tableRows;
+        let count = 1;
+        let firstDayPosition;
+
+        const startDate = this.startDate;
+        const disabledDate = this.disabledDate;
+        const now = clearHours(new Date());
+
+        for (var i = 0; i < 6; i++) {
+          const row = rows[i];
+
+          if (this.showWeekNumber) {
+            if (!row[0]) {
+              row[0] = { type: 'week', text: getWeekNumber(new Date(startDate.getTime() + DAY_DURATION * (i * 7 + 1))) };
+            }
+          }
+
+          for (var j = 0; j < 7; j++) {
+            let cell = row[this.showWeekNumber ? j + 1 : j];
+            if (!cell) {
+              cell = { row: i, column: j, type: 'normal', inRange: false, start: false, end: false };
+            }
+
+            cell.type = 'normal';
+
+            const index = i * 7 + j;
+            const time = startDate.getTime() + DAY_DURATION * (index - offset);
+            cell.inRange = time >= clearHours(this.minDate) && time <= clearHours(this.maxDate);
+            cell.start = this.minDate && time === clearHours(this.minDate);
+            cell.end = this.maxDate && time === clearHours(this.maxDate);
+            const isToday = time === now;
+
+            if (isToday) {
+              cell.type = 'today';
+            }
+
+            if (i >= 0 && i <= 1) {
+              if (j + i * 7 >= (day + offset)) {
+                cell.text = count++;
+                if (count === 2) {
+                  firstDayPosition = i * 7 + j;
+                }
+              } else {
+                cell.text = dateCountOfLastMonth - (day + offset - j % 7) + 1 + i * 7;
+                cell.type = 'prev-month';
+              }
+            } else {
+              if (count <= dateCountOfMonth) {
+                cell.text = count++;
+                if (count === 2) {
+                  firstDayPosition = i * 7 + j;
+                }
+              } else {
+                cell.text = count++ - dateCountOfMonth;
+                cell.type = 'next-month';
+              }
+            }
+
+            cell.disabled = typeof disabledDate === 'function' && disabledDate(new Date(time));
+
+            this.$set(row, this.showWeekNumber ? j + 1 : j, cell);
+          }
+
+          if (this.selectionMode === 'week') {
+            const start = this.showWeekNumber ? 1 : 0;
+            const end = this.showWeekNumber ? 7 : 6;
+            const isWeekActive = this.isWeekActive(row[start + 1]);
+
+            row[start].inRange = isWeekActive;
+            row[start].start = isWeekActive;
+            row[end].inRange = isWeekActive;
+            row[end].end = isWeekActive;
+          }
+        }
+
+        rows.firstDayPosition = firstDayPosition;
+
+        return rows;
       }
     },
 
@@ -138,7 +226,7 @@
     },
 
     methods: {
-      rows() {
+      _rows() {
         const date = new Date(this.year, this.month, 1);
         let day = getFirstDayOfMonth(date); // day of first day
         const dateCountOfMonth = getDayCountOfMonth(date.getFullYear(), date.getMonth());
@@ -272,7 +360,7 @@
 
       getCellByDate(date) {
         const startDate = this.startDate;
-        const rows = this.rows();
+        const rows = this.rows;
         const index = (date - startDate) / DAY_DURATION;
         const row = rows[Math.floor(index / 7)];
 
@@ -310,7 +398,7 @@
           maxDate = this.maxDate;
         }
 
-        const rows = this.rows();
+        const rows = this.rows;
         const minDate = this.minDate;
         for (var i = 0, k = rows.length; i < k; i++) {
           const row = rows[i];
@@ -370,7 +458,7 @@
         const cellIndex = target.cellIndex;
         const rowIndex = target.parentNode.rowIndex;
 
-        const cell = this.rows()[rowIndex - 1][cellIndex];
+        const cell = this.rows[rowIndex - 1][cellIndex];
         const text = cell.text;
         const className = target.className;
 
