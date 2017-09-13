@@ -139,6 +139,25 @@ const MessageBox = function(options, callback) {
     callback = options.callback;
   }
 
+  if (window.IS_QN && window.$[options.$type]) {
+    return new Promise((resolve, reject) => {
+      window.$[options.$type]({
+        title: options.title,
+        body: options.message,
+        okBtn: options.confirmButtonText || '确定',
+        cancelBtn: options.cancelButtonText || '取消',
+        okHidden() {
+          callback && callback('confirm');
+          resolve();
+        },
+        cancelHidden() {
+          callback && callback('cancel');
+          reject();
+        }
+      });
+    });
+  }
+
   if (typeof Promise !== 'undefined') {
     return new Promise((resolve, reject) => { // eslint-disable-line
       msgQueue.push({
