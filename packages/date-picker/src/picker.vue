@@ -226,9 +226,7 @@ export default {
       type: String,
       default: 'left'
     },
-    value: {
-      type: String
-    },
+    value: [String, Date, Array],
     defaultValue: {},
     rangeSeparator: {
       default: ' - '
@@ -253,7 +251,7 @@ export default {
     pickerVisible(val) {
       if (!val) this.dispatch('ElFormItem', 'el.form.blur');
       if (this.readonly || this.disabled) return;
-      val ? this.showPicker() : this.hidePicker();
+      val ? !window.IS_QN ? this.showPicker() : this.showQnPicker() : this.hidePicker();
     },
     currentValue(val) {
       if (val) return;
@@ -367,7 +365,26 @@ export default {
     };
     this.placement = PLACEMENT_MAP[this.align] || PLACEMENT_MAP.left;
   },
-
+  mounted() {
+    if (window.IS_QN) {
+      this.$nextTick(() => {
+        const $d = window.$(this.reference.querySelector('input')).datepicker({
+          size: '',
+          timepicker: this.type === 'datetime',
+          todayHighlight: true,
+          todayBtn: true,
+          autoclose: false
+        });
+        $d.on('changeDate', (e) => {
+          var d = '';
+          if (e.target.value) {
+            d = new Date(e.target.value);
+          }
+          this.$emit('input', String(d));
+        });
+      });
+    }
+  },
   methods: {
     handleMouseEnterIcon() {
       if (this.readonly || this.disabled) return;
@@ -443,7 +460,8 @@ export default {
         this.destroyPopper();
       }
     },
-
+    showQnPicker() {
+    },
     showPicker() {
       if (this.$isServer) return;
       if (!this.picker) {

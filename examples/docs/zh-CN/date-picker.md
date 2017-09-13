@@ -3,6 +3,11 @@
     mounted() {
       window.datePickerMd = this;
     },
+    methods: {
+      changeValue1(v) {
+        console.log('changeValue1:', v);
+      }
+    },
     data() {
       return {
         pickerOptions0: {
@@ -113,6 +118,7 @@
     <span class="demonstration">默认</span>
     <el-date-picker
       v-model="value1"
+      @input="changeValue1"
       type="date"
       placeholder="选择日期"
       :picker-options="pickerOptions0">

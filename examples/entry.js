@@ -17,6 +17,9 @@ window.jQuery = $;
 
 require('jquery-date-time-picker');
 require('jquery-date-time-picker/dist/jquery-date-time-picker.css');
+require('main/utils/sui/sui-append.min.css');
+require('main/utils/sui/sui.min.css');
+require('main/utils/sui/sui.min.js');
 
 Vue.use(Element);
 Vue.use(VueRouter);
