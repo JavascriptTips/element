@@ -1,0 +1,67 @@
+@charset "UTF-8";
+@import "./common/var.css";
+
+@component-namespace el {
+
+  @b switching-tabs{
+
+    @e header{
+
+      > ul{
+        margin: 0;
+        padding: 0;
+        height: var(--switching-tabs-height);
+        line-height: var(--switching-tabs-height);
+        color:var(--switching-tabs-color);
+
+        &:after{
+
+          content: '';
+          clear: both;
+        }
+      }
+    }
+
+    @e tab{
+      background-color: var(--switching-tabs-bgc);
+      box-sizing: border-box;
+      margin-right: -1px;
+      border: 1px solid var(--switching-tabs-bdc);
+      border-bottom: 0;
+      padding: 0px 25px;
+      font-size: 14px;
+      float: left;
+      list-style: none;
+      position: relative;
+      top: -1px;
+
+      cursor: pointer;
+
+      @m active{
+        background-color: var(--switching-tabs-active-bgc);
+        border-color: var(--switching-tabs-hover-bdc);
+        color:var(--switching-tabs-hover-bdc);
+        top: 0;
+        z-index: 1;
+
+        &:before{
+
+          content:'';
+
+          background-color: var(--switching-tabs-hover-bdc);
+          height: 4px;
+
+          position: absolute;
+          top: -2px;
+          left: -1px;
+          right: -1px;
+        }
+      }
+    }
+
+    @e content{
+
+      border:1px solid var(--switching-tabs-hover-bdc);
+    }
+  }
+}

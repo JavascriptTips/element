@@ -1,0 +1,97 @@
+@charset "UTF-8";
+@import "./common/var.css";
+
+@component-namespace el {
+
+  @b message {
+    box-shadow: var(--message-shadow);
+    min-width: var(--message-min-width);
+    padding: var(--message-padding);
+    box-sizing: border-box;
+    border-radius: 2px;
+    position: fixed;
+    left: 50%;
+    top: 20px;
+    transform: translateX(-50%);
+    background-color: #fff;
+    transition: opacity 0.3s, transform .4s;
+    overflow: hidden;
+
+    @e group {
+      margin-left: 24px;
+      position: relative;
+      height: 20px;
+      line-height: 20px;
+
+      @when with-icon {
+        margin-left: 0;
+      }
+
+      & p {
+        font-size: 12px;
+        line-height: 18px;
+        margin: 0 2px 0 0;
+        white-space: nowrap;
+        color: var(--message-content-color);
+        text-align: justify;
+        display: inline-block;
+        vertical-align: middle;
+      }
+    }
+
+    @e circle {
+      size:34px;
+      /*background-color: #000;*/
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+
+    @e img {
+      size: 20px;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      margin-top: -9px;
+      margin-left: -2px;
+    }
+
+    @e icon {
+      vertical-align: middle;
+      margin-right: 8px;
+    }
+
+    @e closeBtn {
+      position: absolute 3px 0 * *;
+      cursor: pointer;
+      color: var(--message-close-color);
+      font-size: var(--font-size-base);
+
+      &:hover {
+        color: var(--message-close-hover-color);
+      }
+    }
+
+    & .el-icon-circle-check {
+      color: var(--message-success-color);
+    }
+
+    & .el-icon-circle-cross {
+      color: var(--message-danger-color);
+    }
+
+    & .el-icon-information {
+      color: var(--message-info-color);
+    }
+
+    & .el-icon-warning {
+      color: var(--message-warning-color);
+    }
+  }
+
+  .el-message-fade-enter,
+  .el-message-fade-leave-active {
+    opacity: 0;
+    transform: translate(-50%, -100%);
+  }
+}

@@ -1,0 +1,130 @@
+@charset "UTF-8";
+@import "./common/var.css";
+@import "./common/popup.css";
+
+@component-namespace el {
+
+  @b dialog {
+    position: absolute;
+    left: 50%;
+    /*transform: translateX(-50%);*/
+    background: #fff;
+    border-radius: var(--border-radius-base);
+    box-shadow: var(--dialog-box-shadow);
+    box-sizing: border-box;
+    @modifier tiny {
+      width: var(--dialog-tiny-width);
+    }
+
+    @modifier small {
+      /*width: var(--dialog-small-width);*/
+      /*max-width: var(--dialog-small-width);*/
+    }
+
+    @modifier large {
+      width: var(--dialog-large-width);
+    }
+
+    @modifier full {
+      width: 100%;
+      top: 0;
+      height: 100%;
+      overflow: auto;
+    }
+
+    @e wrapper {
+      position: fixed 0 0 0 0;
+      overflow: auto;
+      margin: 0;
+    }
+
+    @e header {
+      height: 47px;
+      line-height: 47px;
+
+      text-align: left;
+
+      color:var(--dialog-title-color);
+
+      position: relative;
+
+      @m bottom {
+        border-bottom: 1px solid #e9e9e9;
+      }
+    }
+
+    @e close {
+      cursor: pointer;
+      color: var(--dialog-close-color);
+
+      &:hover {
+        color: var(--dialog-close-hover-color);
+      }
+    }
+
+    /*lsy edit*/
+    @e title {
+      line-height: 1;
+      font-size: 16px;
+      /*font-weight: bold;*/
+      color: #212121;
+      padding-left: 16px;
+      @m small {
+        font-size: 14px;
+        margin-left: 8px;
+      }
+    }
+
+    @e body {
+      padding: 30px 20px;
+      color: #475669;
+      font-size: var(--dialog-font-size);
+    }
+
+    @e headerbtn {
+      background: none;
+      border: 0;
+      position: absolute;
+      top: 50%;
+      right: 18px;
+      transform: translate(0,-50%);
+      font-size: 12px;
+    }
+
+    @e footer {
+      padding: 10px 20px 15px;
+      text-align: center;
+      box-sizing: border-box;
+    }
+  }
+
+  .dialog-fade-enter-active {
+    animation: dialog-fade-in .3s;
+  }
+
+  .dialog-fade-leave-active {
+    animation: dialog-fade-out .3s;
+  }
+
+  @keyframes dialog-fade-in {
+    0% {
+      transform: translate3d(0, -20px, 0);
+      opacity: 0;
+    }
+    100% {
+      transform: translate3d(0, 0, 0);
+      opacity: 1;
+    }
+  }
+
+  @keyframes dialog-fade-out {
+    0% {
+      transform: translate3d(0, 0, 0);
+      opacity: 1;
+    }
+    100% {
+      transform: translate3d(0, -20px, 0);
+      opacity: 0;
+    }
+  }
+}

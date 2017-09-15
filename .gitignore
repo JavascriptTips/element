@@ -12,4 +12,6 @@ examples/pages/zh-CN
 fe.element/element-ui
 .npmrc
 coverage
-*.css
+./*.css
+!./src/utils/sui/sui.min.css
+!./src/utils/sui/sui-append.min.css

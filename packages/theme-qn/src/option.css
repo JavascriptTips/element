@@ -1,0 +1,67 @@
+@charset "UTF-8";
+@import "./common/var.css";
+
+@component-namespace el {
+
+  @b select-dropdown {
+    @e item {
+      font-size: var(--select-font-size);
+      padding: 8px 10px;
+      position: relative;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      color: var(--select-option-color);
+      height: var(--select-option-height);
+      line-height: 1.5;
+      box-sizing: border-box;
+      cursor: pointer;
+
+      /*&:after{
+        content:'';
+        background-color: #d9dee9;
+        height: 1px;
+        position: absolute;
+        bottom: 1px;
+        left: 10px;
+        right: 10px;
+      }*/
+
+      &:last-child{
+        &:after{
+          display:none;
+        }
+      }
+
+      @when disabled {
+        color: var(--select-option-disabled-color);
+        cursor: not-allowed;
+
+        &:hover {
+          background-color: var(--color-white);
+        }
+      }
+
+      &.hover {
+        color: var(--select-option-selected-hover);
+        background-color: var(--select-option-hover-background);
+      }
+
+      &.selected {
+        color: var(--color-white);
+        background-color: var(--select-option-selected);
+
+        /*&.hover {*/
+          /*background-color: var(--select-option-selected-hover);*/
+        /*}*/
+        /*&::after{*/
+          /*background-color: inherit;*/
+        /*}*/
+      }
+
+      & span {
+        line-height: 1.5 !important;
+      }
+    }
+  }
+}
