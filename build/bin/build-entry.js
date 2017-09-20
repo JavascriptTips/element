@@ -8,7 +8,7 @@ var endOfLine = require('os').EOL;
 var platform = process.argv[2] || 'weike';
 var env = '';
 if (platform === 'qn') {
-  env = 'import \'element-ui/src/utils/sui/env\';';
+  env = 'import \'element-ui/build/bin/qn-env\';';
 }
 
 var OUTPUT_PATH = path.join(__dirname, '../../src/index.js');

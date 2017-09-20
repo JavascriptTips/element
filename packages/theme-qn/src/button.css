@@ -17,6 +17,7 @@
     outline: none;
     margin: 0;
     @utils-user-select none;
+    transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1)
 
     & + .el-button {
       margin-left: 10px;
@@ -68,7 +69,7 @@
       border: var(--border-base);
       /*border: 0;*/
       box-shadow: none;
-      background: #fff;
+      background: #E4F0FD;
       border-color: var(--color-primary);
       color: var(--color-primary);
       /*color: var(--button-default-color);*/

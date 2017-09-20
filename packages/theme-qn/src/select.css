@@ -22,7 +22,7 @@
       }
       .el-input__inner {
         background-color: #fff;
-        border-color: #ccc;
+        border-color: #959595;
       }
     }
 
@@ -30,18 +30,17 @@
       cursor: pointer;
       padding-top: 0;
       padding-bottom: 0;
-      border-color: #ccc;
 
       &:focus {
-        border-color: #ccc;
+        border-color: var(--color-primary);
       }
     }
 
     & .el-input__inner:focus + .el-input__icon{
-        border-color: var(--select-border-color-hover);
+        /*border-color: var(--select-border-color-hover);*/
 
         .el-input__icon-text{
-          color: var(--select-border-color-hover);
+          /*color: var(--select-border-color-hover);*/
         }
     }
 
@@ -70,9 +69,8 @@
         }
 
         @when reverse {
-          transform: rotate(0deg);
           transform-origin: center 25%;
-          transform: translateY(-50%);
+          transform: rotate(180deg);
 
           .el-input__icon-text{
             transform: translate(0,0) rotate(0deg);
@@ -103,7 +101,6 @@
           cursor: not-allowed;
 
           &:hover {
-            border-color: var(--select-disabled-border);
           }
         }
       }

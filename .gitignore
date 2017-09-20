@@ -13,5 +13,4 @@ fe.element/element-ui
 .npmrc
 coverage
 ./*.css
-!./src/utils/sui/sui.min.css
-!./src/utils/sui/sui-append.min.css
+__test

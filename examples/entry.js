@@ -11,15 +11,14 @@ import SideNav from './components/side-nav';
 import FooterNav from './components/footer-nav';
 import title from './i18n/title.json';
 import $ from 'jquery';
+import 'qnui/lib/date-picker/index.scss';
+import 'qnui/lib/time-picker/index.scss';
 
 window.$ = $;
 window.jQuery = $;
 
 require('jquery-date-time-picker');
 require('jquery-date-time-picker/dist/jquery-date-time-picker.css');
-require('main/utils/sui/sui-append.min.css');
-require('main/utils/sui/sui.min.css');
-require('main/utils/sui/sui.min.js');
 
 Vue.use(Element);
 Vue.use(VueRouter);

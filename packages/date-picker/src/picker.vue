@@ -1,28 +1,30 @@
 <template>
-  <el-input
-    class="el-date-editor"
-    :class="'el-date-editor--' + type"
-    :readonly="!editable || readonly"
-    :disabled="disabled"
-    :size="size"
-    v-clickoutside="handleClose"
-    :placeholder="placeholder"
-    @focus="handleFocus"
-    @blur="handleBlur"
-    @keydown.native="handleKeydown"
-    :value="displayValue"
-    @change.native="displayValue = $event.target.value"
-    :validateEvent="false"
-    ref="reference">
-    <i slot="icon"
-      class="el-input__icon"
-      @click="handleClickIcon"
-      :class="[showClose ? 'el-icon-close' : triggerClass]"
-      @mouseenter="handleMouseEnterIcon"
-      @mouseleave="showClose = false"
-      v-if="haveTrigger">
-    </i>
-  </el-input>
+  <div class="el-date-editor-top" >
+    <el-input
+      class="el-date-editor"
+      :class="'el-date-editor--' + type"
+      :readonly="!editable || readonly"
+      :disabled="disabled"
+      :size="size"
+      v-clickoutside="handleClose"
+      :placeholder="placeholder"
+      @focus="handleFocus"
+      @blur="handleBlur"
+      @keydown.native="handleKeydown"
+      :value="displayValue"
+      @change.native="displayValue = $event.target.value"
+      :validateEvent="false"
+      ref="reference">
+      <i slot="icon"
+        class="el-input__icon"
+        @click="handleClickIcon"
+        :class="[showClose ? 'el-icon-close' : triggerClass]"
+        @mouseenter="handleMouseEnterIcon"
+        @mouseleave="showClose = false"
+        v-if="haveTrigger">
+      </i>
+    </el-input>
+  </div>
 </template>
 
 <script>
@@ -32,6 +34,9 @@ import { formatDate, parseDate, getWeekNumber, equalDate, isDate } from './util'
 import Popper from 'element-ui/src/utils/vue-popper';
 import Emitter from 'element-ui/src/mixins/emitter';
 import ElInput from 'element-ui/packages/input';
+import react from 'react';
+import reactDOM from 'react-dom';
+import DatePicker from 'qnui/lib/date-picker';
 
 const NewPopper = {
   props: {
@@ -215,7 +220,7 @@ export default {
     // 日期不可以为空字符串
     notNull: {
       type: Boolean,
-      default: true
+      default: false
     },
     popperClass: String,
     editable: {
@@ -249,12 +254,13 @@ export default {
 
   watch: {
     pickerVisible(val) {
+      if (window.IS_QN) return;
       if (!val) this.dispatch('ElFormItem', 'el.form.blur');
       if (this.readonly || this.disabled) return;
-      val ? !window.IS_QN ? this.showPicker() : this.showQnPicker() : this.hidePicker();
+      val ? this.showPicker() : this.hidePicker();
     },
     currentValue(val) {
-      if (val) return;
+      if (val) return this.mountPicker();
       if (this.picker && typeof this.picker.handleClear === 'function') {
         this.picker.handleClear();
       } else {
@@ -366,24 +372,7 @@ export default {
     this.placement = PLACEMENT_MAP[this.align] || PLACEMENT_MAP.left;
   },
   mounted() {
-    if (window.IS_QN) {
-      this.$nextTick(() => {
-        const $d = window.$(this.reference.querySelector('input')).datepicker({
-          size: '',
-          timepicker: this.type === 'datetime',
-          todayHighlight: true,
-          todayBtn: true,
-          autoclose: false
-        });
-        $d.on('changeDate', (e) => {
-          var d = '';
-          if (e.target.value) {
-            d = new Date(e.target.value);
-          }
-          this.$emit('input', String(d));
-        });
-      });
-    }
+    this.mountQnPicker();
   },
   methods: {
     handleMouseEnterIcon() {
@@ -460,7 +449,17 @@ export default {
         this.destroyPopper();
       }
     },
-    showQnPicker() {
+    mountQnPicker() {
+      const dp = react.createElement(DatePicker, {
+        defaultValue: this.value,
+        onChange: (val, str) => {
+          if (!val) {
+            val = '';
+          }
+          this.$emit('input', val);
+        },
+      });
+      const dpEl = reactDOM.render(dp, this.$el);
     },
     showPicker() {
       if (this.$isServer) return;

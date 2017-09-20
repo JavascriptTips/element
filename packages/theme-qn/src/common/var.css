@@ -15,10 +15,10 @@
   --color-success: #58b957;
   --color-warning: #f39800;
   --color-danger: #ff4a46;*/
-  --color-primary: #28a3ef;
+  --color-primary: #3089DC;
   --color-success: #43cd6e;
   --color-warning: #e1b203;
-  --color-danger: #ed6a5a;
+  --color-danger: #E61C1C;
   --color-info: #46b8da;
 
   --color-blue: #2e90fe;
@@ -38,17 +38,17 @@
   -------------------------- */
   --border-width-base: 1px;
   --border-style-base: solid;
-  --border-color-base: var(--color-grey);
-  --border-color-hover: var(--color-primary); /* #8492a6; */
+  --border-color-base: #ccc;
+  --border-color-hover: #959595;
   --border-base: var(--border-width-base) var(--border-style-base) var(--border-color-base);
-  --border-radius-base: 4px;
+  --border-radius-base: 0;
   --border-radius-small: 2px;
   --border-radius-circle: 100%;
   --shadow-base: 0 0 2px rgba(var(--color-black), 0.18), 0 0 1px var(--color-blue-light);
 
   /* Box-shadow
   -------------------------- */
-  --box-shadow-base: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
+  --box-shadow-base: 1px 1px 3px 0px rgba(0,0,0,0.32);
   --box-shadow-dark: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .12);
 
   /* Fill
@@ -168,10 +168,10 @@
 
   --select-option-color: var(--select-group-color);
   --select-option-disabled-color: var(--color-grey);
-  --select-option-height: 36px;
-  --select-option-hover-background:  rgba(var(--color-primary), 0.8);
-  --select-option-selected: var(--color-primary);
-  --select-option-selected-hover: #fff; /*#0097e8;*/
+  --select-option-height: 28px;
+  --select-option-hover-background:  #F2F2F2;
+  --select-option-selected: #F2F2F2;
+  --select-option-selected-hover: #333; /*#0097e8;*/
 
   /*lsy*/
   --select-group-color: #333;
@@ -182,7 +182,7 @@
   --select-dropdown-shadow: var(--box-shadow-base);
   --select-dropdown-empty-color: #999;
   --select-dropdown-max-height: 274px;
-  --select-dropdown-padding: 0;/*lsy*/
+  --select-dropdown-padding: 12px 0;
   --select-dropdown-empty-padding: 10px 0;
   --select-dropdown-border: solid 1px var(--disabled-border-base);
 
@@ -396,8 +396,8 @@
   --button-info-fill: var(--color-info);
   --button-info-shadow: #96d1f3;
 
-  --button-hover-tint-percent: 20%;
-  --button-active-shade-percent: 10%;
+  --button-hover-tint-percent: -10%;
+  --button-active-shade-percent: -10%;
 
 
   /* cascader
@@ -422,14 +422,14 @@
   --dialog-background-color: var(--color-blue);
   --dialog-footer-background: var(--color-blue-lighter);
   --dialog-box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.2);
-  --dialog-title-color:#666;
+  --dialog-title-color:#333;
   --dialog-tiny-width: 30%;
   --dialog-small-width: 50%;
   --dialog-large-width: 90%;
-  --dialog-close-color: var(--color-grey);
-  --dialog-close-hover-color: var(--dialog-title-color);
+  --dialog-close-color: #999;
+  --dialog-close-hover-color: #333;
   --dialog-title-font-size: 16px;
-  --dialog-font-size: 14px;
+  --dialog-font-size: 12px;
 
   /* Table
  -------------------------- */

@@ -49,13 +49,14 @@
       position: relative;
 
       @m bottom {
-        border-bottom: 1px solid #e9e9e9;
+        border-bottom: 0;
       }
     }
 
     @e close {
       cursor: pointer;
       color: var(--dialog-close-color);
+      font-size: 16px;
 
       &:hover {
         color: var(--dialog-close-hover-color);
@@ -68,7 +69,7 @@
       font-size: 16px;
       /*font-weight: bold;*/
       color: #212121;
-      padding-left: 16px;
+      padding-left: 20px;
       @m small {
         font-size: 14px;
         margin-left: 8px;
@@ -76,8 +77,8 @@
     }
 
     @e body {
-      padding: 30px 20px;
-      color: #475669;
+      padding: 20px 20px;
+      color: #666;
       font-size: var(--dialog-font-size);
     }
 
@@ -92,7 +93,7 @@
     }
 
     @e footer {
-      padding: 10px 20px 15px;
+      padding: 0px 20px 20px;
       text-align: center;
       box-sizing: border-box;
     }

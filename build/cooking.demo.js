@@ -131,4 +131,10 @@ cooking.add('plugin.CopyWebpackPlugin', new CopyWebpackPlugin([
   { from: 'examples/versions.json' }
 ]));
 cooking.add('vue.preserveWhitespace', false);
+
+cooking.add('loader.scss', {
+  test: /\.scss$/,
+  loaders: ['style-loader', 'css-loader', 'sass-loader']
+});
+
 module.exports = cooking.resolve();

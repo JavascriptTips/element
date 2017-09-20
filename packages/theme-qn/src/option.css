@@ -6,16 +6,17 @@
   @b select-dropdown {
     @e item {
       font-size: var(--select-font-size);
-      padding: 8px 10px;
+      padding: 0px 10px;
       position: relative;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
       color: var(--select-option-color);
       height: var(--select-option-height);
-      line-height: 1.5;
+      line-height: var(--select-option-height);
       box-sizing: border-box;
       cursor: pointer;
+      font-size: 12px;
 
       /*&:after{
         content:'';
@@ -48,9 +49,24 @@
       }
 
       &.selected {
-        color: var(--color-white);
+        color: var(--select-option-selected-hover);
         background-color: var(--select-option-selected);
 
+        &:before {
+          box-sizing: content-box;
+          margin-right: 6px;
+          content: "";
+          border: 2px solid var(--color-primary);
+          border-left: 0;
+          border-top: 0;
+          height: 8px;
+          width: 3px;
+          position: relative;
+          transform: rotate(45deg);
+          transition: transform .15s cubic-bezier(.71,-.46,.88,.6) .05s;
+          transform-origin: center;
+          display: inline-block;
+        }
         /*&.hover {*/
           /*background-color: var(--select-option-selected-hover);*/
         /*}*/
