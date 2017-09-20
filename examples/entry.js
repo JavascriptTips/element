@@ -11,8 +11,6 @@ import SideNav from './components/side-nav';
 import FooterNav from './components/footer-nav';
 import title from './i18n/title.json';
 import $ from 'jquery';
-import 'qnui/lib/date-picker/index.scss';
-import 'qnui/lib/time-picker/index.scss';
 
 window.$ = $;
 window.jQuery = $;

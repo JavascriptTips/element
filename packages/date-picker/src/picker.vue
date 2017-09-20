@@ -28,6 +28,9 @@
 </template>
 
 <script>
+import 'qnui/lib/date-picker/index.scss';
+import 'qnui/lib/time-picker/index.scss';
+
 import Vue from 'vue';
 import Clickoutside from 'element-ui/src/utils/clickoutside';
 import { formatDate, parseDate, getWeekNumber, equalDate, isDate } from './util';
@@ -457,7 +460,7 @@ export default {
             val = '';
           }
           this.$emit('input', val);
-        },
+        }
       });
       const dpEl = reactDOM.render(dp, this.$el);
     },
