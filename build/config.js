@@ -9,7 +9,7 @@ var mixinsList = fs.readdirSync(path.resolve(__dirname, '../src/mixins'));
 var transitionList = fs.readdirSync(path.resolve(__dirname, '../src/transitions'));
 var externals = {
   react: 'react',
-  'react-dom': 'reactDOM'
+  'react-dom': 'react-dom'
 };
 
 Object.keys(Components).forEach(function(key) {
