@@ -3,6 +3,12 @@ import ElSelect from 'element-ui/packages/select';
 import ElOption from 'element-ui/packages/option';
 import Locale from 'element-ui/src/mixins/locale';
 
+import 'qnui/lib/button/index.scss';
+import 'qnui/lib/pagination/index.scss';
+import react from 'react';
+import reactDOM from 'react-dom';
+import Pagination from 'qnui/lib/pagination';
+
 export default {
   name: 'ElPagination',
 
@@ -40,6 +46,13 @@ export default {
       internalCurrentPage: 1,
       internalPageSize: 0
     };
+  },
+  mounted() {
+    if (window.IS_QN) {
+      this.$nextTick(() => {
+        this.mountQnPagination();
+      });
+    }
   },
 
   render(h) {
@@ -242,6 +255,26 @@ export default {
   },
 
   methods: {
+    mountQnPagination() {
+      if (this.rEl) {
+        reactDOM.unmountComponentAtNode(this.$el);
+      }
+
+      const pg = react.createElement(Pagination, {
+        current: this.currentPage,
+        total: this.total,
+        pageSize: this.pageSize,
+        onChange: (p) => {
+          this.$emit('current-change', p);
+        }
+      });
+
+      console.log(this.$el);
+      if (this.$el) {
+        this.rEl = reactDOM.render(pg, this.$el);
+      }
+    },
+
     handleCurrentChange(val) {
       this.internalCurrentPage = this.getValidCurrentPage(val);
     },
@@ -305,6 +338,7 @@ export default {
       immediate: true,
       handler(val) {
         this.internalPageSize = val;
+        this.mountQnPagination();
       }
     },
 
@@ -330,6 +364,7 @@ export default {
         this.$emit('update:currentPage', newVal);
         this.$emit('current-change', this.internalCurrentPage);
       }
+      this.mountQnPagination();
     },
 
     internalPageCount(newVal) {

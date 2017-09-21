@@ -3,14 +3,21 @@
 
 @component-namespace el {
   @b date-editor-top {
+    width: 100%;
     display: inline-block;
+
+    /* 重写qnui */
+    .next-date-picker-medium {
+      width: 100%;
+      min-width: auto;
+    }
   }
   @b date-editor {
     position: relative;
     display: inline-block;
 
     &.el-input {
-      width: 173px;
+      width: 115px;
     }
 
     @m daterange {

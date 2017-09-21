@@ -453,7 +453,11 @@ export default {
       }
     },
     mountQnPicker() {
+      if (this.rEl) {
+        reactDOM.unmountComponentAtNode(this.$el);
+      }
       const dp = react.createElement(DatePicker, {
+        showTime: this.type === 'datetime',
         defaultValue: this.value,
         onChange: (val, str) => {
           if (!val) {
@@ -462,7 +466,7 @@ export default {
           this.$emit('input', val);
         }
       });
-      const dpEl = reactDOM.render(dp, this.$el);
+      this.rEl = reactDOM.render(dp, this.$el);
     },
     showPicker() {
       if (this.$isServer) return;

@@ -1,6 +1,6 @@
 {
   "name": "@qp/qp-element-ui",
-  "version": "1.3.52",
+  "version": "1.3.53",
   "description": "A Component Library for Vue.js.",
   "main": "lib/element-ui.common.js",
   "files": [
@@ -21,7 +21,7 @@
     "deploy": "npm run deploy:build && gh-pages -d examples/element-ui --remote eleme && del examples/element-ui",
     "deploy:build": "npm run build:file && cooking build -c build/cooking.demo.js -p && echo element.eleme.io>>examples/element-ui/CNAME",
     "dev": "npm run build:file && cooking watch -c build/cooking.demo.js -p",
-    "dev-qn": "npm run build:file-qn && cooking watch -c build/cooking.demo.js -p",
+    "dev-qn": "npm run build:file-qn && PLATFORM=qn cooking watch -c build/cooking.demo.js -p",
     "dev:play": "npm run build:file && cross-env PLAY_ENV=true cooking watch -c build/cooking.demo.js -p",
     "dist": "npm run clean && npm run build:file && npm run lint && cooking build -c build/cooking.conf.js,build/cooking.common.js,build/cooking.component.js -p && npm run build:utils && npm run build:theme",
     "dist:qn": "npm run clean && npm run build:file-qn && npm run lint && cooking build -c build/cooking.conf.js,build/cooking.common.js,build/cooking.component.js -p && npm run build:utils && npm run build:theme",

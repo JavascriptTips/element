@@ -124,7 +124,7 @@
   --radio-input-small__inner-circle-width:6px;
 
   --radio-input-border-radius: var(--border-radius-circle);
-  --radio-input-fill: var(--border-color-hover);
+  --radio-input-fill: var(--color-primary);
   --radio-input-border: var(--border-base);
   --radio-input-border-color: var(--border-color-base);
   --radio-icon-color: var(--color-white);

@@ -7,6 +7,11 @@
 </template>
 
 <script>
+import 'qnui/lib/step/index.scss';
+import react from 'react';
+import reactDOM from 'react-dom';
+import Step from 'qnui/lib/step';
+
 export default {
   name: 'ElSteps',
 
@@ -26,6 +31,12 @@ export default {
     processStatus: {
       type: String,
       default: 'process'
+    },
+    names: {
+      type: Array,
+      default() {
+        return [];
+      }
     }
   },
 
@@ -39,12 +50,37 @@ export default {
   watch: {
     active(newVal, oldVal) {
       this.$emit('change', newVal, oldVal);
+      this.mountQnSteps();
     },
 
     steps(steps) {
       steps.forEach((child, index) => {
         child.index = index;
       });
+    }
+  },
+  mounted() {
+    if (this.names.length) {
+      this.mountQnSteps();
+    }
+  },
+  methods: {
+    mountQnSteps() {
+      if (this.rEl) {
+        reactDOM.unmountComponentAtNode(this.$el);
+      }
+
+      const items = this.names.map((name, i) => {
+        return react.createElement(Step.Item, {
+          key: i,
+          title: name
+        });
+      });
+      const sp = react.createElement(Step, {
+        current: this.active,
+        type: 'arrow'
+      }, items);
+      this.rEl = reactDOM.render(sp, this.$el);
     }
   }
 };

@@ -17,10 +17,10 @@ function fileExists(filePath) {
   }
 }
 
-function writeIndexCss(theme, initIndexContent, resourcePre = './') {
+function writeIndexCss(theme, initIndexContent, resourcePre = './', filters = []) {
   var indexContent = initIndexContent || '@import "./base.css";\n';
   Components.forEach(function(key) {
-    if (['icon', 'option', 'option-group'].indexOf(key) > -1) return;
+    if (['icon', 'option', 'option-group'].concat(filters).indexOf(key) > -1) return;
     var fileName = key + '.css';
     indexContent += `@import "${resourcePre}${fileName}";\n`;
     var filePath = path.resolve(basepath, theme, 'src', fileName);
@@ -38,5 +38,15 @@ themes.forEach((theme) => {
 });
 
 // build weike-theme-qn
-const weikeThemeIndex = writeIndexCss('theme-weike', undefined, path.join(basepath, './theme-weike/src/'));
-writeIndexCss('theme-qn', weikeThemeIndex);
+const weikeThemeIndex = writeIndexCss(
+  'theme-weike',
+  undefined,
+  path.join(basepath, './theme-weike/src/'),
+  ['pagination']
+);
+writeIndexCss(
+  'theme-qn',
+  weikeThemeIndex,
+  undefined,
+  ['pagination']
+);

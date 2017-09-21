@@ -2,10 +2,12 @@ var cooking = require('cooking');
 var config = require('./config');
 var md = require('markdown-it')();
 var CopyWebpackPlugin = require('copy-webpack-plugin');
+var webpack = require('webpack');
 var striptags = require('./strip-tags');
 var slugify = require('transliteration').slugify;
 var isProd = process.env.NODE_ENV === 'production';
 var isPlay = !!process.env.PLAY_ENV;
+var isQn = process.env.PLATFORM === 'qn';
 
 function convert(str) {
   str = str.replace(/(&#x)(\w{4});/gi, function($0) {
@@ -16,7 +18,7 @@ function convert(str) {
 
 cooking.set({
   entry: isProd ? {
-    docs: './examples/entry.js',
+    docs: isQn ? './examples/entry-qn.js' : './examples/entry.js',
     'element-ui': './src/index.js'
   } : (isPlay ? './examples/play.js' : './examples/entry.js'),
   dist: './examples/element-ui/',
@@ -136,5 +138,9 @@ cooking.add('loader.scss', {
   test: /\.scss$/,
   loaders: ['style-loader', 'css-loader', 'sass-loader']
 });
+
+cooking.add('plugin.Define', new webpack.DefinePlugin({
+  'IS_QN': false
+}));
 
 module.exports = cooking.resolve();

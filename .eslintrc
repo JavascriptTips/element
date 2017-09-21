@@ -5,7 +5,9 @@
   "globals": {
     "expect": true,
     "sinon": true,
-    "Promise": true
+    "Promise": true,
+    "__DEBUG__": true,
+    "__THEME__": true,
   },
   "plugins": ['vue'],
   "extends": 'elemefe',
