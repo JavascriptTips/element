@@ -7,7 +7,10 @@ var saladConfig = require('../packages/theme-default/salad.config.json');
 var utilsList = fs.readdirSync(path.resolve(__dirname, '../src/utils'));
 var mixinsList = fs.readdirSync(path.resolve(__dirname, '../src/mixins'));
 var transitionList = fs.readdirSync(path.resolve(__dirname, '../src/transitions'));
-var externals = {};
+var externals = {
+  react: 'react',
+  'react-dom': 'reactDOM'
+};
 
 Object.keys(Components).forEach(function(key) {
   externals[`@qp/qp-element-ui/packages/${key}`] = `@qp/qp-element-ui/lib/${key}`;
