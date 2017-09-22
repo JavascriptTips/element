@@ -7,7 +7,7 @@ var salad = require('postcss-salad')(require('./salad.config.json'));
 var rimraf = require('rimraf');
 
 gulp.task('compile', function() {
-  return gulp.src(['../theme-weike/src/*.css', './src/*.css'])
+  return gulp.src(['./src/*.css'])
     .pipe(postcss([salad]))
     .pipe(cssmin())
     .pipe(gulp.dest('./lib'));
