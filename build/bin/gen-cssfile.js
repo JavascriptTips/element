@@ -17,7 +17,7 @@ function fileExists(filePath) {
   }
 }
 
-function writeIndexCss(theme, initIndexContent, resourcePre = './', filters = []) {
+function writeIndexCss(theme, initIndexContent, resourcePre = './', filters = [], noWrite) {
   var indexContent = initIndexContent || '@import "./base.css";\n';
   Components.forEach(function(key) {
     if (['icon', 'option', 'option-group'].concat(filters).indexOf(key) > -1) return;
@@ -29,7 +29,9 @@ function writeIndexCss(theme, initIndexContent, resourcePre = './', filters = []
       console.log(theme, ' 创建遗漏的 ', fileName, ' 文件');
     }
   });
-  fs.writeFileSync(path.resolve(basepath, theme, 'src', 'index.css'), indexContent);
+  if (!noWrite) {
+    fs.writeFileSync(path.resolve(basepath, theme, 'src', 'index.css'), indexContent);
+  }
   return indexContent;
 }
 
@@ -42,7 +44,8 @@ const weikeThemeIndex = writeIndexCss(
   'theme-weike',
   undefined,
   path.join(basepath, './theme-weike/src/'),
-  ['pagination']
+  ['pagination'],
+  true
 );
 writeIndexCss(
   'theme-qn',
