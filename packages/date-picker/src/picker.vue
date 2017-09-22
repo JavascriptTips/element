@@ -453,6 +453,9 @@ export default {
       }
     },
     mountQnPicker() {
+      if (!window.IS_QN) {
+        return;
+      }
       if (this.rEl) {
         reactDOM.unmountComponentAtNode(this.$el);
       }
