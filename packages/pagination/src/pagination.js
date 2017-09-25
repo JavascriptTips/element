@@ -256,7 +256,7 @@ export default {
 
   methods: {
     mountQnPagination() {
-      if (window.IS_QN) {
+      if (!window.IS_QN) {
         return;
       }
 
