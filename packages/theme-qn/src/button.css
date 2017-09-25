@@ -26,16 +26,18 @@
     @mixin button-size var(--button-padding-vertical), var(--button-padding-horizontal), var(--button-font-size), var(--button-border-radius);
 
     &:hover,
-    &:focus {
-      color: var(--color-primary);
-      border-color: @color;
+    &:focus,
+    &:active {
+      background: var(--button-default-fill-hover);
+      border-color: var(--button-default-border-hover);
+      outline: none;
     }
 
-    &:active {
+    /*&:active {
       color: shade(var(--color-primary), var(--button-active-shade-percent));
       border-color: @color;
       outline: none;
-    }
+    }*/
 
     &::-moz-focus-inner {
       border: 0;

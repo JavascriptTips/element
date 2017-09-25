@@ -356,8 +356,11 @@
   --button-mini-padding-horizontal: 6px;
 
   --button-default-color: #333333;
-  --button-default-fill: var(--color-white);
-  --button-default-border: #c4c4c4;
+  --button-default-fill: #F7F8FA;
+  --button-default-border: #ccc;
+  
+  --button-default-fill-hover: #F2F2F2;
+  --button-default-border-hover: #959595;
 
   --button-ghost-color: #666;
   --button-ghost-fill: transparent;

@@ -40,16 +40,16 @@ themes.forEach((theme) => {
 });
 
 // build weike-theme-qn
-const weikeThemeIndex = writeIndexCss(
-  'theme-weike',
-  undefined,
-  path.join(basepath, './theme-weike/src/'),
-  ['pagination'],
-  true
-);
+// const weikeThemeIndex = writeIndexCss(
+//   'theme-weike',
+//   undefined,
+//   path.join(basepath, './theme-weike/src/'),
+//   ['pagination', 'button'],
+//   true
+// );
 writeIndexCss(
   'theme-qn',
-  weikeThemeIndex,
+  undefined,
   undefined,
   ['pagination']
 );
