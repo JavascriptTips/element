@@ -24,10 +24,6 @@
     color: $color;
   }
 
-  &.is-disabled {
-    background: $background-color;
-  }
-
   &.is-plain {
     background: var(--button-default-fill);
     border: var(--border-base);

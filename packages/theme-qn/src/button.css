@@ -102,12 +102,12 @@
       &,
       &:hover,
       &:focus {
-        color: #fff;
+        color: #C7C7C7;
+        background: #F7F8FA;
+        border: 1px solid #E6E6E6;
+        text-decoration: none;
+
         cursor: not-allowed;
-        background-image: none;
-        /*background-color: var(--button-primary-fill);*/
-        opacity: .6;
-        border-color: var(--button-disabled-border);
         box-shadow: none;
       }
 
@@ -121,10 +121,17 @@
         &,
         &:hover,
         &:focus {
-          background-color: #fff;
-          border-color: #d3dce6;
-          color: #C0CCDA;
+          color: #C7C7C7;
+          background: #F7F8FA;
+          border: 1px solid #E6E6E6;
+          text-decoration: none;
+
+          cursor: not-allowed;
+          box-shadow: none;
         }
+      }
+      &.el-button--text {
+        border: 0;
       }
     }
 
