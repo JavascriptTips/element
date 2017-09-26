@@ -194,9 +194,11 @@
 
       &:hover,
       &:focus {
+        background:none;
         color: tint(var(--color-primary), var(--button-hover-tint-percent));
       }
       &:active {
+        background:none;
         color: shade(var(--color-primary), var(--button-active-shade-percent));
       }
     }
