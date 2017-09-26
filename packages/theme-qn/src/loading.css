@@ -4,7 +4,7 @@
 @component-namespace el {
   @b loading-mask {
     position: absolute;
-    z-index: 1999; /* 不超过popup的最小 2000*/
+    z-index: 999; /* 不超过popup的最小 2000*/
     background-color: rgba(255, 255, 255, .9);
     margin: 0;
     top: 0;
