@@ -331,6 +331,12 @@ export default {
   },
 
   watch: {
+    total: {
+      immediate: true,
+      handler() {
+        this.mountQnPagination();
+      }
+    },
     currentPage: {
       immediate: true,
       handler(val) {
