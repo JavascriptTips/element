@@ -145,7 +145,7 @@
         this.$nextTick(_ => {
           const inputElm = this.$refs.input.$el;
           if (inputElm) {
-            this.pickerWidth = inputElm.getBoundingClientRect().width + 10;
+            this.pickerWidth = 161;// inputElm.getBoundingClientRect().width + 10;
           }
         });
       },
