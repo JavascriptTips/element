@@ -17,7 +17,7 @@
     display: inline-block;
 
     &.el-input {
-      width: 115px;
+      width: 100%;
     }
 
     @m daterange {

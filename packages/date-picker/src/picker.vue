@@ -4,7 +4,7 @@
       class="el-date-editor"
       :class="'el-date-editor--' + type"
       :readonly="!editable || readonly"
-      :disabled="disabled"
+      :disabled="disabledInput"
       :size="size"
       v-clickoutside="handleClose"
       :placeholder="placeholder"
@@ -251,16 +251,24 @@ export default {
       pickerVisible: false,
       showClose: false,
       currentValue: '',
-      unwatchPickerOptions: null
+      unwatchPickerOptions: null,
+      disabledInside: false
     };
   },
 
   watch: {
     pickerVisible(val) {
+      if (!val) {
+        this.disabledInside = false;
+      }
       if (window.IS_QN) return;
       if (!val) this.dispatch('ElFormItem', 'el.form.blur');
       if (this.readonly || this.disabled) return;
       val ? this.showPicker() : this.hidePicker();
+
+      if (val) {
+        this.disabledInside = true;
+      }
     },
     currentValue(val) {
       if (val) return this.mountPicker();
@@ -283,6 +291,9 @@ export default {
   },
 
   computed: {
+    disabledInput() {
+      return this.disabled || this.disabledInside;
+    },
     reference() {
       return this.$refs.reference.$el;
     },
