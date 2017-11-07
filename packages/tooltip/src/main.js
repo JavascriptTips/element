@@ -44,14 +44,12 @@ export default {
 
   beforeCreate() {
     if (this.$isServer) return;
-
     this.popperVM = new Vue({
       data: { node: '' },
       render(h) {
         return this.node;
       }
     }).$mount();
-
     this.debounceClose = debounce(200, () => this.handleClosePopper());
   },
 
@@ -75,13 +73,19 @@ export default {
     }
 
     if (!this.$slots.default || !this.$slots.default.length) return this.$slots.default;
-
     const vnode = getFirstComponentChild(this.$slots.default);
     if (!vnode) return vnode;
     const data = vnode.data = vnode.data || {};
-    // const on = vnode.data.on = vnode.data.on || {};
+    const on = vnode.data.on = vnode.data.on || {};
     const nativeOn = vnode.data.nativeOn = vnode.data.nativeOn || {};
-
+    on.mouseenter = this.addEventHandle(on.mouseenter, () => {
+      this.setExpectedState(true);
+      this.handleShowPopper();
+    });
+    on.mouseleave = this.addEventHandle(on.mouseleave, () => {
+      this.setExpectedState(false);
+      this.debounceClose();
+    });
     nativeOn.mouseenter = this.addEventHandle(nativeOn.mouseenter, () => {
       console.log(1);
       this.setExpectedState(true);
