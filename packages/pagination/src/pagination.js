@@ -3,8 +3,6 @@ import ElSelect from 'element-ui/packages/select';
 import ElOption from 'element-ui/packages/option';
 import Locale from 'element-ui/src/mixins/locale';
 
-import 'qnui/lib/button/index.scss';
-import 'qnui/lib/pagination/index.scss';
 import react from 'react';
 import reactDOM from 'react-dom';
 import Pagination from 'qnui/lib/pagination';

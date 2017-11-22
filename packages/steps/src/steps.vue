@@ -7,7 +7,6 @@
 </template>
 
 <script>
-import 'qnui/lib/step/index.scss';
 import react from 'react';
 import reactDOM from 'react-dom';
 import Step from 'qnui/lib/step';
