@@ -8,9 +8,7 @@ var endOfLine = require('os').EOL;
 var platform = process.argv[2] || 'weike';
 var env = '';
 var isQn = platform === 'qn';
-if (isQn) {
-  env = 'import \'element-ui/build/bin/qn-env\';';
-}
+env = 'import \'element-ui/build/bin/qn-env\';';
 
 var OUTPUT_PATH = path.join(__dirname, '../../src/index.js');
 var QN_OUTPUT_PATH = path.join(__dirname, '../../src/index-qn.js');
