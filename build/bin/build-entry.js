@@ -90,14 +90,14 @@ ComponentNames.forEach(name => {
 });
 
 var template = render(MAIN_TEMPLATE, {
-  env,
+  env: '',
   include: includeComponentTemplate.join(endOfLine),
   install: installTemplate.join(',' + endOfLine),
   version: process.env.VERSION || require('../../package.json').version,
   list: listTemplate.join(',' + endOfLine)
 });
 var qnTemplate = render(MAIN_TEMPLATE, {
-  env: '',
+  env,
   include: includeComponentTemplate.join(endOfLine),
   install: installTemplate.join(',' + endOfLine),
   version: process.env.VERSION || require('../../package.json').version,
