@@ -4,7 +4,6 @@ var Components = require('../../components.json');
 var themes = [
   'theme-default',
   'theme-weike'
-  // 'theme-qn'
 ];
 Components = Object.keys(Components);
 var basepath = path.resolve(__dirname, '../../packages/');
@@ -48,8 +47,4 @@ themes.forEach((theme) => {
 //   true
 // );
 writeIndexCss(
-  'theme-qn',
-  undefined,
-  undefined,
-  ['pagination']
-);
+  'theme-qn');

@@ -8,7 +8,6 @@ var slugify = require('transliteration').slugify;
 var isProd = process.env.NODE_ENV === 'production';
 var isPlay = !!process.env.PLAY_ENV;
 var isQn = process.env.PLATFORM === 'qn';
-
 function convert(str) {
   str = str.replace(/(&#x)(\w{4});/gi, function($0) {
     return String.fromCharCode(parseInt(encodeURIComponent($0).replace(/(%26%23x)(\w{4})(%3B)/g, '$2'), 16));
@@ -16,11 +15,13 @@ function convert(str) {
   return str;
 }
 
+console.log(`isQn:${isQn}`);
+
 cooking.set({
   entry: isProd ? {
     docs: isQn ? './examples/entry-qn.js' : './examples/entry.js',
     'element-ui': './src/index.js'
-  } : (isPlay ? './examples/play.js' : './examples/entry.js'),
+  } : (isPlay ? './examples/play.js' : isQn ? './examples/entry-qn.js' : './examples/entry.js'),
   dist: './examples/element-ui/',
   template: [
     {

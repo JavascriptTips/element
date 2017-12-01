@@ -1,9 +1,10 @@
+import 'packages/theme-qn/src/index.css';
+
 import Vue from 'vue';
 import entry from './app';
 import VueRouter from 'vue-router';
 import routes from './route.config';
-import Element from 'main/index.js';
-import 'packages/theme-qn/src/index.css';
+import Element from 'main/index-qn.js';
 import demoBlock from './components/demo-block.vue';
 import MainFooter from './components/footer.vue';
 import MainHeader from './components/header.vue';
