@@ -166,6 +166,7 @@
         const maxRows = autosize.maxRows;
 
         this.textareaCalcStyle = calcTextareaHeight(this.$refs.textarea, minRows, maxRows);
+
       },
       handleFocus(event) {
         this.$emit('focus', event);
@@ -204,6 +205,17 @@
 
     mounted() {
       this.resizeTextarea();
+
+      this.$nextTick(() => {
+        if (this.autofocus) {
+          if (this.$refs.textarea) {
+            this.$refs.textarea.focus();
+          }
+          if (this.$refs.input) {
+            this.$refs.input.focus();
+          }          
+        }
+      });
     }
   };
 </script>
