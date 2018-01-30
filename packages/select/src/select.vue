@@ -44,7 +44,8 @@
       class="el-select__label"
       :class="size"
       v-if="simpleText"
-      @click="handleIconClick" >
+      @click="handleIconClick"
+      @mouseover="handleIconClick" >
       {{simpleText}}
     </span>
     <el-input
@@ -176,7 +177,7 @@
     directives: { Clickoutside },
 
     props: {
-      simpleText: Boolean,
+      simpleText: String,
       noresize: Boolean,
       name: String,
       value: {
@@ -287,7 +288,7 @@
       },
 
       visible(val) {
-        if (!val) {
+        if (!val && this.$refs.reference) {
           this.$refs.reference.$el.querySelector('input').blur();
           this.handleIconHide();
           this.broadcast('ElSelectDropdown', 'destroyPopper');
@@ -649,7 +650,9 @@
       },
 
       resetInputWidth() {
-        this.inputWidth = this.$refs.reference.$el.getBoundingClientRect().width;
+        if (this.$refs.reference) {
+          this.inputWidth = this.$refs.reference.$el.getBoundingClientRect().width;          
+        }
       },
 
       handleResize() {
