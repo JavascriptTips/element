@@ -180,6 +180,7 @@
       v-model="value"
       placeholder="请选择"
       size="small"
+      simple-text="下啦选择"
       fix-icon>
       <el-option
         v-for="item in options"

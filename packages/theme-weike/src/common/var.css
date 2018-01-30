@@ -147,6 +147,8 @@
 
   /* Select
   -------------------------- */
+  --select-label-color: #333;
+
   --select-icon-bg:#eee;
   --select-border-color:#bebebe;
   --select-border-color-hover: #e6e7ec; /*var(--border-color-hover);*/

@@ -2,7 +2,7 @@
   <transition name="msgbox-fade">
     <div class="el-message-box__wrapper" tabindex="-1" v-show="visible" @click.self="handleWrapperClick">
       <div class="el-message-box" :class="customClass">
-        <div class="el-message-box__header" v-if="title !== undefined && !isDate">
+        <div class="el-message-box__header" v-if="title !== undefined && title !== '' && !isDate">
           <div class="el-message-box__title">
             <div class="el-message-box__status" :class="[ typeClass ]"></div>
             <span>{{ title || t('el.messagebox.title') }}</span>

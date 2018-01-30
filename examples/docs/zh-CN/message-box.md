@@ -49,9 +49,9 @@
         this.$prompt('修改发送时间:', '', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
-          isDate: true,
-          isTime: true,
-          minDate: new Date(),
+          // isDate: true,
+          // isTime: true,
+          // minDate: new Date(),
         }).then(({ value }) => {
           setTimeout(() => {
             this.$message({

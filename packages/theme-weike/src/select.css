@@ -30,6 +30,13 @@
         }
       }
     }
+    @e label {
+      color: var(--select-label-color);
+      font-size: 12px;
+      &.size {
+        font-size: 12px;
+      }
+    }
 
     & .el-input__inner {
       cursor: pointer;

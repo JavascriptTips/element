@@ -40,7 +40,15 @@
         :style="{ width: inputLength + 'px', 'max-width': inputWidth - 42 + 'px' }"
         ref="input">
     </div>
+    <span
+      class="el-select__label"
+      :class="size"
+      v-if="simpleText"
+      @click="handleIconClick" >
+      {{simpleText}}
+    </span>
     <el-input
+      v-else
       ref="reference"
       v-model="selectedLabel"
       type="text"
@@ -168,6 +176,7 @@
     directives: { Clickoutside },
 
     props: {
+      simpleText: Boolean,
       noresize: Boolean,
       name: String,
       value: {

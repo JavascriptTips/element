@@ -194,7 +194,7 @@ MessageBox.confirm = (message, title, options) => {
 MessageBox.prompt = (message, title, options) => {
   if (typeof title === 'object') {
     options = title;
-    title = '';
+    title = undefined;
   }
   return MessageBox(merge({
     title: title,
