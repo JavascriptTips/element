@@ -16,8 +16,9 @@
     }
 
     @e wrap {
-      overflow: scroll;
       padding-right: 17px;
+      overflow: scroll;
+
       @m hidden-default {
         &::-webkit-scrollbar {
           width: 0;

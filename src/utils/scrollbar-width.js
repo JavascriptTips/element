@@ -14,7 +14,7 @@ export default function() {
   outer.style.top = '-9999px';
   document.body.appendChild(outer);
 
-  const widthNoScroll = outer.offsetWidth;
+  const widthNoScroll = outer.offsetWidth - 17;
   outer.style.overflow = 'scroll';
 
   const inner = document.createElement('div');
